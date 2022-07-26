@@ -8,6 +8,7 @@ create table Hotel (Hotel_ID int not null auto_increment,
 						State varchar(20),
                         Zipcode long,
                         Phone long,
+						Total_Room long,
 						primary key(Hotel_ID)
 
 );
@@ -44,7 +45,7 @@ create table Customer  (Customer_ID int not null auto_increment,
 
 
 
-insert into Hotel values(1, 'UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 5099557226);
+insert into Hotel values(1, 'UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 40,5099557226);
 insert into Reservation values(1, '7/26/2022', '7/28/2022', '7/28/2022', 2, 0, 'Queen', 24, 1);
 insert into Customer values(1, 'John', 'Doe', '828 South Galvin Drive', 'Dallas', 'TX', 7523, 2149471611, 1);
 
