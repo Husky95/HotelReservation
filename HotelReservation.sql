@@ -3,7 +3,7 @@ use HotelReservationDB;
 SET FOREIGN_KEY_CHECKS=0;
 
 create table Hotel (Hotel_ID int unique not null auto_increment,
-						Hotel_Name varchar(20),
+						Hotel_Name varchar(40),
                         Street varchar(20),
                         City varchar(20),
 						State varchar(20),
