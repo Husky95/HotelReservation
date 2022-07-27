@@ -1,82 +1,67 @@
 package com.skillstorms.backend.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Entity(name="Customer") 
-@Table(name="Customer")
-public class Customer {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "Customer_ID")
-	private int customerID;
+@Entity(name="Hotel") // This tells Hibernate to make a table out of this class
+@Table(name="Hotel")
+public class Hotel {
 	
-    @Column(name = "Firstname")
-    @NotBlank
-    private String firstName;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "Hotel_ID")
+	private int hotelID;
     
-    @Column(name = "Lastname")
+	@Column(name = "Hotel_Name")
     @NotBlank
-    private String lastName;
+    private String hotelName;
     
-    @Column(name = "Street")
+	@Column(name = "Street")
     @NotBlank
     private String street;
-    
+   
     @Column(name = "City")
     @NotBlank
     private String city;
-    
+   
     @Column(name = "State")
     @NotBlank
     private String state;
     
     @Column(name = "Zipcode")
     @NotNull
-    private long zipcode;
+    private String zipcode;
     
     @Column(name = "Phone")
     @NotNull
     private long phone;
-
-
-
     
-    
-	
+    @Column(name = "Total_Rooms")
+    @NotNull
+    private long totalRoom;
+
 	@Override
 	public String toString() {
-		return "Customer [customerID=" + customerID + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", street=" + street + ", city=" + city + ", state=" + state + ", zipcode=" + zipcode + ", phone="
-				+ phone + "]";
+		return "Hotel [hotelID=" + hotelID + ", hotelName=" + hotelName + ", street=" + street + ", city=" + city
+				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRoom=" + totalRoom + "]";
 	}
-	public int getCustomerID() {
-		return customerID;
+	public int getHotelID() {
+		return hotelID;
 	}
-	public void setCustomerID(int customerID) {
-		this.customerID = customerID;
+	public void setHotelID(int hotelID) {
+		this.hotelID = hotelID;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getHotelName() {
+		return hotelName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
 	}
 	public String getStreet() {
 		return street;
@@ -96,10 +81,10 @@ public class Customer {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public long getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
-	public void setZipcode(long zipcode) {
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 	public long getPhone() {
@@ -108,5 +93,10 @@ public class Customer {
 	public void setPhone(long phone) {
 		this.phone = phone;
 	}
-	
-}
+	public long getTotalRoom() {
+		return totalRoom;
+	}
+	public void setTotalRoom(long totalRoom) {
+		this.totalRoom = totalRoom;
+	}
+	}
