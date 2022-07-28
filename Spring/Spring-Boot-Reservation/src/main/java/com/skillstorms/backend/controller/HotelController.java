@@ -42,7 +42,7 @@ public class HotelController {
     return hotelRepository.findAll();
   }
   
-  @GetMapping(path="/test/{hotelId}")
+  @GetMapping(path="/{hotelId}")
   public Hotel findByID(@PathVariable (value = "hotelId") int hotelID) {
 	  	Optional<Hotel> hotel = hotelRepository.findById(hotelID);
 		return hotel.isPresent() ? hotel.get() : null;
