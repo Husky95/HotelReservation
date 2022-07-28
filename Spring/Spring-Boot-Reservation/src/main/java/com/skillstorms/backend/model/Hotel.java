@@ -46,12 +46,12 @@ public class Hotel {
     
     @Column(name = "Total_Rooms")
     @NotNull
-    private long totalRoom;
+    private long totalRooms;
 
 	@Override
 	public String toString() {
 		return "Hotel [hotelID=" + hotelID + ", hotelName=" + hotelName + ", street=" + street + ", city=" + city
-				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRoom=" + totalRoom + "]";
+				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRooms=" + totalRooms + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -110,10 +110,10 @@ public class Hotel {
 	public void setPhone(long phone) {
 		this.phone = phone;
 	}
-	public long getTotalRoom() {
-		return totalRoom;
+	public long getTotalRooms() {
+		return totalRooms;
 	}
-	public void setTotalRoom(long totalRoom) {
-		this.totalRoom = totalRoom;
+	public void setTotalRooms(long totalRooms) {
+		this.totalRooms = totalRooms;
 	}
 	}
