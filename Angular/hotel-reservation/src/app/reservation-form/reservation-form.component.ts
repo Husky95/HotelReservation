@@ -17,12 +17,21 @@ export class ReservationFormComponent implements OnInit {
     numOfChildren: number = 0
 
     hotelData: HotelDataService
+    @Input() reservation: any = {
+        arrivalDate: "",
+        departDate: "",
+        numAdults: 1,
+        numKids: 0,
+        numBeds: 1,
+        bedType: "Full",
+    }
 
     constructor(hotelData: HotelDataService) { 
         this.hotelData = hotelData
     }
 
     ngOnInit(): void {
+
     }
 
     getData() {

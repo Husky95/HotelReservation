@@ -4,7 +4,7 @@
 </nav>
 
 <main id="form">
-<app-reservation-form *ngIf="showReservationFrom; else make" [showBack]="false"></app-reservation-form>
+    <app-find-reservation *ngIf="showReservationFrom; else make"></app-find-reservation>
 <ng-template #make>
     <app-date-form></app-date-form>
 </ng-template>

@@ -70,22 +70,22 @@
     <h3>Room Information</h3>
     <div>
         <label for="numOfAdults"># of Adults</label>
-        <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="numOfAdults"></p-dropdown>
+        <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="reservation.numAdults"></p-dropdown>
     </div>
 
     <div>
         <label for="numOfChildren"># of Children</label>
-        <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="numOfChildren"></p-dropdown>
+        <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="reservation.numKids"></p-dropdown>
     </div>
 
     <div>
         <label for="bedSize">Bed Size</label>
-        <p-dropdown name="bedSize" [options]="beds"></p-dropdown>
+        <p-dropdown name="bedSize" [options]="beds" [(ngModel)]="reservation.bedType"></p-dropdown>
     </div>
 
     <div>
         <label for="bedAmount">Number of beds</label>
-        <p-dropdown name="bedAmount" [options]="[1, 2]"></p-dropdown>
+        <p-dropdown name="bedAmount" [options]="[1, 2]" [(ngModel)]="reservation.numBeds"></p-dropdown>
     </div>
 
     <input type="submit" pButton>
