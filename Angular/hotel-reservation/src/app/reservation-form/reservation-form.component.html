@@ -1,0 +1,95 @@
+<p>reservation-form works!</p>
+<div *ngIf="showBack" (click)="hideForm.emit()">
+    <i class="pi pi-chevron-left"></i>
+    <span>Back to hotels</span>
+</div>
+{{ hotelData.hotelInfo }}
+<form (ngSubmit)="getData()">
+    <h3>Personal Information</h3>
+    <div>
+        <label for="firstName">First Name</label>
+        <input name="firstName" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+    </div>
+
+    <div>
+        <label for="lastName">Last Name</label>
+        <input name="lastName" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+    </div>
+    
+    <h3>Contact Information</h3>
+    <div>
+        <label for="email">Email</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-envelope"></i>
+            <input name="email" type="text" class="p-inputtext-sm" pKeyFilter="email" pInputText>
+        </span>
+    </div>
+
+    <div>
+        <label for="phone">Phone</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-phone"></i>
+            <input name="phone" type="text" class="p-inputtext-sm" pKeyFilter="int" pInputText>
+        </span>
+    </div>
+
+    <h3>Address</h3>
+
+    <div>
+        <label for="street">Street</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-home"></i>
+            <input name="address" type="text" class="p-inputtext-sm" pInputText>
+        </span>
+    </div>
+
+    <div class="address-container">
+        <div>
+            <label for="citys">City</label>
+            <span class="p-input-icon-left">
+                <i class="pi pi-building"></i>
+                <input name="city" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+            </span>
+        </div>
+        <div>
+            <label for="state">State</label>
+            <span class="p-input-icon-left">
+                <i class="pi pi-map"></i>
+                <input name="state" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+            </span>
+        </div>
+        <div>
+            <label for="zipcode">Zipcode</label>
+            <span class="p-input-icon-left">
+                <i class="pi pi-map-marker"></i>
+                <input name="zipcode" type="text" class="p-inputtext-sm" pKeyFilter="int" pInputText>
+            </span>
+        </div>
+    </div>
+
+    <h3>Room Information</h3>
+    <div>
+        <label for="numOfAdults"># of Adults</label>
+        <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="numOfAdults"></p-dropdown>
+    </div>
+
+    <div>
+        <label for="numOfChildren"># of Children</label>
+        <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="numOfChildren"></p-dropdown>
+    </div>
+
+    <div>
+        <label for="bedSize">Bed Size</label>
+        <p-dropdown name="bedSize" [options]="beds"></p-dropdown>
+    </div>
+
+    <div>
+        <label for="bedAmount">Number of beds</label>
+        <p-dropdown name="bedAmount" [options]="[1, 2]"></p-dropdown>
+    </div>
+
+    <input type="submit" pButton>
+    <p-button (click)="getData()">Test</p-button>
+    {{ numOfAdults }}
+
+</form>
