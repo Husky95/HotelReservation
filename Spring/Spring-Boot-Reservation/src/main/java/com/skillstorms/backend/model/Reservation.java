@@ -1,5 +1,7 @@
 package com.skillstorms.backend.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Reservation") // This tells Hibernate to make a table out of this class
@@ -26,16 +29,16 @@ public class Reservation {
 	int reservationNumber;
 	
     @Column(name = "Reserve_Date")
-    @NotBlank
-    private String reserveDate;
+    @NotNull
+    private Date reserveDate;
     
     @Column(name = "Arrival_Date")
-    @NotBlank
-    private String arrivalDate;
+    @NotNull
+    private Date arrivalDate;
     
     @Column(name = "Depart_Date")
-    @NotBlank
-    private String departDate;
+    @NotNull
+    private Date departDate;
     
     @Column(name = "Num_Adults")
     @NotNull
@@ -62,7 +65,7 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Customer_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
     private Customer customer;
     
     /*
@@ -100,7 +103,7 @@ public class Reservation {
 	public void setReservationNumber(int reservationNumber) {
 		this.reservationNumber = reservationNumber;
 	}
-	public String getReserveDate() {
+	public Date getReserveDate() {
 		return reserveDate;
 	}
 	@Override
@@ -109,19 +112,19 @@ public class Reservation {
 				+ arrivalDate + ", departDate=" + departDate + ", numAdults=" + numAdults + ", numKids=" + numKids
 				+ ", bedType=" + bedType + ", roomNumber=" + roomNumber +  "]";
 	}
-	public void setReserveDate(String reserveDate) {
+	public void setReserveDate(Date reserveDate) {
 		this.reserveDate = reserveDate;
 	}
-	public String getArrivalDate() {
+	public Date getArrivalDate() {
 		return arrivalDate;
 	}
-	public void setArrivalDate(String arrivalDate) {
+	public void setArrivalDate(Date arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
-	public String getDepartDate() {
+	public Date getDepartDate() {
 		return departDate;
 	}
-	public void setDepartDate(String departDate) {
+	public void setDepartDate(Date departDate) {
 		this.departDate = departDate;
 	}
 	public long getNumAdults() {

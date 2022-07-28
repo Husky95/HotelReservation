@@ -7,14 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity(name="Customer") 
 @Table(name="Customer")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "customerID")
 public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -49,7 +52,8 @@ public class Customer {
     @NotNull
     private long phone;
 
-
+    @OneToMany(mappedBy="customer")
+    private Set<Reservation> reservations;
 
     
     
@@ -107,6 +111,12 @@ public class Customer {
 	}
 	public void setPhone(long phone) {
 		this.phone = phone;
+	}
+	public Set<Reservation> getReservations() {
+		return reservations;
+	}
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 	
 }

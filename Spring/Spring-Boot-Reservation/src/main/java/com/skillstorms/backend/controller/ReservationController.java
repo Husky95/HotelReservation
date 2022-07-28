@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorms.backend.model.Hotel;
 import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.repository.CustomerRepository;
 import com.skillstorms.backend.repository.HotelRepository;
@@ -25,7 +27,7 @@ import com.skillstorms.backend.model.ResourceNotFoundException;
 
 @RestController // @RestController = @Controller + @ResponseBody
 @CrossOrigin("*") // If you don't like CorsFilter, you're in luck. They do the same thing
-@RequestMapping(path="/reservation") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/reservations") // This means URL's start with /demo (after Application path)
 public class ReservationController {
   @Autowired 
   private ReservationRepository reservationRepository;
@@ -51,12 +53,22 @@ public class ReservationController {
 	//}).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + hotelID + " not found"));
   }
 
-  @GetMapping(path="/all")
+  @GetMapping(path="")
   public @ResponseBody Iterable<Reservation> getAllCustomers() {
     // This returns a JSON or XML with the users
     return reservationRepository.findAll();
   }
   //TODO 
   //update
+  @PutMapping(path="")
+  public @ResponseBody Reservation update(@Valid @RequestBody Reservation reservation) {
+  	Optional<Reservation> reservationDatabaseVersion = reservationRepository.findById(reservation.getReservationNumber());
+  	if (reservationDatabaseVersion.isPresent()) {
+  		return reservationRepository.save(reservation);
+  	}
+  	else {
+  		throw new ResourceNotFoundException();
+  	}
+  }
   //delete
 }

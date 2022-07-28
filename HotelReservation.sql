@@ -27,9 +27,9 @@ create table Customer (Customer_ID int not null auto_increment,
 
 
 create table Reservation (Reservation_Number int not null auto_increment,
-						Reserve_Date varchar(20),
-                        Arrival_Date varchar(20),
-                        Depart_Date varchar(20),
+						Reserve_Date date,
+                        Arrival_Date date,
+                        Depart_Date date,
                         Num_Adults long,
                         Num_Kids long,
 						Num_Beds int,
@@ -49,7 +49,7 @@ create table Reservation (Reservation_Number int not null auto_increment,
 insert into Hotel values(1, 'UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 5099557226,40);
 insert into Customer values(1, 'John', 'Doe', '828 South Galvin Drive', 'Dallas', 'TX', 75213, 2149471611);
 
-insert into Reservation values(1, '7/26/2022', '7/28/2022', '7/28/2022', 2, 0, 2, 'Queen', 24, 1);
+insert into Reservation values(1, '2022-07-26', '2022-07-27', '2022-07-28', 2, 0, 2, 'Queen', 24, 1);
 
 
 
