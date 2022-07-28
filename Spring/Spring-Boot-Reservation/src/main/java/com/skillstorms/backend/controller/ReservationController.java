@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorms.backend.model.Customer;
 import com.skillstorms.backend.model.Hotel;
 import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.repository.CustomerRepository;
@@ -71,4 +73,19 @@ public class ReservationController {
   	}
   }
   //delete
+  @DeleteMapping(path="/{id}")
+  public void delete(@PathVariable int id) {
+  	Optional<Reservation> reservationStagedForDelete = reservationRepository.findById(id);
+  	if (reservationStagedForDelete.isPresent()) {
+  		Reservation r = reservationStagedForDelete.get();
+  		Customer c = r.getCustomer();
+  		c.getReservations().remove(r);
+  		customerRepository.save(c);
+  		reservationRepository.deleteById(id);
+  	}
+  	else {
+  		throw new ResourceNotFoundException();
+  	}
+  	
+  }
 }
