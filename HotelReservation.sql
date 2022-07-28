@@ -36,7 +36,9 @@ create table Reservation (Reservation_Number int not null auto_increment,
                         Bed_Type varchar(20), 
                         Room_Number long, 
                         Customer_ID int not null,
+                        Hotel_ID int not null,
 						foreign key (Customer_ID) references Customer(Customer_ID),
+                        foreign key (Hotel_ID) references Hotel(Hotel_ID),
 						primary key(Reservation_Number)
 
 );

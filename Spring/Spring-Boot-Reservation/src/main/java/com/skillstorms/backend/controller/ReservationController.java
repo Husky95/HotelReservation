@@ -38,16 +38,29 @@ public class ReservationController {
   @Autowired
   private HotelRepository hotelRepository;
   
-  @PostMapping("/customer/{customerId}")
+  @PostMapping("")
   //@PostMapping("/customer/{customerId}/hotel/{hotelID}")
   //public Reservation create(@PathVariable (value = "customerId") Integer customerId,@PathVariable (value = "hotelID") Integer hotelID, @Valid @RequestBody Reservation reservation) {
-  public Reservation create(@PathVariable (value = "customerId") Integer customerId, @Valid @RequestBody Reservation reservation) {
+  public Reservation create(@Valid @RequestBody Reservation reservation) {
 
 	System.out.println("reservation add");
-	return customerRepository.findById(customerId).map(customer -> {
-        reservation.setCustomer(customer);
-        return reservationRepository.save(reservation);
-	}).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + customerId + " not found"));
+	Optional<Customer> optCustomer = customerRepository.findById(reservation.getCustomer().getCustomerID());
+	if (optCustomer.isPresent()) {
+		Customer c = optCustomer.get();
+		c.getReservations().add(reservation);
+	} 
+	else {
+		throw new ResourceNotFoundException("Customer Id " + reservation.getCustomer().getCustomerID() + " not found");
+	}
+	Optional<Hotel> optHotel = hotelRepository.findById(reservation.getHotel().getHotelID());
+	if (optHotel.isPresent()) {
+		Hotel h = optHotel.get();
+		h.getReservations().add(reservation);
+	}
+	else {
+		throw new ResourceNotFoundException("Hotel Id " + reservation.getHotel().getHotelID() + " not found");
+	}
+	return reservationRepository.save(reservation);
 
 	//return hotelRepository.findById(hotelID).map(hotel -> {
 		//temp.setHotel(hotel);
@@ -81,6 +94,9 @@ public class ReservationController {
   		Customer c = r.getCustomer();
   		c.getReservations().remove(r);
   		customerRepository.save(c);
+  		Hotel h = r.getHotel();
+  		h.getReservations().remove(r);
+  		hotelRepository.save(h);
   		reservationRepository.deleteById(id);
   	}
   	else {

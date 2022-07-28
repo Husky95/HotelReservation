@@ -1,18 +1,24 @@
 package com.skillstorms.backend.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity(name="Hotel") // This tells Hibernate to make a table out of this class
 @Table(name="Hotel")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "hotelID")
 public class Hotel {
 	
 	@Id
@@ -47,6 +53,9 @@ public class Hotel {
     @Column(name = "Total_Rooms")
     @NotNull
     private long totalRooms;
+    
+    @OneToMany(mappedBy="hotel")
+    private Set<Reservation> reservations;
 
 	@Override
 	public String toString() {
@@ -116,4 +125,10 @@ public class Hotel {
 	public void setTotalRooms(long totalRooms) {
 		this.totalRooms = totalRooms;
 	}
+	public Set<Reservation> getReservations() {
+		return reservations;
 	}
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+}

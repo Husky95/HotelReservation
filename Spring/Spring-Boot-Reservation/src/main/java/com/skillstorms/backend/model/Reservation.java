@@ -67,11 +67,10 @@ public class Reservation {
     @JsonIdentityReference(alwaysAsId = true)
     private Customer customer;
     
-    /*
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Hotel_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
     private Hotel hotel;
     
     
@@ -81,7 +80,6 @@ public class Reservation {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
-	*/
     
 	public long getNumBeds() {
 		return numBeds;
