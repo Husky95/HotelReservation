@@ -1,6 +1,6 @@
 package com.skillstorms.backend.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +18,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Reservation") // This tells Hibernate to make a table out of this class
 @Table(name="Reservation")
@@ -30,15 +29,15 @@ public class Reservation {
 	
     @Column(name = "Reserve_Date")
     @NotNull
-    private Date reserveDate;
+    private LocalDate reserveDate;
     
     @Column(name = "Arrival_Date")
     @NotNull
-    private Date arrivalDate;
+    private LocalDate arrivalDate;
     
     @Column(name = "Depart_Date")
     @NotNull
-    private Date departDate;
+    private LocalDate departDate;
     
     @Column(name = "Num_Adults")
     @NotNull
@@ -103,7 +102,7 @@ public class Reservation {
 	public void setReservationNumber(int reservationNumber) {
 		this.reservationNumber = reservationNumber;
 	}
-	public Date getReserveDate() {
+	public LocalDate getReserveDate() {
 		return reserveDate;
 	}
 	@Override
@@ -112,19 +111,19 @@ public class Reservation {
 				+ arrivalDate + ", departDate=" + departDate + ", numAdults=" + numAdults + ", numKids=" + numKids
 				+ ", bedType=" + bedType + ", roomNumber=" + roomNumber +  "]";
 	}
-	public void setReserveDate(Date reserveDate) {
+	public void setReserveDate(LocalDate reserveDate) {
 		this.reserveDate = reserveDate;
 	}
-	public Date getArrivalDate() {
+	public LocalDate getArrivalDate() {
 		return arrivalDate;
 	}
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
-	public Date getDepartDate() {
+	public LocalDate getDepartDate() {
 		return departDate;
 	}
-	public void setDepartDate(Date departDate) {
+	public void setDepartDate(LocalDate departDate) {
 		this.departDate = departDate;
 	}
 	public long getNumAdults() {
