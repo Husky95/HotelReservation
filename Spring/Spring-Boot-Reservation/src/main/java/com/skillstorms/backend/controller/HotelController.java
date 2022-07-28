@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +53,7 @@ public class HotelController {
   	return hotelRepository.findByHotelName(name);
   }
   @PutMapping(path="")
-  public @ResponseBody Hotel updateHotel(@Valid @RequestBody Hotel hotel) {
+  public @ResponseBody Hotel update(@Valid @RequestBody Hotel hotel) {
   	Optional<Hotel> hotelDatabaseVersion = hotelRepository.findById(hotel.getHotelID());
   	if (hotelDatabaseVersion.isPresent()) {
   		return hotelRepository.save(hotel);
@@ -60,5 +61,9 @@ public class HotelController {
   	else {
   		throw new ResourceNotFoundException();
   	}
+  }
+  @DeleteMapping(path="/{id}")
+  public void delete(@PathVariable int id) {
+  	hotelRepository.deleteById(id);
   }
 }
