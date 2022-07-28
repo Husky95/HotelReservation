@@ -7,14 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity(name="Customer") 
 @Table(name="Customer")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "customerID")
 public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,6 +31,10 @@ public class Customer {
     @Column(name = "Lastname")
     @NotBlank
     private String lastName;
+    
+    @Column(name = "Email")
+    @NotBlank
+    private String Email;
     
     @Column(name = "Street")
     @NotBlank
@@ -49,10 +56,19 @@ public class Customer {
     @NotNull
     private long phone;
 
-
+    @OneToMany(mappedBy = "customer")
+//	@JsonManagedReference // This does get serialized, but it's back half doesn't
+	private Set<Reservation> reservations;
 
     
     
+	
+	public Set<Reservation> getReservations() {
+		return reservations;
+	}
+	public void setReservations(Set<Reservation> reservations) {
+		this.reservations = reservations;
+	}
 	
 	@Override
 	public String toString() {
@@ -107,6 +123,12 @@ public class Customer {
 	}
 	public void setPhone(long phone) {
 		this.phone = phone;
+	}
+	public String getEmail() {
+		return Email;
+	}
+	public void setEmail(String email) {
+		Email = email;
 	}
 	
 }

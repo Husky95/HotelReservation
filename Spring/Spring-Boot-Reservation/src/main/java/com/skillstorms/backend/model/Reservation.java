@@ -2,7 +2,6 @@ package com.skillstorms.backend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 @Entity(name="Reservation") // This tells Hibernate to make a table out of this class
 @Table(name="Reservation")
@@ -59,17 +58,18 @@ public class Reservation {
     
 
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @JoinColumn(name = "Customer_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+	@JsonIdentityReference(alwaysAsId = true)
     private Customer customer;
     
-    /*
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    
+    @ManyToOne
     @JoinColumn(name = "Hotel_ID", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //@JsonIgnore
     private Hotel hotel;
     
     
@@ -79,7 +79,7 @@ public class Reservation {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
-	*/
+	
     
 	public long getNumBeds() {
 		return numBeds;

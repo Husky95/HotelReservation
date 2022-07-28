@@ -5,14 +5,12 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,28 +32,39 @@ public class ReservationController {
   @Autowired
   private HotelRepository hotelRepository;
   
-  @PostMapping("/customer/{customerId}")
-  //@PostMapping("/customer/{customerId}/hotel/{hotelID}")
-  //public Reservation create(@PathVariable (value = "customerId") Integer customerId,@PathVariable (value = "hotelID") Integer hotelID, @Valid @RequestBody Reservation reservation) {
-  public Reservation create(@PathVariable (value = "customerId") Integer customerId, @Valid @RequestBody Reservation reservation) {
+  //@PostMapping("/customer/{customerId}")
+  //public Reservation create(@PathVariable (value = "customerId") Integer customerId, @Valid @RequestBody Reservation reservation) {
 
-	System.out.println("reservation add");
-	return customerRepository.findById(customerId).map(customer -> {
-        reservation.setCustomer(customer);
-        return reservationRepository.save(reservation);
-	}).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + customerId + " not found"));
+  
+  @PostMapping("/customer/{customerId}/hotel/{hotelID}")
+  public Reservation create(@PathVariable (value = "customerId") Integer customerId,
+		  					@PathVariable (value = "hotelID") Integer hotelID, 
+		  					@Valid @RequestBody Reservation reservation) {
 
-	//return hotelRepository.findById(hotelID).map(hotel -> {
-		//temp.setHotel(hotel);
-        //return reservationRepository.save(temp);
-	//}).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + hotelID + " not found"));
-  }
+		System.out.println("reservation add");
+		customerRepository.findById(customerId).map(customer -> {
+	        reservation.setCustomer(customer);
+	        return reservation;
+	        //return reservationRepository.save(reservation);
+		}).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + customerId + " not found"));
+	
+		return hotelRepository.findById(hotelID).map(hotel -> {
+			reservation.setHotel(hotel);
+	        return reservationRepository.save(reservation);
+		}).orElseThrow(() -> new ResourceNotFoundException("HotelId " + hotelID + " not found"));  
+	}
 
   @GetMapping(path="/all")
-  public @ResponseBody Iterable<Reservation> getAllCustomers() {
-    // This returns a JSON or XML with the users
-    return reservationRepository.findAll();
+  public @ResponseBody Iterable<Reservation> findAll() {
+	  	return reservationRepository.findAll();
   }
+  
+  @GetMapping(path="/{id}")
+  public Reservation findByID(@PathVariable (value = "id") int reservationID) {
+	  	Optional<Reservation> reservation = reservationRepository.findById(reservationID);
+		return reservation.isPresent() ? reservation.get() : null;
+  }
+  
   //TODO 
   //update
   //delete

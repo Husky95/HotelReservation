@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Hotel {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Hotel_ID")
 	private int hotelID;
     
