@@ -17,4 +17,8 @@ export class HotelApiService {
     findAll(): Observable<any> {
         return this.http.get(environment.apiURL + 'hotel/all')
     }
+
+    findById(id: number): Observable<any> {
+        return this.http.get(environment.apiURL + `hotel/${id}`)
+    }
 }

@@ -17,7 +17,8 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HotelsPageComponent } from './hotels-page/hotels-page.component'
+import { HotelsPageComponent } from './hotels-page/hotels-page.component';
+import { FindReservationComponent } from './find-reservation/find-reservation.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { HotelsPageComponent } from './hotels-page/hotels-page.component'
     HotelListComponent,
     ReservationFormComponent,
     NavbarComponent,
-    HotelsPageComponent
+    HotelsPageComponent,
+    FindReservationComponent
   ],
   imports: [
     BrowserModule,

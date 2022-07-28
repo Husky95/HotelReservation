@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class ReservationApiService {
         this.http = http
     }
 
-    findById(id: number) {
-        this.http.get(environment.apiURL + `reservation/${id}`)
+    findById(id: number): Observable<any> {
+        return this.http.get(environment.apiURL + `reservation/${id}`)
     }
 }
