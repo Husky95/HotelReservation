@@ -1,6 +1,7 @@
 package com.skillstorms.backend.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,14 +52,22 @@ public class HotelController {
   @GetMapping(path="/statecity")
   public @ResponseBody ArrayList<CityState> getStateAndCity() {
 	  Iterable<Hotel> hotel = hotelRepository.findAll();
+	    HashMap<String, String> cities = new HashMap<String, String>();
+
       int n = 10; 
 
 	  ArrayList<CityState> arr = new ArrayList<CityState>(n);	  
 	  hotel.forEach((element) -> { 
 		  CityState temp = new CityState();
-		  temp.setCity(element.getCity());
-		  temp.setState(element.getState());
-		  arr.add(temp);
+		  String city = element.getCity();
+		  String state = element.getState();
+		  String key = city+state;
+		  if ( cities.put(key, city) == null) {
+			  temp.setCity(city);
+			  temp.setState(state);
+			  arr.add(temp);
+		  }
+
 	  });
 	  return arr;
   }
