@@ -1,20 +1,31 @@
 package com.skillstorms.backend.model;
 
+
+import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
 @Entity(name="Hotel") // This tells Hibernate to make a table out of this class
 @Table(name="Hotel")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "hotelID")
 public class Hotel {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "hotelID")
     @Column(name = "Hotel_ID")
 	private int hotelID;
     
@@ -46,6 +57,10 @@ public class Hotel {
     @NotNull
     private long totalRoom;
 
+    //@OneToMany(mappedBy = "customer")
+    //@JsonManagedReference // This does get serialized, but it's back half doesn't
+	//private Set<Reservation> reservations;
+   
 	@Override
 	public String toString() {
 		return "Hotel [hotelID=" + hotelID + ", hotelName=" + hotelName + ", street=" + street + ", city=" + city
@@ -99,4 +114,20 @@ public class Hotel {
 	public void setTotalRoom(long totalRoom) {
 		this.totalRoom = totalRoom;
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(hotelID);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Hotel other = (Hotel) obj;
+		return hotelID == other.hotelID;
+	}
+	
 	}

@@ -68,8 +68,8 @@ public class Reservation {
     
     @ManyToOne
     @JoinColumn(name = "Hotel_ID", nullable = false)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //@JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIdentityReference(alwaysAsId = true)
     private Hotel hotel;
     
     

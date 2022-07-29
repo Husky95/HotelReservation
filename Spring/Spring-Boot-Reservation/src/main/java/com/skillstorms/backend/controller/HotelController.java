@@ -2,27 +2,28 @@ package com.skillstorms.backend.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorms.backend.model.CityState;
 import com.skillstorms.backend.model.Hotel;
+import com.skillstorms.backend.model.ResourceNotFoundException;
 import com.skillstorms.backend.repository.HotelRepository;
 
 @RestController // @RestController = @Controller + @ResponseBody
@@ -71,5 +72,29 @@ public class HotelController {
 	  });
 	  return arr;
   }
+  
+  @GetMapping(path="/name/{name}")
+  public @ResponseBody List<Hotel> findByName(@PathVariable String name) {
+  	return hotelRepository.findByHotelName(name);
+  }
+  
+  //update	
+  @PutMapping(path="")
+  public @ResponseBody Hotel update(@Valid @RequestBody Hotel hotel) {
+  	Optional<Hotel> hotelDatabaseVersion = hotelRepository.findById(hotel.getHotelID());
+  	if (hotelDatabaseVersion.isPresent()) {
+  		return hotelRepository.save(hotel);
+  	}
+  	else {
+  		throw new ResourceNotFoundException();
+  	}
+  }
+  //delete
+  @DeleteMapping(path="/{id}")
+  @ResponseStatus(code = HttpStatus.OK)
+  public void delete(@PathVariable int id) {
+  	hotelRepository.deleteById(id);
+  }
+  
 }
 

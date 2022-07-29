@@ -6,14 +6,17 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorms.backend.model.Customer;
 import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.repository.CustomerRepository;
 import com.skillstorms.backend.repository.HotelRepository;
@@ -64,8 +67,38 @@ public class ReservationController {
 	  	Optional<Reservation> reservation = reservationRepository.findById(reservationID);
 		return reservation.isPresent() ? reservation.get() : null;
   }
-  
+  //update
+  @PutMapping(path="")
+  public @ResponseBody Reservation update(@Valid @RequestBody Reservation reservation) {
+  	Optional<Reservation> reservationDatabaseVersion = reservationRepository.findById(reservation.getReservationNumber());
+  	if (reservationDatabaseVersion.isPresent()) {
+  		return reservationRepository.save(reservation);
+  	}
+  	else {
+  		throw new ResourceNotFoundException();
+  	}
+  }
+  	
+    @DeleteMapping(path="/{id}")
+    public void delete(@PathVariable (value = "id") int reservationID) {
+    	Optional<Reservation> reservationStagedForDelete = reservationRepository.findById(reservationID);
+    	if (reservationStagedForDelete.isPresent()) {
+    		Reservation r = reservationStagedForDelete.get();
+    		Customer c = r.getCustomer();
+    		c.getReservations().remove(r);
+    		customerRepository.save(c);
+    		//Hotel h = r.getHotel();
+    		//h.getReservations().remove(r);
+    		//hotelRepository.save(h);
+    		reservationRepository.deleteById(reservationID);
+    		
+    	}
+    	else {
+    		throw new ResourceNotFoundException();
+    	}
+
+    }
+  }
   //TODO 
   //update
   //delete
-}

@@ -3,7 +3,7 @@ use HotelReservationDB;
 SET FOREIGN_KEY_CHECKS=0;
 
 create table Hotel (Hotel_ID int unique not null auto_increment,
-						Hotel_Name varchar(20),
+						Hotel_Name varchar(40),
                         Street varchar(20),
                         City varchar(20),
 						State varchar(20),
@@ -28,9 +28,9 @@ create table Customer (Customer_ID int not null auto_increment,
 
 
 create table Reservation (Reservation_Number int not null auto_increment,
-						Reserve_Date varchar(20),
-                        Arrival_Date varchar(20),
-                        Depart_Date varchar(20),
+						Reserve_Date Date,
+                        Arrival_Date Date,
+                        Depart_Date Date,
                         Num_Adults long,
                         Num_Kids long,
 						Num_Beds int,
@@ -56,8 +56,7 @@ insert into Hotel values(3, 'UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98
 
 insert into Customer values(1, 'John', 'Doe','custer@gmail.com','828 South Galvin Drive', 'Dallas', 'TX', 75213, 2149471611);
 
-insert into Reservation values(1, '7/26/2022', '7/28/2022', '7/28/2022', 2, 0, 2, 'Queen', 24, 1, 1);
-
+insert into Reservation values(1, '2022-07-26', '2022-07-27', '2022-07-28', 2, 0, 2, 'Queen', 24, 1, 1);
 
 
 
