@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorms.backend.model.CityState;
+import com.skillstorms.backend.model.Customer;
 import com.skillstorms.backend.model.Hotel;
 import com.skillstorms.backend.model.ResourceNotFoundException;
 import com.skillstorms.backend.repository.HotelRepository;
@@ -68,7 +69,6 @@ public class HotelController {
 			  temp.setState(state);
 			  arr.add(temp);
 		  }
-
 	  });
 	  return arr;
   }
@@ -79,15 +79,19 @@ public class HotelController {
   }
   
   //update	
-  @PutMapping(path="")
-  public @ResponseBody Hotel update(@Valid @RequestBody Hotel hotel) {
-  	Optional<Hotel> hotelDatabaseVersion = hotelRepository.findById(hotel.getHotelID());
-  	if (hotelDatabaseVersion.isPresent()) {
-  		return hotelRepository.save(hotel);
-  	}
-  	else {
-  		throw new ResourceNotFoundException();
-  	}
+  @PutMapping(path="/{id}")
+  public @ResponseBody Optional<Object> update(@PathVariable (value = "id") int hotelID, @Valid @RequestBody Hotel newHotel) { 
+	  return hotelRepository.findById(hotelID)
+		      .map(hotel -> {
+		    	  hotel.setHotelName(newHotel.getHotelName());
+		    	  hotel.setCity(newHotel.getCity());
+		    	  hotel.setStreet(newHotel.getStreet());
+		    	  hotel.setState(newHotel.getState());
+		    	  hotel.setZipcode(newHotel.getZipcode());
+		    	  hotel.setPhone(newHotel.getPhone());
+		    	  hotel.setTotalRoom(newHotel.getTotalRoom());
+		          return hotelRepository.save(hotel);
+	 });
   }
   //delete
   @DeleteMapping(path="/{id}")

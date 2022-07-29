@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorms.backend.model.Customer;
+import com.skillstorms.backend.model.Hotel;
 import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.repository.CustomerRepository;
 import com.skillstorms.backend.repository.HotelRepository;
@@ -48,7 +49,6 @@ public class ReservationController {
 		customerRepository.findById(customerId).map(customer -> {
 	        reservation.setCustomer(customer);
 	        return reservation;
-	        //return reservationRepository.save(reservation);
 		}).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + customerId + " not found"));
 	
 		return hotelRepository.findById(hotelID).map(hotel -> {
@@ -68,15 +68,35 @@ public class ReservationController {
 		return reservation.isPresent() ? reservation.get() : null;
   }
   //update
-  @PutMapping(path="")
-  public @ResponseBody Reservation update(@Valid @RequestBody Reservation reservation) {
-  	Optional<Reservation> reservationDatabaseVersion = reservationRepository.findById(reservation.getReservationNumber());
-  	if (reservationDatabaseVersion.isPresent()) {
-  		return reservationRepository.save(reservation);
-  	}
-  	else {
-  		throw new ResourceNotFoundException();
-  	}
+  @PutMapping(path="/{reservationId}/customer/{customerId}/hotel/{hotelId}")
+  public @ResponseBody Optional<Object> update(@PathVariable (value = "reservationId") int reservationID, 
+		  									   @PathVariable (value = "customerId") int customerID, 
+		  									   @PathVariable (value = "hotelId") int hotelID, 
+		  									   @Valid @RequestBody Reservation newReservation)
+  {
+	  System.out.println("Put Reservation");
+	  return reservationRepository.findById(reservationID)
+		      .map(reservation -> {
+		    	  Optional<Customer> tempCustomer = customerRepository.findById(customerID);
+		    	  Optional<Hotel> tempHotel = hotelRepository.findById(hotelID);
+
+		    	  Customer currentCustomer  = tempCustomer.isPresent() ? tempCustomer.get() : null;
+		    	  Hotel currentHotel  = tempHotel.isPresent() ? tempHotel.get() : null;
+		    	  
+		    	  System.out.println(currentCustomer);
+		    	  reservation.setReserveDate(newReservation.getReserveDate());
+		    	  reservation.setArrivalDate(newReservation.getArrivalDate());
+		    	  reservation.setDepartDate(newReservation.getDepartDate());
+		    	  reservation.setNumAdults(newReservation.getNumAdults());
+		    	  reservation.setNumKids(newReservation.getNumKids());
+		    	  reservation.setNumBeds(newReservation.getNumBeds());
+		    	  reservation.setBedType(newReservation.getBedType());
+		    	  reservation.setRoomNumber(newReservation.getRoomNumber());
+		    	  reservation.setCustomer(currentCustomer);
+		    	  reservation.setHotel(currentHotel);
+
+		          return reservationRepository.save(reservation);
+	 });	
   }
   	
     @DeleteMapping(path="/{id}")
@@ -91,14 +111,9 @@ public class ReservationController {
     		//h.getReservations().remove(r);
     		//hotelRepository.save(h);
     		reservationRepository.deleteById(reservationID);
-    		
     	}
     	else {
     		throw new ResourceNotFoundException();
     	}
-
     }
   }
-  //TODO 
-  //update
-  //delete

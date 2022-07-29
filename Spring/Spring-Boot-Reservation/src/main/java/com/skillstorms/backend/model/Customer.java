@@ -61,7 +61,6 @@ public class Customer {
 	private Set<Reservation> reservations;
 
     
-    
 	
 	public Set<Reservation> getReservations() {
 		return reservations;

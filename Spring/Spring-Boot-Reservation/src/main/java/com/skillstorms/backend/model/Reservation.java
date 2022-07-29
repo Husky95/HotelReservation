@@ -1,5 +1,7 @@
 package com.skillstorms.backend.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,16 +27,15 @@ public class Reservation {
 	int reservationNumber;
 	
     @Column(name = "Reserve_Date")
-    @NotBlank
-    private String reserveDate;
+    private LocalDate reserveDate;
     
     @Column(name = "Arrival_Date")
-    @NotBlank
-    private String arrivalDate;
+    @NotNull
+    private LocalDate arrivalDate;
     
     @Column(name = "Depart_Date")
-    @NotBlank
-    private String departDate;
+    @NotNull
+    private LocalDate departDate;
     
     @Column(name = "Num_Adults")
     @NotNull
@@ -60,14 +61,14 @@ public class Reservation {
     
     //@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ManyToOne()
-    @JoinColumn(name = "Customer_ID", nullable = false)
+    @JoinColumn(name = "Customer_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIdentityReference(alwaysAsId = true)
     private Customer customer;
     
     
     @ManyToOne
-    @JoinColumn(name = "Hotel_ID", nullable = false)
+    @JoinColumn(name = "Hotel_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIdentityReference(alwaysAsId = true)
     private Hotel hotel;
@@ -80,7 +81,6 @@ public class Reservation {
 		this.hotel = hotel;
 	}
 	
-    
 	public long getNumBeds() {
 		return numBeds;
 	}
@@ -100,28 +100,30 @@ public class Reservation {
 	public void setReservationNumber(int reservationNumber) {
 		this.reservationNumber = reservationNumber;
 	}
-	public String getReserveDate() {
-		return reserveDate;
-	}
+	
 	@Override
 	public String toString() {
 		return "Reservation [reservationNumber=" + reservationNumber + ", reserveDate=" + reserveDate + ", arrivalDate="
 				+ arrivalDate + ", departDate=" + departDate + ", numAdults=" + numAdults + ", numKids=" + numKids
 				+ ", bedType=" + bedType + ", roomNumber=" + roomNumber +  "]";
 	}
-	public void setReserveDate(String reserveDate) {
+	public LocalDate getReserveDate() {
+		return reserveDate;
+	}
+	
+	public void setReserveDate( LocalDate reserveDate) {
 		this.reserveDate = reserveDate;
 	}
-	public String getArrivalDate() {
+	public LocalDate getArrivalDate() {
 		return arrivalDate;
 	}
-	public void setArrivalDate(String arrivalDate) {
+	public void setArrivalDate( LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
-	public String getDepartDate() {
+	public LocalDate getDepartDate() {
 		return departDate;
 	}
-	public void setDepartDate(String departDate) {
+	public void setDepartDate( LocalDate departDate) {
 		this.departDate = departDate;
 	}
 	public long getNumAdults() {

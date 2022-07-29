@@ -36,9 +36,9 @@ create table Reservation (Reservation_Number int not null auto_increment,
 						Num_Beds int,
                         Bed_Type varchar(20), 
                         Room_Number long, 
-                        Customer_ID int not null,
-                        Hotel_ID int not null,
-						foreign key (Customer_ID) references Customer(Customer_ID),
+                        Customer_ID int ,
+                        Hotel_ID int ,
+						foreign key (Customer_ID) references Customer(Customer_ID) ON DELETE CASCADE,
 						foreign key (Hotel_ID) references Hotel(Hotel_ID),
 
 						primary key(Reservation_Number)

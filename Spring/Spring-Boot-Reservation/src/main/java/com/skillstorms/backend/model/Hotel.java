@@ -2,20 +2,16 @@ package com.skillstorms.backend.model;
 
 
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity(name="Hotel") // This tells Hibernate to make a table out of this class
@@ -55,7 +51,7 @@ public class Hotel {
     
     @Column(name = "Total_Rooms")
     @NotNull
-    private long totalRoom;
+    private long totalRooms;
 
     //@OneToMany(mappedBy = "customer")
     //@JsonManagedReference // This does get serialized, but it's back half doesn't
@@ -64,7 +60,7 @@ public class Hotel {
 	@Override
 	public String toString() {
 		return "Hotel [hotelID=" + hotelID + ", hotelName=" + hotelName + ", street=" + street + ", city=" + city
-				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRoom=" + totalRoom + "]";
+				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRoom=" + totalRooms + "]";
 	}
 	public int getHotelID() {
 		return hotelID;
@@ -109,10 +105,10 @@ public class Hotel {
 		this.phone = phone;
 	}
 	public long getTotalRoom() {
-		return totalRoom;
+		return totalRooms;
 	}
 	public void setTotalRoom(long totalRoom) {
-		this.totalRoom = totalRoom;
+		this.totalRooms = totalRoom;
 	}
 	@Override
 	public int hashCode() {
