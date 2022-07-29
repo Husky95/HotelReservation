@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 @Table(name="Reservation")
 public class Reservation {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Reservation_Number")
 	int reservationNumber;
 	
