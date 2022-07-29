@@ -1,19 +1,30 @@
-<p>reservation-form works!</p>
 <div *ngIf="showBack" (click)="hideForm.emit()">
     <i class="pi pi-chevron-left"></i>
     <span>Back to hotels</span>
 </div>
-{{ hotelData.hotelInfo }}
+
+<div>
+    <!-- Insert random image -->
+    <div>{{ hotelData.hotelInfo.hotelName }}</div>
+    <div>{{ hotelData.hotelInfo.street }}</div>
+    <div>
+        {{ hotelData.hotelInfo.city }}
+        {{ hotelData.hotelInfo.state }}
+        {{ hotelData.hotelInfo.zipcode }}
+    </div>
+    <div>{{ hotelData.hotelInfo.phone }}</div>
+</div>
+
 <form (ngSubmit)="getData()">
     <h3>Personal Information</h3>
     <div>
         <label for="firstName">First Name</label>
-        <input name="firstName" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+        <input name="firstName" type="text" class="p-inputtext-sm" [(ngModel)]="customer.firstName" [pKeyFilter]="'alpha'" pInputText>
     </div>
 
     <div>
         <label for="lastName">Last Name</label>
-        <input name="lastName" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+        <input name="lastName" type="text" class="p-inputtext-sm" [(ngModel)]="customer.lastName" [pKeyFilter]="'alpha'" pInputText>
     </div>
     
     <h3>Contact Information</h3>
@@ -21,7 +32,7 @@
         <label for="email">Email</label>
         <span class="p-input-icon-left">
             <i class="pi pi-envelope"></i>
-            <input name="email" type="text" class="p-inputtext-sm" pKeyFilter="email" pInputText>
+            <input name="email" type="text" class="p-inputtext-sm" [(ngModel)]="customer.email" [pKeyFilter]="'email'" pInputText>
         </span>
     </div>
 
@@ -29,7 +40,7 @@
         <label for="phone">Phone</label>
         <span class="p-input-icon-left">
             <i class="pi pi-phone"></i>
-            <input name="phone" type="text" class="p-inputtext-sm" pKeyFilter="int" pInputText>
+            <input name="phone" type="text" class="p-inputtext-sm" [(ngModel)]="customer.phone" [pKeyFilter]="'int'" pInputText>
         </span>
     </div>
 
@@ -39,7 +50,7 @@
         <label for="street">Street</label>
         <span class="p-input-icon-left">
             <i class="pi pi-home"></i>
-            <input name="address" type="text" class="p-inputtext-sm" pInputText>
+            <input name="address" type="text" class="p-inputtext-sm" [(ngModel)]="customer.street" pInputText>
         </span>
     </div>
 
@@ -48,21 +59,21 @@
             <label for="citys">City</label>
             <span class="p-input-icon-left">
                 <i class="pi pi-building"></i>
-                <input name="city" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+                <input name="city" type="text" class="p-inputtext-sm" [(ngModel)]="customer.city" [pKeyFilter]="'alpha'" pInputText>
             </span>
         </div>
         <div>
             <label for="state">State</label>
             <span class="p-input-icon-left">
                 <i class="pi pi-map"></i>
-                <input name="state" type="text" class="p-inputtext-sm" pKeyFilter="alpha" pInputText>
+                <input name="state" type="text" class="p-inputtext-sm" [(ngModel)]="customer.state" [pKeyFilter]="'alpha'" pInputText>
             </span>
         </div>
         <div>
             <label for="zipcode">Zipcode</label>
             <span class="p-input-icon-left">
                 <i class="pi pi-map-marker"></i>
-                <input name="zipcode" type="text" class="p-inputtext-sm" pKeyFilter="int" pInputText>
+                <input name="zipcode" type="text" class="p-inputtext-sm" [(ngModel)]="customer.zipcode" [pKeyFilter]="'int'" pInputText>
             </span>
         </div>
     </div>

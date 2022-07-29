@@ -6,4 +6,9 @@
     <p-button (onClick)="getReservation(id)">Sumbit</p-button>
 </form>
 
+<!-- <div *ngIf="hotel != null">
+    {{ hotel.hotelName }}
+
+</div> -->
+
 <app-reservation-form *ngIf="reservation != null" [showBack]="false" [reservation]= "reservation"></app-reservation-form>

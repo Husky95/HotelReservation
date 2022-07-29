@@ -9,7 +9,7 @@
     </div> -->
     <div>
         <label for="location">Location</label>
-        <p-dropdown [options]="cities" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
+        <p-dropdown [options]="locations" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
             <ng-template pTemplate="selectedItem">
                 <div *ngIf="selected">
                     <div>{{ selected.city }}, {{ selected.state }}</div>

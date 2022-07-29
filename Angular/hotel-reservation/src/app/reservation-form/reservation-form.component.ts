@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CustomerApiService } from '../customer-api.service';
 import { HotelDataService } from '../services/hotel-data.service';
 
 @Component({
@@ -26,12 +27,17 @@ export class ReservationFormComponent implements OnInit {
         bedType: "Full",
     }
 
-    constructor(hotelData: HotelDataService) { 
+    customer: any = {}
+
+    constructor(hotelData: HotelDataService, private customerService: CustomerApiService) { 
         this.hotelData = hotelData
     }
 
     ngOnInit(): void {
-
+        if (this.reservation.customer != null) {
+            // Found customer id, display data
+            this.customerService.findById(this.reservation.customer).subscribe(resp => this.customer = resp)
+        }
     }
 
     getData() {
