@@ -18,7 +18,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotelsPageComponent } from './hotels-page/hotels-page.component';
-import { FindReservationComponent } from './find-reservation/find-reservation.component'
+import { FindReservationComponent } from './find-reservation/find-reservation.component';
+import { PhoneFormatPipe } from './phone-format.pipe'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FindReservationComponent } from './find-reservation/find-reservation.co
     ReservationFormComponent,
     NavbarComponent,
     HotelsPageComponent,
-    FindReservationComponent
+    FindReservationComponent,
+    PhoneFormatPipe
   ],
   imports: [
     BrowserModule,

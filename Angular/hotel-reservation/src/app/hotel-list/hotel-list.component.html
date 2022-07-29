@@ -13,6 +13,6 @@ Make a reservation for {{ date[0] | date: 'shortDate' }} - {{ date[1] | date: 's
         {{ elem.state }}
         {{ elem.zipcode }}
     </div>
-    <div>{{ elem.phone }}</div>
+    <div>{{ elem.phone | phoneFormat }}</div>
     <p-button (onClick)="selectHotel(elem)">Book</p-button>
 </div>
