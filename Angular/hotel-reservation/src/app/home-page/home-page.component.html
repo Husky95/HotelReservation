@@ -1,0 +1,12 @@
+<nav>
+    <a href="#form"><p-button (click)="toggleForm(false)">Make a reservation</p-button></a>
+    <a href="#form"><p-button (click)="toggleForm(true)">Have a reservation?</p-button></a>
+</nav>
+
+<main id="form">
+    <app-find-reservation *ngIf="showReservationFrom; else make"></app-find-reservation>
+<ng-template #make>
+    <app-date-form></app-date-form>
+</ng-template>
+</main>
+

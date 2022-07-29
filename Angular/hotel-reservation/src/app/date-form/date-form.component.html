@@ -1,0 +1,34 @@
+<p>date-form works!</p>
+<div>
+    <!-- <div>
+        <label for="location">Location</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-map-marker"></i>
+            <input name="location" type="text" class="p-inputtext-sm" placeholder="Going to" pInputText>
+        </span>
+    </div> -->
+    <div>
+        <label for="location">Location</label>
+        <p-dropdown [options]="locations" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
+            <ng-template pTemplate="selectedItem">
+                <div *ngIf="selected">
+                    <div>{{ selected.city }}, {{ selected.state }}</div>
+                </div>
+            </ng-template>
+            <ng-template let-location pTemplate="item">
+                <div class="location-item">
+                    <div>{{ location.city }}, {{ location.state }}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <div>
+        <label for="date">Check In - Check Out</label>
+        <p-calendar name="date" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true"></p-calendar>
+    </div>
+    <p-button (click)="showHotels()">Search</p-button>
+</div>
+
+
+<app-hotel-list [hidden]="hideHotelList" [date]="date" (hideHotels)="toggleDisplay()"></app-hotel-list>
+<app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()"></app-reservation-form>
