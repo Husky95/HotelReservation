@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class HotelApiService {
+export class CustomerApiService {
 
     http: HttpClient
 
@@ -14,15 +14,7 @@ export class HotelApiService {
         this.http = http
     }
 
-    findAll(): Observable<any> {
-        return this.http.get(environment.apiURL + 'hotel/all')
-    }
-
     findById(id: number): Observable<any> {
-        return this.http.get(environment.apiURL + `hotel/${id}`)
-    }
-
-    getLocations(): Observable<any> {
-        return this.http.get(environment.apiURL + 'hotel/statecity')
+        return this.http.get(environment.apiURL + `customer/${id}`)
     }
 }

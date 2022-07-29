@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelApiService } from '../services/hotel-api.service';
+import { HotelDataService } from '../services/hotel-data.service';
 import { ReservationApiService } from '../services/reservation-api.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class FindReservationComponent implements OnInit {
     id: number = 0
     hotel: any = null
 
-    constructor(private reservationService: ReservationApiService, private hotelService: HotelApiService ) { }
+    constructor(private reservationService: ReservationApiService, private hotelService: HotelApiService, private hotelData: HotelDataService ) { }
 
     ngOnInit(): void {
     }
@@ -22,7 +23,7 @@ export class FindReservationComponent implements OnInit {
     getReservation(id: number) {
         this.reservationService.findById(id).subscribe(resp => {
             this.reservation = resp
-            this.hotelService.findById(this.reservation.hotel.hotelID).subscribe(resp => this.hotel = resp)
+            this.hotelService.findById(this.reservation.hotel.hotelID).subscribe(resp => this.hotelData.hotelInfo = resp)
         })
     }
 

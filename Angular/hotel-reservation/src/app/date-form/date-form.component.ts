@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HotelApiService } from '../services/hotel-api.service';
 
 @Component({
     selector: 'app-date-form',
@@ -13,12 +14,13 @@ export class DateFormComponent implements OnInit {
     date: Array<Date> = []
     showForm: boolean = false
 
-    cities = [{city: "Philly", state: "PA"}, {city: "NYC", state: "NY"}, {city: "Seattle", state: "WA"},]
+    locations: Array<any> = []
     selected = {city: null, state: null}
 
-    constructor() { }
+    constructor(private service: HotelApiService) { }
 
     ngOnInit(): void {
+        this.service.getLocations().subscribe(resp => this.locations = resp)
     }
 
     showHotels() {
