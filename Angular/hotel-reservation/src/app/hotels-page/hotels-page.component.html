@@ -1,10 +1,15 @@
-<div *ngFor="let elem of hotels">
-    <div>{{ elem.hotelName }}</div>
-    <div>{{ elem.street}}</div>
-    <div>
-        {{ elem.city }},
-        {{ elem.state }}
-        {{ elem.zipcode }}
+<div class="hotel-container">
+    <div *ngFor="let elem of hotels">
+        <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3">
+        <div>
+            <header>{{ elem.hotelName }}</header>
+            <div>{{ elem.street}}</div>
+            <div>
+                {{ elem.city }},
+                {{ elem.state }}
+                {{ elem.zipcode }}
+            </div>
+            <div>{{ elem.phone | phoneFormat }}</div>
+        </div>
     </div>
-    <div>{{ elem.phone | phoneFormat }}</div>
 </div>

@@ -1,0 +1,35 @@
+.hotel-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: auto;
+    gap: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.hotel-container > div {
+    display: flex;
+    min-width: 400px;
+    border-radius: 5px;
+    align-items: center;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 5px 5px 5px lightgray;
+    justify-content: space-between;
+}
+
+.hotel-container > div > div {
+    margin: auto
+}
+
+img {
+    width: 200px;
+    height: auto;
+    
+}
+
+header {
+    font-size: 24px;
+    margin-bottom: 20px;
+}

@@ -2,12 +2,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CustomerApiService } from '../customer-api.service';
 import { HotelDataService } from '../services/hotel-data.service';
 import { ReservationApiService } from '../services/reservation-api.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 
 @Component({
     selector: 'app-reservation-form',
     templateUrl: './reservation-form.component.html',
-    styleUrls: ['./reservation-form.component.css']
+    styleUrls: ['./reservation-form.component.css'],
+    providers: [ConfirmationService,MessageService]
 })
+
 export class ReservationFormComponent implements OnInit {
 
     @Input() showBack: boolean = true
@@ -30,9 +34,8 @@ export class ReservationFormComponent implements OnInit {
 
     @Input() dates: Array<Date> = []
 
-    modalData: any = {show: false}
-
-    constructor(hotelData: HotelDataService, private customerService: CustomerApiService, private reservationService: ReservationApiService) { 
+    constructor(hotelData: HotelDataService, private customerService: CustomerApiService, private reservationService: ReservationApiService, 
+        private confirmationService: ConfirmationService, private messageService: MessageService) { 
         this.hotelData = hotelData
     }
 
@@ -47,8 +50,38 @@ export class ReservationFormComponent implements OnInit {
         }
     }
 
-    closeModal() {
-        this.modalData = {show: false}
+    cancelReservation() {
+        this.confirmationService.confirm({
+            header: 'Cancel Reservation',
+            message: 'Are you sure that you want to cancel your reservation',
+            accept: () => {
+                //Actual logic to perform a confirmation
+                this.reservationService.delete(this.reservation.reservationNumber).subscribe(resp => {
+                    this.customerService.delete(this.reservation.customer).subscribe() 
+                    window.location.reload()  
+                })
+                this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
+            }
+        });
+    }
+
+    updateReservation(data: any) {
+        this.confirmationService.confirm({
+            header: 'Update Reservation Information',
+            message: 'Is the information correct?',
+            accept: () => {
+                //Actual logic to perform a confirmation
+                this.customerService.update(this.customer.customerID, this.customer).subscribe(resp => {
+                    this.reservationService.update(resp.reservations[0].reservationNumber, resp.customerID, 
+                        this.hotelData.hotelInfo.hotelID, this.dates, data).subscribe(resp => console.log(resp))
+                })
+                this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
+            }
+        });
+    }
+
+    returnHome() {
+        window.location.reload()
     }
 
     getData() {
@@ -62,18 +95,18 @@ export class ReservationFormComponent implements OnInit {
 
         if (this.reservation.customer != null) {
             // Update data
-            this.modalData = {
-                show: true, 
-                type: 'update', 
-                data: {
-                    customer: this.customer,
-                    hotelId: this.hotelData.hotelInfo.hotelID,
-                    dates: this.dates, 
-                    reservation: data
-                }
-            }
+            // this.modalData = {
+            //     show: true, 
+            //     type: 'update', 
+            //     data: {
+            //         customer: this.customer,
+            //         hotelId: this.hotelData.hotelInfo.hotelID,
+            //         dates: this.dates, 
+            //         reservation: data
+            //     }
+            // }
             console.log("we updating in here")
-            
+            this.updateReservation(data)
         }
         else {
             // Create new reservation
@@ -84,14 +117,14 @@ export class ReservationFormComponent implements OnInit {
         
     }
 
-    cancelReservation() {
-        this.modalData = {
-            show: true,
-            type: 'cancel',
-            data: {
-                reservationId: this.reservation.reservationNumber,
-                customerId: this.reservation.customer
-            }
-        }
-    }
+    // cancelReservation() {
+    //     this.modalData = {
+    //         show: true,
+    //         type: 'cancel',
+    //         data: {
+    //             reservationId: this.reservation.reservationNumber,
+    //             customerId: this.reservation.customer
+    //         }
+    //     }
+    // }
 }

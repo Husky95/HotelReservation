@@ -1,5 +1,4 @@
-<p>date-form works!</p>
-<div>
+<div class="form-container">
     <!-- <div>
         <label for="location">Location</label>
         <span class="p-input-icon-left">
@@ -22,11 +21,13 @@
             </ng-template>
         </p-dropdown>
     </div>
-    <div>
+    <div class="date">
         <label for="date">Check In - Check Out</label>
-        <p-calendar name="date" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true"></p-calendar>
+        <p-calendar name="date" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
     </div>
-    <p-button (click)="showHotels()">Search</p-button>
+
+    <p-button (click)="showHotels()" label="Search" icon="pi pi-search"></p-button>
+
 </div>
 
 

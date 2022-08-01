@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotelsPageComponent } from './hotels-page/hotels-page.component';
 import { FindReservationComponent } from './find-reservation/find-reservation.component';
 import { PhoneFormatPipe } from './phone-format.pipe';
-import { ModalComponent } from './modal/modal.component'
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,6 @@ import { ModalComponent } from './modal/modal.component'
     HotelsPageComponent,
     FindReservationComponent,
     PhoneFormatPipe,
-    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +44,8 @@ import { ModalComponent } from './modal/modal.component'
     DropdownModule,
     CalendarModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ConfirmDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

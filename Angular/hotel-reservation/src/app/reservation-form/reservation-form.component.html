@@ -1,110 +1,113 @@
-<div *ngIf="showBack" (click)="hideForm.emit()">
-    <i class="pi pi-chevron-left"></i>
-    <span>Back to hotels</span>
+
+
+<div class="reservation-container">
+    <div *ngIf="showBack" (click)="hideForm.emit()" class="back-button">
+        <i class="pi pi-chevron-left"></i>
+        <span>Back to hotels</span>
+    </div>
+
+    <div class="hotel-info">
+        <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3">
+        <div>
+            <div>
+                <header>{{ hotelData.hotelInfo.hotelName }}</header>
+                <div>{{ hotelData.hotelInfo.street }}</div>
+                <div>
+                    {{ hotelData.hotelInfo.city }}
+                    {{ hotelData.hotelInfo.state }}
+                    {{ hotelData.hotelInfo.zipcode }}
+                </div>
+                <div>{{ hotelData.hotelInfo.phone | phoneFormat }}</div>
+            </div>
+            <div *ngIf="showBack">
+                {{ hotelData.hotelInfo.hotelName }} offers you a privileged experience combining comfort and conviviality. 
+                Whether you are a backpacker, a solo traveler or with your family, our hotel with top-of-the-range service will meet all your expectations. 
+                More than just a hotel, {{ hotelData.hotelInfo.hotelName }} offers you a place to live and meet people.
+            </div>
+        </div>
+    </div>
+
+    <form>
+        <h3>Personal Information</h3>
+        <div class="personal-info">
+            <input name="firstName" type="text" class="p-inputtext-sm" placeholder="First Name" [(ngModel)]="customer.firstName" [pKeyFilter]="'alpha'" pInputText>
+            <input name="lastName" type="text" class="p-inputtext-sm" placeholder="Last Name" [(ngModel)]="customer.lastName" [pKeyFilter]="'alpha'" pInputText>
+        </div>
+
+        <h3>Contact Information</h3>
+        <div class="contact-info">
+            <span class="p-input-icon-left">
+                <i class="pi pi-envelope"></i>
+                <input name="email" type="text" class="p-inputtext-sm" placeholder="Email" [(ngModel)]="customer.email" [pKeyFilter]="'email'" pInputText>
+            </span>
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-phone"></i>
+                <input name="phone" type="text" class="p-inputtext-sm" placeholder="Phone Number" [(ngModel)]="customer.phone" [pKeyFilter]="'int'" pInputText>
+            </span>
+        </div>
+
+        <h3>Address</h3>
+        <div class="address-info">
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-home"></i>
+                <input name="address" type="text" class="p-inputtext-sm" placeholder="Street" [(ngModel)]="customer.street" pInputText>
+            </span>
+
+            <div class="city-container">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-building"></i>
+                    <input name="city" type="text" class="p-inputtext-sm" placeholder="City" [(ngModel)]="customer.city" [pKeyFilter]="'alpha'" pInputText>
+                </span>
+
+                <span class="p-input-icon-left">
+                    <i class="pi pi-map"></i>
+                    <input name="state" type="text" class="p-inputtext-sm" placeholder="State" [(ngModel)]="customer.state" [pKeyFilter]="'alpha'" pInputText>
+                </span>
+
+
+                <span class="p-input-icon-left">
+                    <i class="pi pi-map-marker"></i>
+                    <input name="zipcode" type="text" class="p-inputtext-sm" placeholder="Zipcode" [(ngModel)]="customer.zipcode" [pKeyFilter]="'int'" pInputText>
+                </span>
+            </div>
+        </div>
+
+        <h3>Room Information</h3>
+        <div class="room-info">
+            <div>
+                <label for="numOfAdults">Adults</label>
+                <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="reservation.numAdults"></p-dropdown>
+            </div>
+
+            <div>
+                <label for="numOfChildren">Children</label>
+                <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="reservation.numKids"></p-dropdown>
+            </div>
+
+            <div>
+                <label for="bedSize">Bed Size</label>
+                <p-dropdown name="bedSize" [options]="beds" [(ngModel)]="reservation.bedType"></p-dropdown>
+            </div>
+
+            <div>
+                <label for="bedAmount">Beds</label>
+                <p-dropdown name="bedAmount" [options]="[1, 2]" [(ngModel)]="reservation.numBeds"></p-dropdown>
+            </div>
+        </div>
+
+        <nav>
+        <p-button (click)="getData()" *ngIf="showBack; else edit">Submit</p-button>
+        <ng-template #edit>
+            <div class="edit-buttons">
+                <button (click)="cancelReservation()" pButton pRipple type="button" label="Cancel Reservation" icon="pi pi-trash" class="p-button-danger"></button>
+                <button (click)="getData()" pButton pRipple type="button" label="Update Information" icon="pi pi-pencil" class="p-button-warning"></button>
+                <button (click)="returnHome()" pButton pRipple type="button" label="Done" icon="pi pi-check"></button>
+            </div>
+        </ng-template>
+    </nav>
+    </form>
 </div>
 
-<div>
-    <!-- Insert random image -->
-    <div>{{ hotelData.hotelInfo.hotelName }}</div>
-    <div>{{ hotelData.hotelInfo.street }}</div>
-    <div>
-        {{ hotelData.hotelInfo.city }}
-        {{ hotelData.hotelInfo.state }}
-        {{ hotelData.hotelInfo.zipcode }}
-    </div>
-    <div>{{ hotelData.hotelInfo.phone | phoneFormat }}</div>
-</div>
-
-<form>
-    <h3>Personal Information</h3>
-    <div>
-        <label for="firstName">First Name</label>
-        <input name="firstName" type="text" class="p-inputtext-sm" [(ngModel)]="customer.firstName" [pKeyFilter]="'alpha'" pInputText>
-    </div>
-
-    <div>
-        <label for="lastName">Last Name</label>
-        <input name="lastName" type="text" class="p-inputtext-sm" [(ngModel)]="customer.lastName" [pKeyFilter]="'alpha'" pInputText>
-    </div>
-    
-    <h3>Contact Information</h3>
-    <div>
-        <label for="email">Email</label>
-        <span class="p-input-icon-left">
-            <i class="pi pi-envelope"></i>
-            <input name="email" type="text" class="p-inputtext-sm" [(ngModel)]="customer.email" [pKeyFilter]="'email'" pInputText>
-        </span>
-    </div>
-
-    <div>
-        <label for="phone">Phone</label>
-        <span class="p-input-icon-left">
-            <i class="pi pi-phone"></i>
-            <input name="phone" type="text" class="p-inputtext-sm" [(ngModel)]="customer.phone" [pKeyFilter]="'int'" pInputText>
-        </span>
-    </div>
-
-    <h3>Address</h3>
-
-    <div>
-        <label for="street">Street</label>
-        <span class="p-input-icon-left">
-            <i class="pi pi-home"></i>
-            <input name="address" type="text" class="p-inputtext-sm" [(ngModel)]="customer.street" pInputText>
-        </span>
-    </div>
-
-    <div class="address-container">
-        <div>
-            <label for="citys">City</label>
-            <span class="p-input-icon-left">
-                <i class="pi pi-building"></i>
-                <input name="city" type="text" class="p-inputtext-sm" [(ngModel)]="customer.city" [pKeyFilter]="'alpha'" pInputText>
-            </span>
-        </div>
-        <div>
-            <label for="state">State</label>
-            <span class="p-input-icon-left">
-                <i class="pi pi-map"></i>
-                <input name="state" type="text" class="p-inputtext-sm" [(ngModel)]="customer.state" [pKeyFilter]="'alpha'" pInputText>
-            </span>
-        </div>
-        <div>
-            <label for="zipcode">Zipcode</label>
-            <span class="p-input-icon-left">
-                <i class="pi pi-map-marker"></i>
-                <input name="zipcode" type="text" class="p-inputtext-sm" [(ngModel)]="customer.zipcode" [pKeyFilter]="'int'" pInputText>
-            </span>
-        </div>
-    </div>
-
-    <h3>Room Information</h3>
-    <div>
-        <label for="numOfAdults"># of Adults</label>
-        <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="reservation.numAdults"></p-dropdown>
-    </div>
-
-    <div>
-        <label for="numOfChildren"># of Children</label>
-        <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="reservation.numKids"></p-dropdown>
-    </div>
-
-    <div>
-        <label for="bedSize">Bed Size</label>
-        <p-dropdown name="bedSize" [options]="beds" [(ngModel)]="reservation.bedType"></p-dropdown>
-    </div>
-
-    <div>
-        <label for="bedAmount">Number of beds</label>
-        <p-dropdown name="bedAmount" [options]="[1, 2]" [(ngModel)]="reservation.numBeds"></p-dropdown>
-    </div>
-
-    <p-button (click)="getData()" *ngIf="showBack; else edit">Submit</p-button>
-    <ng-template #edit>
-        <p-button (onClick)="cancelReservation()">Cancel Reservation</p-button>
-        <p-button (onClick)="getData()">Update Information</p-button>
-        <p-button>Done</p-button>
-    </ng-template>
-</form>
-
-<app-modal [modalData]="modalData" (closeModal)="closeModal()"></app-modal>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
