@@ -1,6 +1,11 @@
 package com.skillstorms.backend.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -17,11 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorms.backend.model.Customer;
+import com.skillstorms.backend.model.DateChecker;
 import com.skillstorms.backend.model.Hotel;
 import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.repository.CustomerRepository;
 import com.skillstorms.backend.repository.HotelRepository;
 import com.skillstorms.backend.repository.ReservationRepository;
+
+
 import com.skillstorms.backend.model.ResourceNotFoundException;
 
 
@@ -60,6 +68,76 @@ public class ReservationController {
   @GetMapping(path="/all")
   public @ResponseBody Iterable<Reservation> findAll() {
 	  	return reservationRepository.findAll();
+  }
+  @GetMapping(path="/vacancy/{date}")
+  public @ResponseBody ArrayList<Hotel> findByVacancy() {
+	  Iterable<Reservation> ReservationList = reservationRepository.findAll();
+	  ArrayList<Integer> hotelList = new ArrayList<Integer>();
+	  
+	  //This go through the reservation list and check if there matching date in arrivalDate or departDate
+	  //if there is add the hotelID to a hotel List 
+	  //if not return a list of all hotel 
+	  ReservationList.forEach(
+          (element) -> { 
+        	  LocalDate arrivalDate = LocalDate.of(2022, 7, 27);
+        	  DateChecker checker = new DateChecker(arrivalDate);
+        	  //int compareValue = arrivalDate.compareTo(element.getArrivalDate());
+
+        	  if (checker.checkConflictArrival(element.getArrivalDate(), element.getDepartDate())) {
+        		  Hotel hotel = element.getHotel();
+        		  hotelList.add(hotel.getHotelID());
+        		  
+        	  	} 
+        	  else {
+        		  //System.out.println("input date is available");
+        	      //ArrayList<Hotel> allHotel = new ArrayList<Hotel>(hotelRepository.findAll());
+        	  }
+           }
+      );
+	  
+	  //Check if hotelList for matching date > 0 
+	  //if not return all list 
+	  //if it is go do the logic
+	  if( hotelList.size()> 0 )
+	  {
+		  Set<Integer> hotelSet = new HashSet<>(hotelList);
+		  ArrayList<Integer> occurencesList = new ArrayList<Integer>(hotelSet.size());
+		  ArrayList<Hotel> vacantHotel = new ArrayList<Hotel>();
+		  ArrayList<Hotel> allHotel = new ArrayList<Hotel>(hotelRepository.findAll());
+
+		  //this go through hotelSet with matching date and check the number of hotelID occurences
+		  //if the total occurences is less than the hotel max capacity display the hotel 
+		  //if it not then remove the hotel from the hotelSet 
+		  for (int i = 0 ; i < hotelSet.size(); i++  )
+		  {
+			  Integer hotelID = hotelSet.iterator().next();
+			  occurencesList.add(Collections.frequency(hotelList,hotelID)); 
+			  //if occurence is less than capacity < remove it from the list 
+			  //if not add it to the list 
+			  if( occurencesList.get(i) > 0 )
+			  {
+				  Optional <Hotel> hotel = hotelRepository.findById(hotelID);
+				  Hotel noVacant = hotel.isPresent() ? hotel.get() : null;
+				  allHotel.remove(noVacant);
+				  hotelSet.remove(hotelID);
+			  }
+			  else
+			  {
+				  continue;
+				  //Optional <Hotel> hotel = hotelRepository.findById(hotelID);
+				  //Hotel vacant = hotel.isPresent() ? hotel.get() : null;
+				  //vacantHotel.add(vacant);
+			  }
+	
+		  }
+		  System.out.println(allHotel);
+		  return allHotel;
+	  }
+	  else
+	  {
+		  ArrayList<Hotel> allHotel = new ArrayList<Hotel>(hotelRepository.findAll());
+		  return allHotel;
+	  }
   }
   
   @GetMapping(path="/{id}")
