@@ -33,6 +33,11 @@ public interface ReservationRepository  extends JpaRepository<Reservation, Integ
 			+ "WHERE r.hotel.hotelID IN :hotelIDs "
 			+ "AND (:arrivalDate BETWEEN r.arrivalDate AND r.departDate "
 			+ "OR r.arrivalDate BETWEEN :arrivalDate AND :departDate) GROUP BY r.hotel")
-	List<ReservationCount> countReservationsByHotelForDateRange(@Param("arrivalDate") LocalDate arrivalDate, @Param("departDate") LocalDate departDate, @Param("hotelIDs") List<Integer> hotelIDs);	
+	List<ReservationCount> countReservationsByHotelForDateRange(@Param("arrivalDate") LocalDate arrivalDate, @Param("departDate") LocalDate departDate, @Param("hotelIDs") List<Integer> hotelIDs);
+	
+	@Query("SELECT r FROM Reservation r WHERE r.hotel.hotelID = :hotelID"
+			+ " AND (:arrivalDate BETWEEN r.arrivalDate AND r.departDate "
+			+ " OR r.arrivalDate BETWEEN :arrivalDate AND :departDate)")
+	List<Reservation> findByHotelIDAndDateRange(@Param("hotelID") int hotelID, @Param("arrivalDate") LocalDate arrivalDate, @Param("departDate") LocalDate departDate);
 	
 }

@@ -40,7 +40,6 @@ create table Reservation (Reservation_Number int not null auto_increment,
                         Hotel_ID int ,
 						foreign key (Customer_ID) references Customer(Customer_ID) ON DELETE CASCADE,
 						foreign key (Hotel_ID) references Hotel(Hotel_ID),
-
 						primary key(Reservation_Number)
 
 );

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skillstorms.backend.model.Hotel;
+import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.model.ReservationCount;
 import com.skillstorms.backend.repository.HotelRepository;
 
@@ -42,18 +43,19 @@ public class HotelService {
 	}
 	
 	public List<Hotel> findByCityStateAndAvailability(String city, String state, LocalDate arrivalDate, LocalDate departDate) {
-		List<Hotel> areaHotels = findByCityAndState(city, state);
-		List<Integer> areaHotelIDs = getHotelIDs(areaHotels);
-		Map<Integer, Hotel> areaHotelMap = mapHotels(areaHotels);
-		List<ReservationCount> areaHotelReservationCounts = reservationService.getReservationCountByHotel(arrivalDate, departDate, areaHotelIDs);
-		List<Hotel> availableAreaHotels = new LinkedList<>();
-		for (ReservationCount reservationCount : areaHotelReservationCounts) {
-			Hotel hotel = areaHotelMap.get(reservationCount.getHotel().getHotelID());
-			if (hotel.getTotalRoom() > reservationCount.getCount()) {
-				availableAreaHotels.add(hotel);
+		List<Hotel> areaHotels = hotelRepository.findByCityAndState(city, state);
+		List<Hotel> availableHotels = new LinkedList<>();
+		for (Hotel areaHotel : areaHotels) {
+			List<Reservation> reservations = reservationService.findByHotelIDAndDateRagne(areaHotel.getHotelID(), arrivalDate, departDate);
+			if (isHotelAvailable(areaHotel, reservations)) {
+				availableHotels.add(areaHotel);
 			}
 		}
-		return availableAreaHotels;
+		return availableHotels;
+	}
+	
+	private boolean isHotelAvailable(Hotel hotel, List<Reservation> reservations) {
+		return hotel.getTotalRoom() > reservationService.getMaxReservationOverlap(reservations);
 	}
 
 }
