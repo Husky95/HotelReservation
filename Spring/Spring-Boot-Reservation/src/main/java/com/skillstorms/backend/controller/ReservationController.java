@@ -69,8 +69,8 @@ public class ReservationController {
   public @ResponseBody Iterable<Reservation> findAll() {
 	  	return reservationRepository.findAll();
   }
-  @GetMapping(path="/vacancy/{date}")
-  public @ResponseBody ArrayList<Hotel> findByVacancy(@PathVariable (value = "date") String date) {
+  @GetMapping(path="/vacancy/{arrivalDate}/{departDate}")
+  public @ResponseBody ArrayList<Hotel> findByVacancy(@PathVariable (value = "arrivalDate") String startDate, @PathVariable (value = "departDate") String endDate) {
 	  Iterable<Reservation> ReservationList = reservationRepository.findAll();
 	  ArrayList<Integer> hotelList = new ArrayList<Integer>();
 	  
@@ -79,11 +79,13 @@ public class ReservationController {
 	  //if not return a list of all hotel 
 	  ReservationList.forEach(
           (element) -> { 
-        	  LocalDate arrivalDate = LocalDate.parse(date);
-        	  DateChecker checker = new DateChecker(arrivalDate);
+        	  LocalDate arrivalDate = LocalDate.parse(startDate);
+        	  LocalDate departDate = LocalDate.parse(endDate);
+        	  
+        	  DateChecker checker = new DateChecker(arrivalDate,departDate);
         	  //int compareValue = arrivalDate.compareTo(element.getArrivalDate());
 
-        	  if (checker.checkConflictArrival(element.getArrivalDate(), element.getDepartDate())) {
+        	  if (checker. checkConflictRange(element.getArrivalDate(), element.getDepartDate())) {
         		  Hotel hotel = element.getHotel();
         		  hotelList.add(hotel.getHotelID());
         		  
