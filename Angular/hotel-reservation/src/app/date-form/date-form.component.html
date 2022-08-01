@@ -31,4 +31,4 @@
 
 
 <app-hotel-list [hidden]="hideHotelList" [date]="date" (hideHotels)="toggleDisplay()"></app-hotel-list>
-<app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()"></app-reservation-form>
+<app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()" [dates]="date"></app-reservation-form>

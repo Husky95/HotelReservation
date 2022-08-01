@@ -12,10 +12,10 @@
         {{ hotelData.hotelInfo.state }}
         {{ hotelData.hotelInfo.zipcode }}
     </div>
-    <div>{{ hotelData.hotelInfo.phone }}</div>
+    <div>{{ hotelData.hotelInfo.phone | phoneFormat }}</div>
 </div>
 
-<form (ngSubmit)="getData()">
+<form>
     <h3>Personal Information</h3>
     <div>
         <label for="firstName">First Name</label>
@@ -99,8 +99,12 @@
         <p-dropdown name="bedAmount" [options]="[1, 2]" [(ngModel)]="reservation.numBeds"></p-dropdown>
     </div>
 
-    <input type="submit" pButton>
-    <p-button (click)="getData()">Test</p-button>
-    {{ numOfAdults }}
-
+    <p-button (click)="getData()" *ngIf="showBack; else edit">Submit</p-button>
+    <ng-template #edit>
+        <p-button (onClick)="cancelReservation()">Cancel Reservation</p-button>
+        <p-button (onClick)="getData()">Update Information</p-button>
+        <p-button>Done</p-button>
+    </ng-template>
 </form>
+
+<app-modal [modalData]="modalData" (closeModal)="closeModal()"></app-modal>

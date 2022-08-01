@@ -8,4 +8,5 @@ export class HotelDataService {
     hotelInfo: any = {}
 
     constructor() { }
+
 }

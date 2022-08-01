@@ -1,0 +1,17 @@
+<div *ngIf="modalData.show">
+    <nav (click)="exit()">X</nav>
+    <div *ngIf="modalData.type == 'cancel'">
+        <header>Cancel Reservation</header>
+        Are you sure you want to cancel your reservation?
+        {{modalData.data.id}}
+        <p-button (onClick)="exit()">Cancel</p-button>
+        <p-button (onClick)="cancelReservation(modalData.data)">Confirm</p-button>
+    </div>
+
+    <div *ngIf="modalData.type == 'update'">
+        <header>Update Information</header>
+        <div>Is this the correct Information?</div>
+        <p-button (onClick)="exit()">Cancel</p-button>
+        <p-button (onClick)="updateReservation(modalData.data)">Confirm</p-button>
+    </div>
+</div>

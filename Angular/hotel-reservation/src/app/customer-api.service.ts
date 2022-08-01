@@ -17,4 +17,16 @@ export class CustomerApiService {
     findById(id: number): Observable<any> {
         return this.http.get(environment.apiURL + `customer/${id}`)
     }
+
+    save(body: any): Observable<any> {
+        return this.http.post(environment.apiURL + "customer", body)
+    }
+
+    update(id: number, body: any): Observable<any> {
+        return this.http.put(environment.apiURL + `customer/${id}`, body)
+    }
+
+    delete(id: number): Observable<any> {
+        return this.http.delete(environment.apiURL + `customer/${id}`)
+    }
 }

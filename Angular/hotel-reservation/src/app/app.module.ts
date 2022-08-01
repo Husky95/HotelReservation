@@ -19,7 +19,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotelsPageComponent } from './hotels-page/hotels-page.component';
 import { FindReservationComponent } from './find-reservation/find-reservation.component';
-import { PhoneFormatPipe } from './phone-format.pipe'
+import { PhoneFormatPipe } from './phone-format.pipe';
+import { ModalComponent } from './modal/modal.component'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PhoneFormatPipe } from './phone-format.pipe'
     NavbarComponent,
     HotelsPageComponent,
     FindReservationComponent,
-    PhoneFormatPipe
+    PhoneFormatPipe,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
