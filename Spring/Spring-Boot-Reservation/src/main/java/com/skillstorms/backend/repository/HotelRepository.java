@@ -12,4 +12,9 @@ import com.skillstorms.backend.model.Hotel;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 	List<Hotel> findByHotelName(String hotelName);
+	
+	
+	List<Hotel> findByCityAndState(String city, String state);
+	
+	List<Hotel> findByHotelIDIn(List<Integer> hotelIDs);
 }

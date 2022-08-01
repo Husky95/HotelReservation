@@ -70,7 +70,7 @@ public class ReservationController {
 	  	return reservationRepository.findAll();
   }
   @GetMapping(path="/vacancy/{date}")
-  public @ResponseBody ArrayList<Hotel> findByVacancy() {
+  public @ResponseBody ArrayList<Hotel> findByVacancy(@PathVariable (value = "date") String date) {
 	  Iterable<Reservation> ReservationList = reservationRepository.findAll();
 	  ArrayList<Integer> hotelList = new ArrayList<Integer>();
 	  
@@ -79,7 +79,7 @@ public class ReservationController {
 	  //if not return a list of all hotel 
 	  ReservationList.forEach(
           (element) -> { 
-        	  LocalDate arrivalDate = LocalDate.of(2022, 7, 27);
+        	  LocalDate arrivalDate = LocalDate.parse(date);
         	  DateChecker checker = new DateChecker(arrivalDate);
         	  //int compareValue = arrivalDate.compareTo(element.getArrivalDate());
 
