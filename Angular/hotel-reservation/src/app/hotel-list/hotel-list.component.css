@@ -38,3 +38,7 @@ img {
 .row-end {
     margin-left: auto;
 }
+
+.empty {
+    text-align: center;
+}

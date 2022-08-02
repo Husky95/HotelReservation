@@ -1,5 +1,5 @@
-<div *ngIf="hotels.length == 0">
-    Sorry, there are no hotels available for these dates.
+<div class="empty" *ngIf="hotels.length == 0">
+    Sorry, there are no hotels for your location available for these dates.
 </div>
 
 <!-- Make a reservation for {{ date[0] | date: 'shortDate' }} - {{ date[1] | date: 'shortDate' }} -->

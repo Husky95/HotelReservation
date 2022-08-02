@@ -8,7 +8,8 @@
     </div> -->
     <div>
         <label for="location">Location</label>
-        <p-dropdown [options]="locations" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
+        <small *ngIf="dataInvalid.location" class="p-error block">Location cannot be empty.</small>
+        <p-dropdown (onChange)="validateData('location')" (onHide)="validateData('location')" [options]="locations" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
             <ng-template pTemplate="selectedItem">
                 <div *ngIf="selected">
                     <div>{{ selected.city }}, {{ selected.state }}</div>
@@ -23,7 +24,8 @@
     </div>
     <div class="date">
         <label for="date">Check In - Check Out</label>
-        <p-calendar name="date" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
+        <small *ngIf="dataInvalid.dates" class="p-error block">Please select your dates.</small>
+        <p-calendar name="date" (onClose)="validateData('dates')" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
     </div>
 
     <p-button (click)="showHotels()" label="Search" icon="pi pi-search"></p-button>

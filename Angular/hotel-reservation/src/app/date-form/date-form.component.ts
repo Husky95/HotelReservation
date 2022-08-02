@@ -10,8 +10,6 @@ import { HotelApiService } from '../services/hotel-api.service';
 export class DateFormComponent implements OnInit {
 
     hideHotelList: boolean = true
-    startDate: any = ''
-    endDate: any = ''
     date: Array<Date> = []
     showForm: boolean = false
 
@@ -20,6 +18,11 @@ export class DateFormComponent implements OnInit {
 
     searchEvent: Subject<void> = new Subject<void>()
 
+    dataInvalid = {
+        location: false,
+        dates: false
+    }
+
     constructor(private service: HotelApiService) { }
 
     ngOnInit(): void {
@@ -27,10 +30,15 @@ export class DateFormComponent implements OnInit {
     }
 
     showHotels() {
-        this.hideHotelList = false
-        this.showForm = false
-        console.log(this.selected)
-        this.searchEvent.next()
+
+        if (!this.dataInvalid.location && this.selected != null) {
+            if (!this.dataInvalid.dates && this.date.length == 2) {
+                this.hideHotelList = false
+                this.showForm = false
+                console.log(this.selected)
+                this.searchEvent.next()
+            }
+        }
     }
 
     getDates() {
@@ -40,5 +48,16 @@ export class DateFormComponent implements OnInit {
     toggleDisplay() {
         this.hideHotelList = !this.hideHotelList
         this.showForm = !this.showForm
+    }
+
+    validateData(type: string) {
+        switch(type) {
+            case 'location':
+                this.selected == null ? this.dataInvalid.location = true : this.dataInvalid.location = false
+                break
+            case 'dates':
+                this.date == null || this.date[1] == null ? this.dataInvalid.dates = true : this.dataInvalid.dates = false
+                break
+        }
     }
 }
