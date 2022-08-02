@@ -1,0 +1,87 @@
+img {
+    height: auto;
+    width: 300px;
+}
+
+.back-button {
+    margin-bottom: 40px;
+}
+
+.back-button:hover {
+    cursor: pointer;
+}
+
+.hotel-info {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.hotel-info header {
+    font-size: 32px;
+}
+
+.hotel-info > div {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form > div {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.address-info {
+    flex-direction: column;
+} 
+
+.address-info > span > input {
+    width: 300px;
+}
+
+.city-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    gap: 30px;
+}
+
+.reservation-container {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+input {
+    margin-right: 40px;
+}
+
+.room-info > div {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+}
+
+nav {
+    margin-top: 40px;
+}
+
+.edit-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.edit-buttons button {
+    margin-right: 20px;
+}

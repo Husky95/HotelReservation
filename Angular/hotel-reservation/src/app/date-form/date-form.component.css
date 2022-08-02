@@ -1,0 +1,15 @@
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 500px;
+    margin: auto;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+
+.form-container > div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}

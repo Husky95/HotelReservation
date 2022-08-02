@@ -2,17 +2,23 @@
     Sorry, there are no hotels available for these dates.
 </div>
 
-Make a reservation for {{ date[0] | date: 'shortDate' }} - {{ date[1] | date: 'shortDate' }}
+<!-- Make a reservation for {{ date[0] | date: 'shortDate' }} - {{ date[1] | date: 'shortDate' }} -->
 
-<div *ngFor="let elem of hotels">
-    <!-- Insert random image -->
-    <div>{{ elem.hotelName }}</div>
-    <div>{{ elem.street }}</div>
-    <div>
-        {{ elem.city }}
-        {{ elem.state }}
-        {{ elem.zipcode }}
+<div class="hotel-container" >
+    <div *ngFor="let elem of hotels">
+        <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3">
+        <div class="hotel-info">
+            <header>{{ elem.hotelName }}</header>
+            <div>{{ elem.street }}</div>
+            <div>
+                {{ elem.city }}
+                {{ elem.state }}
+                {{ elem.zipcode }}
+            </div>
+            <div>{{ elem.phone | phoneFormat }}</div>
+        </div>
+        <div class="row-end">
+            <button (click)="selectHotel(elem)" pButton pRipple icon="pi pi-book" label="Book" type="button" class="p-button-outlined p-button-warning"></button>
+        </div>
     </div>
-    <div>{{ elem.phone | phoneFormat }}</div>
-    <p-button (onClick)="selectHotel(elem)">Book</p-button>
 </div>

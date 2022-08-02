@@ -24,7 +24,7 @@ export class HotelListComponent implements OnInit {
     }
 
     selectHotel(info: any) {
-        this.hotelData = info
+        this.hotelData.hotelInfo = info
         this.hideHotels.emit()
     }
 }

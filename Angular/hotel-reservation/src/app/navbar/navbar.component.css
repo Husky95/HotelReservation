@@ -1,0 +1,22 @@
+nav {
+    background-color: #13678A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    
+}
+
+nav > a {
+    font-size: 36px;
+}
+
+nav > div a {
+    font-size: 24px;
+    margin-right: 20px;
+}
+
+a, a:visited {
+    color: white;
+    text-decoration: none;
+}
