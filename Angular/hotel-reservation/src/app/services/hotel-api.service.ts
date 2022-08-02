@@ -22,6 +22,13 @@ export class HotelApiService {
         return this.http.get(environment.apiURL + `hotel/${id}`)
     }
 
+    searchHotels(city: string, state: string, dates: Array<Date>): Observable<any> {
+        let arrivalDate = dates[0].toISOString().substring(0, 10)
+        let departDate = dates[1].toISOString().substring(0, 10)
+        console.log(arrivalDate, departDate)
+        return this.http.get(environment.apiURL + `hotel/search?city=${city}&state=${state}&arrival-date=${arrivalDate}&depart-date=${departDate}`)
+    }
+
     getLocations(): Observable<any> {
         return this.http.get(environment.apiURL + 'hotel/statecity')
     }

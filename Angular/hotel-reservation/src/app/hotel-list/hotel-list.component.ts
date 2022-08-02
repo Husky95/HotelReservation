@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { HotelApiService } from '../services/hotel-api.service';
 import { HotelDataService } from '../services/hotel-data.service';
 
@@ -9,18 +10,26 @@ import { HotelDataService } from '../services/hotel-data.service';
 })
 export class HotelListComponent implements OnInit {
 
-    hotels: any = ["hotel #1", "hotel #2", "hotel #3", "hotel #4", "hotel #5"]
-    @Input() startDate: any
-    @Input() endDate: any
+    hotels: any = []
     @Input() date: Array<Date> = []
+    @Input() location: any = {}
     @Output() hideHotels = new EventEmitter()
+
+    eventSubscription: Subscription = new Subscription;
+    @Input() searchEvent!: Observable<void>;
 
     constructor(private hotelData: HotelDataService, private service: HotelApiService) { 
     }
 
     ngOnInit(): void {
         // Use start and end date to search for hotels
-        this.service.findAll().subscribe(resp => this.hotels = resp)
+        this.eventSubscription = this.searchEvent.subscribe(() => {
+            this.service.searchHotels(this.location.city, this.location.state, this.date).subscribe(resp => this.hotels = resp)
+        })
+    }
+
+    searchHotels(): void {
+        
     }
 
     selectHotel(info: any) {

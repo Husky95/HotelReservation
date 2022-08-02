@@ -31,5 +31,5 @@
 </div>
 
 
-<app-hotel-list [hidden]="hideHotelList" [date]="date" (hideHotels)="toggleDisplay()"></app-hotel-list>
+<app-hotel-list [hidden]="hideHotelList" [date]="date" [location]="selected" (hideHotels)="toggleDisplay()" [searchEvent]="searchEvent.asObservable()"></app-hotel-list>
 <app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()" [dates]="date"></app-reservation-form>

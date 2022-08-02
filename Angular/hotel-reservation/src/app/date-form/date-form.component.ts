@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { HotelApiService } from '../services/hotel-api.service';
 
 @Component({
@@ -17,6 +18,8 @@ export class DateFormComponent implements OnInit {
     locations: Array<any> = []
     selected = {city: null, state: null}
 
+    searchEvent: Subject<void> = new Subject<void>()
+
     constructor(private service: HotelApiService) { }
 
     ngOnInit(): void {
@@ -27,6 +30,7 @@ export class DateFormComponent implements OnInit {
         this.hideHotelList = false
         this.showForm = false
         console.log(this.selected)
+        this.searchEvent.next()
     }
 
     getDates() {
