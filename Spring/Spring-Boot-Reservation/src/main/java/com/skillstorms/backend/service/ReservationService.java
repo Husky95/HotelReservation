@@ -39,7 +39,7 @@ public class ReservationService {
   public ArrayList < Hotel > getVacantHotel(String startDate, String endDate) {
     Iterable < Reservation > ReservationList = reservationRepository.findAll();
     ArrayList < Integer > hotelList = new ArrayList < Integer > ();
-    int[] hotelMaxRooms = new int[] { 40, 40, 40 };
+    //int[] hotelMaxRooms = new int[] { 40, 40, 40 };
 
     //This go through the reservation list and check if there matching date in arrivalDate or departDate
     //if there is add the hotelID to a hotel List 
@@ -80,7 +80,8 @@ public class ReservationService {
         occurencesList.add(Collections.frequency(hotelList, hotelID));
         //if occurence is less than capacity < remove it from the list 
         //if not add it to the list 
-        if (occurencesList.get(i) > hotelMaxRooms[i]) {
+        
+        if (occurencesList.get(i) >= hotelRepository.findById(hotelID).get().getTotalRoom()) {
           Optional < Hotel > hotel = hotelRepository.findById(hotelID);
           Hotel noVacant = hotel.isPresent() ? hotel.get() : null;
           allHotel.remove(noVacant);
@@ -93,7 +94,7 @@ public class ReservationService {
         }
 
       }
-      System.out.println(allHotel);
+      //System.out.println(allHotel);
       return allHotel;
     } else {
       ArrayList < Hotel > allHotel = new ArrayList < Hotel > (hotelRepository.findAll());

@@ -49,13 +49,71 @@ create table Reservation (Reservation_Number int not null auto_increment,
 
 
 
-insert into Hotel values(1, 'UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 5099557226,40);
-insert into Hotel values(2, 'UnitTwo', '9241 13th Ave SW', 'Malvern', 'PA', 898106, 50943557226,40);
-insert into Hotel values(3, 'UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 5099557226,40);
+insert into Customer (Firstname, Lastname, Email, Street, City, State, Zipcode, Phone)
+values('John', 'Doe','Doe@gmail.com','828 South Galvin Drive', 'Dallas', 'TX', 75213, 2149471611);
+insert into Customer (Firstname, Lastname, Email, Street, City, State, Zipcode, Phone)
+values('Bob', 'Smith','Smith@gmail.com', '123 Main St', 'Atlanta', 'GA', 12345, 5556667777);
+insert into Customer (Firstname, Lastname, Email, Street, City, State, Zipcode, Phone)
+values('John', 'Tyler', 'Tyler@gmail.com', '456 Oak St', 'Miami', 'FL', 67890, 1112223333);
 
-insert into Customer values(1, 'John', 'Doe','custer@gmail.com','828 South Galvin Drive', 'Dallas', 'TX', 75213, 2149471611);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-26', '2022-07-27', '2022-07-28', 2, 0, 2, 'Queen', 24, 1, 1);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-01', '2022-08-05', 2, 0, 2, 'Queen', 1, 1, 1);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-01', '2022-08-05', 2, 0, 2, 'Queen', 1, 1, 2);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-10', '2022-08-12', 2, 0, 2, 'Queen', 1, 1, 2);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-13', '2022-08-14', 2, 0, 2, 'Queen', 1, 1, 2);
 
-insert into Reservation values(1, '2022-07-26', '2022-07-27', '2022-07-28', 2, 0, 2, 'Queen', 24, 1, 1);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-01', '2022-09-02', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-01', '2022-08-02', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-02', '2022-08-03', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-08-03', '2022-08-04', 2, 0, 2, 'Queen', 1, 1, 6);
+
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-01', '2022-09-03', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-02', '2022-09-05', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-04', '2022-09-08', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-05', '2022-09-07', 2, 0, 2, 'Queen', 1, 1, 6);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-06', '2022-09-09', 2, 0, 2, 'Queen', 1, 1, 6);
+
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-01', '2022-09-03', 2, 0, 2, 'Queen', 1, 1, 7);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-02', '2022-09-05', 2, 0, 2, 'Queen', 1, 1, 7);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-04', '2022-09-08', 2, 0, 2, 'Queen', 1, 1, 7);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-05', '2022-09-07', 2, 0, 2, 'Queen', 1, 1, 7);
+insert into Reservation (Reserve_Date, Arrival_Date, Depart_Date, Num_Adults, Num_Kids, Num_Beds, Bed_Type, Room_Number, Customer_ID, Hotel_Id)
+values('2022-07-31', '2022-09-06', '2022-09-09', 2, 0, 2, 'Queen', 1, 1, 7);
 
 
-
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 5099557226,1);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('UnitTwo', '9241 13th Ave SW', 'Malvern', 'PA', 898106, 50943557226,40);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('Buena Vista Suites Orlando', '8203 World Center Dr', 'Orlando', 'FL', '32821', 4072398588, 1);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('Handlery Union Square Hotel', '351 Geary St', 'San Francisco', 'CA', '94102', 4157817800, 2);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('Sonder The Witherspoon', '130 South Juniper St', 'Philadelphia', 'PA', '19107', 6173000956, 3);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('BigUnitPrime', '9241 13th Ave SW', 'Portland', 'OR', '88106', 7099557226, 4);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('Wrigley Hostel', '3514 Sheffield Ave', 'Chicago', 'IL', '60657', 1234567890, 2);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('Warwick Allerton', '701 Michigan Ave', 'Chicago', 'IL', '60611', 1234567890, 3);
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms) 
+values('Homewood Suites', '40 East Grand Ave', 'Chicago', 'IL', '60611', 1234567890, 4);
