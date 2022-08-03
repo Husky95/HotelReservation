@@ -126,6 +126,17 @@ public class HotelController {
   	return hotelService.findByCityStateAndAvailability(city, state, arrival, depart);
   }
   
+  @GetMapping(path="/available")
+  public @ResponseBody boolean isHotelAvailableDateRange(
+  		@RequestParam(name="id") int id,
+  		@RequestParam(name="arrival-date") String arrivalDate,
+  		@RequestParam(name="depart-date") String departDate) {
+  	LocalDate arrival = LocalDate.parse(arrivalDate);
+  	LocalDate depart = LocalDate.parse(departDate);
+  	return hotelService.isHotelAvailable(id, arrival, depart);
+  }
+  
+  
   
 }
 
