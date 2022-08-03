@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,17 @@ public class HotelService {
 	
 	private boolean isHotelAvailable(Hotel hotel, List<Reservation> reservations) {
 		return hotel.getTotalRoom() > reservationService.getMaxReservationOverlap(reservations);
+	}
+	
+	public boolean isHotelAvailable(int hotelID, LocalDate arrivalDate, LocalDate departDate) {
+		Optional<Hotel> hotel = hotelRepository.findById(hotelID);
+		if (hotel.isPresent()) {
+			List<Reservation> reservations = reservationService.findByHotelIDAndDateRagne(hotelID, arrivalDate, departDate);
+			return isHotelAvailable(hotel.get(), reservations);
+		}
+		else {
+			return false;
+		}
 	}
 
 }
