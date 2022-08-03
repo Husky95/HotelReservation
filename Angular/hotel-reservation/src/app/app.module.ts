@@ -21,6 +21,8 @@ import { HotelsPageComponent } from './hotels-page/hotels-page.component';
 import { FindReservationComponent } from './find-reservation/find-reservation.component';
 import { PhoneFormatPipe } from './phone-format.pipe';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RatingModule } from 'primeng/rating';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     BrowserAnimationsModule,
     HttpClientModule,
     ConfirmDialogModule,
+    RatingModule,
+    ProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

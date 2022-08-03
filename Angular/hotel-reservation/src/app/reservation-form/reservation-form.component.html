@@ -7,26 +7,32 @@
     <div class="hotel-info">
         <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3">
         <div>
-            <div>
+            <div class="hotel">
                 <header>{{ hotelData.hotelInfo.hotelName }}</header>
-                <div>{{ hotelData.hotelInfo.street }}</div>
-                <div>
-                    {{ hotelData.hotelInfo.city }}
-                    {{ hotelData.hotelInfo.state }}
-                    {{ hotelData.hotelInfo.zipcode }}
+                <p-rating *ngIf="showBack" [ngModel]="getFloor(hotelData.hotelInfo.rating)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+                <div *ngIf="showBack">{{ hotelData.hotelInfo.description }}</div>
+                <div *ngIf="showBack"><b>{{ hotelData.hotelInfo.rating * 2 }}/10 {{ hotelData.hotelInfo.ratingCatagory }}</b></div>
+            </div>
+            <div class="location"> 
+                <img *ngIf="showBack" [hidden]="loading" [src]="imageUrl" (load)="loadedImage()">
+                <div *ngIf="loading && showBack" class="loading">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+                    <div>Getting map data</div>
                 </div>
+                <div>{{ hotelData.hotelInfo.street }}, {{ hotelData.hotelInfo.city }}, {{ hotelData.hotelInfo.state }}, {{ hotelData.hotelInfo.zipcode }}</div>
                 <div>{{ hotelData.hotelInfo.phone | phoneFormat }}</div>
             </div>
-            <div *ngIf="showBack">
-                {{ hotelData.hotelInfo.hotelName }} offers you a privileged experience combining comfort and conviviality. 
-                Whether you are a backpacker, a solo traveler or with your family, our hotel with top-of-the-range service will meet all your expectations. 
-                More than just a hotel, {{ hotelData.hotelInfo.hotelName }} offers you a place to live and meet people.
-            </div>
         </div>
-        <img [src]="mapService.getStaticMap(location.lon, location.lat, 14)" >
     </div>
 
     <form>
+        <div class="date">
+            <label for="date">Check In - Check Out</label>
+            <small *ngIf="dataInvalid.dates" class="p-error block">Please select your dates.</small>
+            <p-calendar name="date" (onClose)="validateData('dates')" (onSelect)="pastDates()" [(ngModel)]="dates" [showWeek]="true" 
+            selectionMode="range" [showButtonBar]="true" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
+        </div>
+
         <h3>Personal Information</h3>
         <div class="personal-info">
             <input name="firstName" type="text" class="p-inputtext-sm" placeholder="First Name" [(ngModel)]="customer.firstName" [pKeyFilter]="'alpha'" pInputText>

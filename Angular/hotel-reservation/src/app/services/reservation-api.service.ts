@@ -34,8 +34,8 @@ export class ReservationApiService {
         delete body.hotel
         delete body.customer
         body = {
-            arrivalDate: dates[0],
-            departDate: dates[1],
+            arrivalDate: dates[0].toISOString().substring(0, 10),
+            departDate: dates[1].toISOString().substring(0, 10),
             ...body
         }
         console.log(body)

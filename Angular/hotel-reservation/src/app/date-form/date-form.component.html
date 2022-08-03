@@ -25,7 +25,8 @@
     <div class="date">
         <label for="date">Check In - Check Out</label>
         <small *ngIf="dataInvalid.dates" class="p-error block">Please select your dates.</small>
-        <p-calendar name="date" (onClose)="validateData('dates')" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
+        <p-calendar name="date" (onClose)="validateData('dates')" [(ngModel)]="date" [showWeek]="true" selectionMode="range" 
+            [showButtonBar]="true" (onSelect)="pastDates()" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
     </div>
 
     <p-button (click)="showHotels()" label="Search" icon="pi pi-search"></p-button>

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CustomerApiService } from '../customer-api.service';
+import { CustomerApiService } from '../services/customer-api.service';
 import { HotelDataService } from '../services/hotel-data.service';
 import { ReservationApiService } from '../services/reservation-api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MapApiService } from '../services/map-api.service';
+import { HotelApiService } from '../services/hotel-api.service';
 
 
 @Component({
@@ -35,13 +36,18 @@ export class ReservationFormComponent implements OnInit {
 
     @Input() dates: Array<Date> = []
 
-    mapService: MapApiService
     location: any
 
+    loading: boolean = true
+    imageUrl: string = ""
+
+    dataInvalid = {
+        dates: false
+    }
+
     constructor(hotelData: HotelDataService, private customerService: CustomerApiService, private reservationService: ReservationApiService, 
-        private confirmationService: ConfirmationService, private messageService: MessageService, mapService: MapApiService) { 
+        private confirmationService: ConfirmationService, private messageService: MessageService, private mapService: MapApiService, private hotelService: HotelApiService) { 
             this.hotelData = hotelData
-            this.mapService = mapService
     }
 
     ngOnInit(): void {
@@ -51,11 +57,30 @@ export class ReservationFormComponent implements OnInit {
         }
         // Check for existing reservation dates
         if (this.reservation.hasOwnProperty("arrivalDate")) {
-            this.dates = [this.reservation.arrivalDate, this.reservation.departDate]
+            this.dates = [new Date(this.reservation.arrivalDate), new Date(this.reservation.departDate)]
         }
 
+        if (this.showBack){
+            this.hotelService.findById(this.hotelData.hotelInfo.hotelID).subscribe(resp => {this.hotelData.hotelInfo = resp
+                this.getGeoLocation()
+            })
+        }
+        else {
+            console.log(this.reservation.hotel.hotelID)
+            this.hotelService.findById(this.reservation.hotel.hotelID).subscribe(resp => {this.hotelData.hotelInfo = resp
+                this.getGeoLocation()
+            })
+        }
+            
+        
+    }
+
+    getGeoLocation() {
         this.mapService.getGeocoding(`${this.hotelData.hotelInfo.street} ${this.hotelData.hotelInfo.city} ${this.hotelData.hotelInfo.state} ${this.hotelData.hotelInfo.zipcode}`)
-            .subscribe(resp => this.location = {lon: resp.results[0].lon, lat: resp.results[0].lat})
+        .subscribe(resp => {
+            this.location = {lon: resp.results[0].lon, lat: resp.results[0].lat}
+            this.imageUrl = this.mapService.getStaticMap(resp.results[0].lon, resp.results[0].lat, 14)
+        })
     }
 
     cancelReservation() {
@@ -123,6 +148,31 @@ export class ReservationFormComponent implements OnInit {
             })
         }
         
+    }
+
+    getFloor(rating: number) {
+        return Math.floor(rating)
+    }
+
+    loadedImage() {
+        console.log("loading")
+        this.loading = false
+    }
+
+    validateData(type: string) {
+        switch(type) {
+            case 'dates':
+                this.dates == null || this.dates[1] == null ? this.dataInvalid.dates = true : this.dataInvalid.dates = false
+                break
+        }
+    }
+
+    pastDates() {
+        console.log(this.dates)
+        let past = new Date()
+        past.setDate(past.getDate() - 1)
+        if (this.dates[0] <= past)
+            this.dates = []
     }
 
     // cancelReservation() {

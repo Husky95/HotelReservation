@@ -23,7 +23,37 @@ img {
 
 .hotel-info > div {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.hotel {
+    flex: 1;
+    display: flex;
     flex-direction: column;
+    gap: 10px;
+}
+
+.location {
+    width: 300px;
+}
+
+.loading {
+    width: 300px; 
+    height: 200px; 
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    padding-top: 25%;
+}
+
+.loading, .location img {
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
 
 form {
@@ -54,7 +84,7 @@ form > div {
 }
 
 .reservation-container {
-    width: 50%;
+    width: 66%;
     margin: auto;
     padding: 20px;
     background-color: white;
@@ -62,14 +92,13 @@ form > div {
     box-shadow: 5px 5px 5px lightgray;
 }
 
-input {
-    margin-right: 40px;
+.room-info, .personal-info, .contact-info {
+    gap: 20px;
 }
 
 .room-info > div {
     display: flex;
     flex-direction: column;
-    margin-right: 40px;
 }
 
 nav {
@@ -84,4 +113,8 @@ nav {
 
 .edit-buttons button {
     margin-right: 20px;
+}
+
+.date {
+    flex-direction: column;
 }

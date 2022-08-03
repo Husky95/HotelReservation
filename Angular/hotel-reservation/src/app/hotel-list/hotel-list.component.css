@@ -3,7 +3,6 @@ main {
     justify-content: center;
     flex-wrap: wrap;
     gap: 40px;
-    background-color: aqua;
 }
 
 main > img {
@@ -16,30 +15,37 @@ main > img {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    background-color: aqua;
+    flex: 1;
 }
 
 .hotel-container > div {
     display: flex;
-    width: 30%;
     min-width: 500px;
+    width: 40%;
     border-radius: 5px;
     align-items: center;
     overflow: hidden;
     background-color: white;
     box-shadow: 5px 5px 5px lightgray;
+    gap: 15px;
 }
 
 .hotel-container > div > div {
-    margin-right: 15px;
+    background-color: aquamarine;
+    padding-bottom: 15px
 }
 
 .hotel-info {
-    margin-left: 10px;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 header {
     font-size: 24px;
-    margin-bottom: 20px;
 }
 
 .hotel-container img {
@@ -47,10 +53,34 @@ header {
     height: auto;
 }
 
+.rating {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
 .row-end {
     margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    height: 66%;
+    margin-right: 15px;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-self: flex-end;
 }
 
 .empty {
     text-align: center;
+}
+
+.loading {
+    width: 300px; 
+    height: 200px; 
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    padding-top: 25%;
 }

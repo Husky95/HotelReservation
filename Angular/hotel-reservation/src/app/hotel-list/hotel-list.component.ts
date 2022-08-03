@@ -28,7 +28,20 @@ export class HotelListComponent implements OnInit {
     ngOnInit(): void {
         // Use start and end date to search for hotels
         this.eventSubscription = this.searchEvent.subscribe(() => {
-            this.service.searchHotels(this.location.city, this.location.state, this.date).subscribe(resp => this.hotels = resp)
+            this.service.searchHotels(this.location.city, this.location.state, this.date).subscribe(resp => {
+                this.hotels = resp.map((elem: any) => {
+                    if (elem.rating <= 2)
+                        return elem = {...elem, ratingCatagory: 'Poor'}
+                    if (elem.rating <= 3)
+                        return elem = {...elem, ratingCatagory: 'Average'}
+                    if (elem.rating <= 4)
+                        return elem = {...elem, ratingCatagory: 'Good'}
+                    if (elem.rating <= 5)
+                        return elem = {...elem, ratingCatagory: 'Excellent'}
+                })
+
+                console.log(this.hotels)
+            })
             this.mapService.getGeocoding(`${this.location.city}, ${this.location.state}`).subscribe(resp => {
                 this.coords = {lon: resp.results[0].lon, lat: resp.results[0].lat}
                 console.log(this.coords)

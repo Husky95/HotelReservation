@@ -41,10 +41,14 @@ export class DateFormComponent implements OnInit {
         }
     }
 
-    getDates() {
+    pastDates() {
         console.log(this.date)
+        let past = new Date()
+        past.setDate(past.getDate() - 1)
+        if (this.date[0] <= past)
+            this.date = []
     }
-
+    
     toggleDisplay() {
         this.hideHotelList = !this.hideHotelList
         this.showForm = !this.showForm
