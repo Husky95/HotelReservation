@@ -95,6 +95,9 @@ public class HotelController {
 		    	  hotel.setZipcode(newHotel.getZipcode());
 		    	  hotel.setPhone(newHotel.getPhone());
 		    	  hotel.setTotalRoom(newHotel.getTotalRoom());
+		    	  hotel.setRating(newHotel.getRating());
+		    	  hotel.setPrice(newHotel.getPrice());
+		    	  hotel.setDescription(newHotel.getDescription());
 		          return hotelRepository.save(hotel);
 	 });
   }

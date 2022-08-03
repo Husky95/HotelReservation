@@ -53,17 +53,56 @@ public class Hotel {
     @NotNull
     private long totalRooms;
 
+    @Column(name = "Rating")
+    @NotNull
+    private float rating;
+    
+    @Column(name = "Price")
+    @NotNull
+    private float price;
+    
+    
+    public long getTotalRooms() {
+		return totalRooms;
+	}
+	public void setTotalRooms(long totalRooms) {
+		this.totalRooms = totalRooms;
+	}
+	public @NotNull float getRating() {
+		return rating;
+	}
+	public void setRating(@NotNull float f) {
+		this.rating = f;
+	}
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float f) {
+		this.price = f;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
+	}
+	@Column(name = "Descriptions")
+    @NotNull
+    private String Description;
+    
     //@OneToMany(mappedBy = "customer")
     //@JsonManagedReference // This does get serialized, but it's back half doesn't
 	//private Set<Reservation> reservations;
    
+
+	public int getHotelID() {
+		return hotelID;
+	}
 	@Override
 	public String toString() {
 		return "Hotel [hotelID=" + hotelID + ", hotelName=" + hotelName + ", street=" + street + ", city=" + city
-				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRoom=" + totalRooms + "]";
-	}
-	public int getHotelID() {
-		return hotelID;
+				+ ", state=" + state + ", zipcode=" + zipcode + ", phone=" + phone + ", totalRooms=" + totalRooms
+				+ ", rating=" + rating + ", price=" + price + ", Description=" + Description + "]";
 	}
 	public void setHotelID(int hotelID) {
 		this.hotelID = hotelID;
