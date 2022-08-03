@@ -3,6 +3,7 @@ import { CustomerApiService } from '../customer-api.service';
 import { HotelDataService } from '../services/hotel-data.service';
 import { ReservationApiService } from '../services/reservation-api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { MapApiService } from '../services/map-api.service';
 
 
 @Component({
@@ -34,9 +35,13 @@ export class ReservationFormComponent implements OnInit {
 
     @Input() dates: Array<Date> = []
 
+    mapService: MapApiService
+    location: any
+
     constructor(hotelData: HotelDataService, private customerService: CustomerApiService, private reservationService: ReservationApiService, 
-        private confirmationService: ConfirmationService, private messageService: MessageService) { 
-        this.hotelData = hotelData
+        private confirmationService: ConfirmationService, private messageService: MessageService, mapService: MapApiService) { 
+            this.hotelData = hotelData
+            this.mapService = mapService
     }
 
     ngOnInit(): void {
@@ -48,6 +53,9 @@ export class ReservationFormComponent implements OnInit {
         if (this.reservation.hasOwnProperty("arrivalDate")) {
             this.dates = [this.reservation.arrivalDate, this.reservation.departDate]
         }
+
+        this.mapService.getGeocoding(`${this.hotelData.hotelInfo.street} ${this.hotelData.hotelInfo.city} ${this.hotelData.hotelInfo.state} ${this.hotelData.hotelInfo.zipcode}`)
+            .subscribe(resp => this.location = {lon: resp.results[0].lon, lat: resp.results[0].lat})
     }
 
     cancelReservation() {

@@ -23,6 +23,7 @@
                 More than just a hotel, {{ hotelData.hotelInfo.hotelName }} offers you a place to live and meet people.
             </div>
         </div>
+        <img [src]="mapService.getStaticMap(location.lon, location.lat, 14)" >
     </div>
 
     <form>
