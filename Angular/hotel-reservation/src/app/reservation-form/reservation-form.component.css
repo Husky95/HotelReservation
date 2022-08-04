@@ -77,6 +77,8 @@ form > div {
     flex-wrap: wrap;
     margin-top: 30px;
     gap: 30px;
+    width: fit-content;
+    align-items: flex-end;
 }
 
 .reservation-container {
@@ -90,6 +92,12 @@ form > div {
 
 .room-info, .personal-info, .contact-info {
     gap: 20px;
+    align-items: flex-end;
+}
+
+.personal-info > div, .contact-info > div, .street, .city-container > div {
+    display: flex;
+    flex-direction: column;
 }
 
 .room-info > div {

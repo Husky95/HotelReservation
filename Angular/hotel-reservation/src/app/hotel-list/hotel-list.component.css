@@ -3,6 +3,8 @@ main {
     justify-content: center;
     flex-wrap: wrap;
     gap: 40px;
+    width: 90%;
+    margin: auto;
 }
 
 main > img {
@@ -15,14 +17,14 @@ main > img {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    background-color: aqua;
     flex: 1;
 }
 
 .hotel-container > div {
     display: flex;
     min-width: 500px;
-    width: 40%;
+    /* width: 40%; */
+    width: 100%;
     border-radius: 5px;
     align-items: center;
     overflow: hidden;
@@ -32,7 +34,6 @@ main > img {
 }
 
 .hotel-container > div > div {
-    background-color: aquamarine;
     padding-bottom: 15px
 }
 
@@ -79,8 +80,7 @@ header {
     height: 200px; 
     background-color: lightgray;
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    justify-items: center;
     align-items: center;
-    padding-top: 25%;
 }

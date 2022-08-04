@@ -6,4 +6,5 @@
     <button (click)="getReservation(id)" pButton pRipple type="button" icon="pi pi-search" label="Search"></button>
 </form>
 
-<app-reservation-form *ngIf="reservation != null" [showBack]="false" [reservation]= "reservation" [customer]="customer"></app-reservation-form>
+<app-reservation-form *ngIf="reservation != null" [showBack]="false" 
+    [reservation]= "reservation" [customer]="customer" [dates]="dates"></app-reservation-form>
