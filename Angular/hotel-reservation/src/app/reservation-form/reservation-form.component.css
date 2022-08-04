@@ -1,7 +1,3 @@
-img {
-    height: auto;
-    width: 300px;
-}
 
 .back-button {
     margin-bottom: 40px;
@@ -23,7 +19,37 @@ img {
 
 .hotel-info > div {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.hotel {
+    flex: 1;
+    display: flex;
     flex-direction: column;
+    gap: 10px;
+}
+
+.location {
+    width: 300px;
+}
+
+.loading {
+    width: 300px; 
+    height: 200px; 
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    padding-top: 25%;
+}
+
+.loading, .location img {
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
 
 form {
@@ -51,10 +77,12 @@ form > div {
     flex-wrap: wrap;
     margin-top: 30px;
     gap: 30px;
+    width: fit-content;
+    align-items: flex-end;
 }
 
 .reservation-container {
-    width: 50%;
+    width: 66%;
     margin: auto;
     padding: 20px;
     background-color: white;
@@ -62,14 +90,19 @@ form > div {
     box-shadow: 5px 5px 5px lightgray;
 }
 
-input {
-    margin-right: 40px;
+.room-info, .personal-info, .contact-info {
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.personal-info > div, .contact-info > div, .street, .city-container > div {
+    display: flex;
+    flex-direction: column;
 }
 
 .room-info > div {
     display: flex;
     flex-direction: column;
-    margin-right: 40px;
 }
 
 nav {
@@ -84,4 +117,52 @@ nav {
 
 .edit-buttons button {
     margin-right: 20px;
+}
+
+.date {
+    flex-direction: column;
+}
+
+.message {
+    width: 50%;
+    margin: auto;
+}
+
+.gallery {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: 450px;
+}
+
+.thumbnail-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+    align-content: flex-start;
+    justify-content: center;
+    padding-top: 20px;
+    height: 100%;
+}
+
+.thumbnail-container > div {
+    width: 40%;
+    display: flex;
+}
+
+.thumbnail-container img {
+    width: 100%;
+}
+
+.imageDisplay {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+}
+
+.imageDisplay > img {
+    width: 100%;
+    margin: auto;
 }

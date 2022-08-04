@@ -14,14 +14,19 @@ nav {
 
 header {
     color: white;
-    font-size: 48px;
+    font-size: 64px;
     margin-bottom: 10%;
+    text-align: center;
 }
 
 nav > div {
     display: flex;
     justify-content: space-between;
     width: 500px;
+}
+
+button {
+    font-size: 18px;
 }
 
 main {

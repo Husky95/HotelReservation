@@ -4,19 +4,29 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 5px;
-    
 }
 
 nav > a {
-    font-size: 36px;
+    font-size: 30px;
 }
 
 nav > div a {
-    font-size: 24px;
+    font-size: 20px;
     margin-right: 20px;
 }
 
 a, a:visited {
     color: white;
     text-decoration: none;
+}
+
+nav > a {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+img {
+    width: auto;
+    height: 50px;
 }

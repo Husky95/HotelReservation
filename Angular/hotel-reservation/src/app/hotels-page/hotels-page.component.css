@@ -11,16 +11,16 @@
 .hotel-container > div {
     display: flex;
     min-width: 400px;
+    width: 30%;
     border-radius: 5px;
     align-items: center;
     overflow: hidden;
     background-color: white;
     box-shadow: 5px 5px 5px lightgray;
-    justify-content: space-between;
 }
 
 .hotel-container > div > div {
-    margin: auto
+    padding: 10px;
 }
 
 img {
