@@ -73,4 +73,18 @@ public class HotelService {
 		}
 	}
 
+	public List<Hotel> findyByCityStatePriceAndAvailability(String city, String state, LocalDate arrivalDate,
+			LocalDate departDate, String sortBy, boolean isAsc, float maxPrice) {
+		Sort.Direction dir = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+		List<Hotel> areaHotels = hotelRepository.findByCityAndStateAndPriceLessThanEqual(city, state, Sort.by(dir, sortBy), maxPrice);
+		List<Hotel> availableHotels = new LinkedList<>();
+		for (Hotel areaHotel : areaHotels) {
+			List<Reservation> reservations = reservationService.findByHotelIDAndDateRagne(areaHotel.getHotelID(), arrivalDate, departDate);
+			if (isHotelAvailable(areaHotel, reservations)) {
+				availableHotels.add(areaHotel);
+			}
+		}
+		return availableHotels;
+	}
+
 }

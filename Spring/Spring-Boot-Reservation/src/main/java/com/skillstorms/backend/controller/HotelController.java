@@ -122,10 +122,16 @@ public class HotelController {
   		@RequestParam(name="arrival-date") String arrivalDate,
   		@RequestParam(name="depart-date") String departDate,
   		@RequestParam(name="sort", defaultValue="price") String sortBy,
-  		@RequestParam(name="isAsc", defaultValue="true") boolean isAsc) {
+  		@RequestParam(name="isAsc", defaultValue="true") boolean isAsc,
+  		@RequestParam(name="maxPrice") Optional<Float> maxPrice) {
   	LocalDate arrival = LocalDate.parse(arrivalDate);
   	LocalDate depart = LocalDate.parse(departDate);
-  	return hotelService.findByCityStateAndAvailability(city, state, arrival, depart, sortBy, isAsc);
+  	if (maxPrice.isPresent()) {
+  		return hotelService.findyByCityStatePriceAndAvailability(city, state, arrival, depart, sortBy, isAsc, maxPrice.get());
+  	}
+  	else {
+  		return hotelService.findByCityStateAndAvailability(city, state, arrival, depart, sortBy, isAsc);
+  	}
   }
   
   @GetMapping(path="/available")
