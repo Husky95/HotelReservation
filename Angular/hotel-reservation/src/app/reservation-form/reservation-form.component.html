@@ -1,11 +1,21 @@
-<div class="reservation-container">
+<div class="reservation-container" *ngIf="!showConfirmation; else confirmation">
     <div *ngIf="showBack" (click)="hideForm.emit()" class="back-button">
         <i class="pi pi-chevron-left"></i>
         <span>Back to hotels</span>
     </div>
 
     <div class="hotel-info">
-        <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3">
+        <div class="gallery">
+            <div class="imageDisplay">
+                <img [src]="displayURL" >
+            </div>
+            <div *ngIf="images" class="thumbnail-container">
+                <div *ngFor="let image of images;">
+                    <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="displayURL = image.thumbnailImageSrc"/>
+                </div>
+            </div>
+        </div>
+        <!-- <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3"> -->
         <div>
             <div class="hotel">
                 <header>{{ hotelData.hotelInfo.hotelName }}</header>
@@ -26,7 +36,8 @@
     </div>
 
     <form>
-        <div class="date">
+        <h3 *ngIf="!showBack">Check In - Check Out</h3>
+        <div *ngIf="!showBack" class="date">
             <label for="date">Check In - Check Out</label>
             <small *ngIf="dataInvalid.dates" class="p-error block">Please select your dates.</small>
             <p-calendar name="date" (onClose)="validateData('dates')" (onSelect)="pastDates()" [(ngModel)]="dates" [showWeek]="true" 
@@ -103,16 +114,31 @@
         </div>
 
         <nav>
-        <p-button (click)="getData()" *ngIf="showBack; else edit">Submit</p-button>
-        <ng-template #edit>
-            <div class="edit-buttons">
-                <button (click)="cancelReservation()" pButton pRipple type="button" label="Cancel Reservation" icon="pi pi-trash" class="p-button-danger"></button>
-                <button (click)="getData()" pButton pRipple type="button" label="Update Information" icon="pi pi-pencil" class="p-button-warning"></button>
-                <button (click)="returnHome()" pButton pRipple type="button" label="Done" icon="pi pi-check"></button>
-            </div>
-        </ng-template>
-    </nav>
+            <p-button (click)="getData()" *ngIf="showBack; else edit">Submit</p-button>
+            <ng-template #edit>
+                <div class="edit-buttons">
+                    <button (click)="cancelReservation()" pButton pRipple type="button" label="Cancel Reservation" icon="pi pi-trash" class="p-button-danger"></button>
+                    <button (click)="getData()" pButton pRipple type="button" label="Update Information" icon="pi pi-pencil" class="p-button-warning"></button>
+                    <button (click)="returnHome()" pButton pRipple type="button" label="Done" icon="pi pi-check"></button>
+                </div>
+            </ng-template>
+        </nav>
     </form>
 </div>
 
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<ng-template #confirmation>
+    <div class="reservation-container">
+        <div (click)="home()" class="back-button">
+            <i class="pi pi-chevron-left"></i>
+            <span>Back to homepage</span>
+        </div>
+
+        <div class="message">
+            <div>Thank you for making a reservation with us!</div>
+            <div>Your reservation id is: <b>{{ reservation.reservationNumber }}</b></div>
+            <div>Please keep track of it. You can use it to update or cancel your reservation.</div>
+        </div>
+    </div>
+</ng-template>

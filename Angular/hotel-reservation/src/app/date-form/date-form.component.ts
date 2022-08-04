@@ -42,11 +42,15 @@ export class DateFormComponent implements OnInit {
     }
 
     pastDates() {
-        console.log(this.date)
-        let past = new Date()
+        let today = new Date()
+        if (this.date[0].getTime() == this.date[1].getTime()) 
+            this.date = [this.date[0]]
+        
+        let past = new Date(today.toLocaleDateString())
         past.setDate(past.getDate() - 1)
-        if (this.date[0] <= past)
-            this.date = []
+        console.log(past)
+        if (this.date[0] < past)
+            this.date = []     
     }
     
     toggleDisplay() {
