@@ -120,10 +120,12 @@ public class HotelController {
   		@RequestParam(name="city", defaultValue="") String city, 
   		@RequestParam(name="state", defaultValue="") String state,
   		@RequestParam(name="arrival-date") String arrivalDate,
-  		@RequestParam(name="depart-date") String departDate) {
+  		@RequestParam(name="depart-date") String departDate,
+  		@RequestParam(name="sort", defaultValue="price") String sortBy,
+  		@RequestParam(name="isAsc", defaultValue="true") boolean isAsc) {
   	LocalDate arrival = LocalDate.parse(arrivalDate);
   	LocalDate depart = LocalDate.parse(departDate);
-  	return hotelService.findByCityStateAndAvailability(city, state, arrival, depart);
+  	return hotelService.findByCityStateAndAvailability(city, state, arrival, depart, sortBy, isAsc);
   }
   
   @GetMapping(path="/available")

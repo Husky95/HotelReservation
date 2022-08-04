@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 
 import com.skillstorms.backend.model.Hotel;
@@ -43,8 +45,9 @@ public class HotelService {
 		return hotelMap;
 	}
 	
-	public List<Hotel> findByCityStateAndAvailability(String city, String state, LocalDate arrivalDate, LocalDate departDate) {
-		List<Hotel> areaHotels = hotelRepository.findByCityAndState(city, state);
+	public List<Hotel> findByCityStateAndAvailability(String city, String state, LocalDate arrivalDate, LocalDate departDate, String sortBy, boolean isAsc) {
+		Sort.Direction dir = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+		List<Hotel> areaHotels = hotelRepository.findByCityAndState(city, state, Sort.by(dir, sortBy));
 		List<Hotel> availableHotels = new LinkedList<>();
 		for (Hotel areaHotel : areaHotels) {
 			List<Reservation> reservations = reservationService.findByHotelIDAndDateRagne(areaHotel.getHotelID(), arrivalDate, departDate);
