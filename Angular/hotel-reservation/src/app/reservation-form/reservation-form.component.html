@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="details">
             <div class="hotel">
                 <header>{{ hotelData.hotelInfo.hotelName }}</header>
                 <p-rating *ngIf="showBack" [ngModel]="getFloor(hotelData.hotelInfo.rating)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>

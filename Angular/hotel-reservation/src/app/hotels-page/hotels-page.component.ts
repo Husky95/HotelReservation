@@ -13,7 +13,6 @@ export class HotelsPageComponent implements OnInit {
     constructor(private service: HotelApiService) { }
 
     ngOnInit(): void {
-        this.service.findAll().subscribe(resp => this.hotels = resp)
     }
 
 }
