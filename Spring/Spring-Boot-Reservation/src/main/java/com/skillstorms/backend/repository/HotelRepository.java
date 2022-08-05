@@ -18,4 +18,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 	List<Hotel> findByCityAndState(String city, String state, Sort sort);
 	
 	List<Hotel> findByHotelIDIn(List<Integer> hotelIDs);
+
+	List<Hotel> findByCityAndStateAndPriceLessThanEqual(String city, String state, Sort by, float maxPrice);
 }
