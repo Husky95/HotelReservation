@@ -4,6 +4,7 @@ form {
     width: 500px;
     margin: auto;
     justify-content: center;
+    margin-top: 50px;
     margin-bottom: 50px;
     gap: 20px;
     align-items: flex-end;

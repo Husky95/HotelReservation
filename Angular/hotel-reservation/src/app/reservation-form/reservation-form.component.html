@@ -11,7 +11,7 @@
             </div>
             <div *ngIf="images" class="thumbnail-container">
                 <div *ngFor="let image of images;">
-                    <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="displayURL = image.thumbnailImageSrc"/>
+                    <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="displayURL = image.thumbnailImageSrc">
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@ import { PhoneFormatPipe } from './phone-format.pipe';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RatingModule } from 'primeng/rating';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +38,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     FindReservationComponent,
     PhoneFormatPipe,
     AllHotelsPageComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

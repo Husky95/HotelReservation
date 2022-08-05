@@ -12,7 +12,7 @@ nav {
     align-items: center;
 }
 
-header {
+nav > header {
     color: white;
     font-size: 64px;
     margin-bottom: 10%;
@@ -29,11 +29,65 @@ button {
     font-size: 18px;
 }
 
-main {
-    margin: 50px 0px 50px 0px;
+.services, .places {
+    width: 90%;
+    margin: auto;
+    margin-top: 50px;
 }
 
-footer {
+.services > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.services > div > div {
+    width: 30%;
+    min-height: 275px;
+    background-color: white;
+    box-shadow: 5px 5px 10px 5px lightgray;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+i {
+    font-size: 36px;
+}
+
+.places img {
+    width: 340px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.places > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.places > div > div > div {
+    margin-top: 10px;
+}
+
+.places > div > div > div:last-child {
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.divider {
+    width: 90%;
+    margin: auto;
+    border: 2px solid #13678A;
+    margin-top: 60px;
+}
+
+.footer {
     background-color: #012030;
     height: 100px;
 }
