@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HotelApiService } from '../services/hotel-api.service';
 import { HotelDataService } from '../services/hotel-data.service';
 import { MapApiService } from '../services/map-api.service';
@@ -17,7 +17,30 @@ export class HotelListComponent implements OnInit {
     loading: boolean = true
     mapUrl: string = ''
 
-    constructor(private hotelData: HotelDataService, private service: HotelApiService, private mapService: MapApiService, private route: ActivatedRoute) { 
+    type: Array<any> = [
+        {sort: "Name", icon: 'pi pi-sort-alpha-down', value: ["hotelName", true]}, 
+        {sort: "Name", icon: 'pi pi-sort-alpha-up', value: ["hotelName", false]},
+        {sort: "Price", icon: 'pi pi-sort-numeric-down', value: ["price", true]},
+        {sort: "Price", icon: 'pi pi-sort-numeric-up', value: ["price", false]},
+        {sort: "Rating", icon: 'pi pi-sort-numeric-down', value: ["rating", true]},
+        {sort: "Rating", icon: 'pi pi-sort-numeric-up', value: ["rating", false]}
+    ]
+    filter: any = {}
+
+    filterBy() {
+        this.route.queryParams.subscribe(params => {
+            params = {
+                ...params,
+                sort: this.filter.value[0],
+                asc: this.filter.value[1]
+            }
+            //console.log(params)
+            this.router.navigate(['hotels'], {queryParams: {...params}})
+        })  
+    }
+
+    constructor(private hotelData: HotelDataService, private service: HotelApiService, private mapService: MapApiService, private router: Router,
+        private route: ActivatedRoute) { 
 
     }
 

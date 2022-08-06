@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { HotelApiService } from '../services/hotel-api.service';
 
 @Component({
@@ -17,7 +17,6 @@ export class DateFormComponent implements OnInit {
     locations: Array<any> = []
     selected = {city: '', state: ''}
 
-    searchEvent: Subject<void> = new Subject<void>()
 
     dataInvalid = {
         location: false,
@@ -26,7 +25,10 @@ export class DateFormComponent implements OnInit {
 
     hotels: Array<any> = []
 
-    constructor(private service: HotelApiService, private router: Router, private route: ActivatedRoute) { 
+    constructor(private service: HotelApiService, private router: Router, private route: ActivatedRoute) {
+        router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(e => {
+            console.log(e);
+        });
     }
 
     ngOnInit(): void {
@@ -56,10 +58,15 @@ export class DateFormComponent implements OnInit {
 
                 this.router.navigate(['hotels'], {queryParams: {...params}})
 
-                this.showHotelList = true
-                this.showForm = false
-                this.service.searchHotels(this.selected.city, this.selected.state, this.date).subscribe(resp => this.hotels = resp)
-                this.searchEvent.next()
+                this.route.queryParams.subscribe(params => {
+                    this.showHotelList = true
+                    this.showForm = false
+                    if (params.hasOwnProperty('sort') && params.hasOwnProperty('asc'))
+                        return this.service.searchHotels(this.selected.city, this.selected.state, this.date, params['sort'], params['asc']).subscribe(resp => this.hotels = resp)  
+                    return this.service.searchHotels(this.selected.city, this.selected.state, this.date, 'hotelName', true).subscribe(resp => this.hotels = resp)              
+                })
+                
+                
             }
         }
     }
