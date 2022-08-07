@@ -25,6 +25,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RatingModule } from 'primeng/rating';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FooterComponent } from './footer/footer.component';
+import { ReservationPageComponent } from './reservation-page/reservation-page.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FooterComponent } from './footer/footer.component';
     PhoneFormatPipe,
     AllHotelsPageComponent,
     FooterComponent,
+    ReservationPageComponent,
   ],
   imports: [
     BrowserModule,

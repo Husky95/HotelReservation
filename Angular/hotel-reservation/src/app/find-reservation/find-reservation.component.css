@@ -5,11 +5,22 @@ form {
     margin: auto;
     justify-content: center;
     margin-top: 50px;
-    margin-bottom: 50px;
+    padding-bottom: 24px;
     gap: 20px;
     align-items: flex-end;
 }
 
 button {
     height: 42px;
+}
+
+form > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+form > div > div {
+    display: flex;
+    flex-direction: column;
 }

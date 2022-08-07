@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelApiService } from '../services/hotel-api.service';
-import { HotelDataService } from '../services/hotel-data.service';
 import { MapApiService } from '../services/map-api.service';
 
 @Component({
@@ -12,6 +11,7 @@ import { MapApiService } from '../services/map-api.service';
 export class HotelListComponent implements OnInit {
 
     @Input() hotels: any = []
+    selectedHotel: any = {}
     @Output() hideHotels = new EventEmitter()
 
     loading: boolean = true
@@ -27,19 +27,17 @@ export class HotelListComponent implements OnInit {
     ]
     filter: any = {}
 
+    showForm: boolean = false
+
     filterBy() {
-        this.route.queryParams.subscribe(params => {
-            params = {
-                ...params,
-                sort: this.filter.value[0],
-                asc: this.filter.value[1]
-            }
-            //console.log(params)
-            this.router.navigate(['hotels'], {queryParams: {...params}})
-        })  
+        const params = {
+            sort: this.filter.value[0],
+            asc: this.filter.value[1]
+        }
+        this.router.navigate(['hotels'], {queryParams: {...params}, queryParamsHandling: 'merge'})
     }
 
-    constructor(private hotelData: HotelDataService, private service: HotelApiService, private mapService: MapApiService, private router: Router,
+    constructor(private service: HotelApiService, private mapService: MapApiService, private router: Router,
         private route: ActivatedRoute) { 
 
     }
@@ -57,8 +55,9 @@ export class HotelListComponent implements OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log("Changes first");
-        console.log(changes);
+        if (changes['hotels'].currentValue != changes['hotels'].previousValue)
+            this.showForm = false
+        //console.log(changes);
         this.hotels = changes['hotels'].currentValue.map((elem: any) => {
             if (elem.rating <= 2)
                 return elem = {...elem, ratingCatagory: 'Poor'}
@@ -76,7 +75,9 @@ export class HotelListComponent implements OnInit {
     }
 
     selectHotel(info: any) {
-        this.hotelData.hotelInfo = info
-        this.hideHotels.emit()
+        this.selectedHotel = info
+        //this.hideHotels.emit()
+        //this.router.navigate([], {queryParams: {hotelId: info.hotelID}, queryParamsHandling: 'merge'})
+        this.showForm = true
     }
 }

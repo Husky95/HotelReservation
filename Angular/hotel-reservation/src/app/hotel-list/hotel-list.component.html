@@ -1,9 +1,10 @@
+<div class="container">
 <div class="empty" *ngIf="hotels.length == 0">
     Sorry, there are no hotels for your location available for these dates.
 </div>
 
 <!-- Make a reservation for {{ date[0] | date: 'shortDate' }} - {{ date[1] | date: 'shortDate' }} -->
-<main>
+<main *ngIf="!showForm && hotels.length != 0">
 <aside>
     <img [hidden]="loading" [src]="mapUrl" alt="Map" (load)="loadedImage()">
     <div *ngIf="loading" class="loading">
@@ -46,3 +47,5 @@
     </div>
 </div>
 </main>
+<app-reservation-form *ngIf="showForm" (hideForm)="showForm = false" [hotel]="selectedHotel"></app-reservation-form>
+</div>
