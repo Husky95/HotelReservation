@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientXsrfModule, HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -20,9 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotelsPageComponent } from './hotels-page/hotels-page.component';
 import { FindReservationComponent } from './find-reservation/find-reservation.component';
 import { PhoneFormatPipe } from './phone-format.pipe';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { RatingModule } from 'primeng/rating';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LoginComponent } from './login/login.component'
+import { ReactiveFormsModule } from '@angular/forms';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +35,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     HotelsPageComponent,
     FindReservationComponent,
     PhoneFormatPipe,
+    LoginComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +49,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CalendarModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ConfirmDialogModule,
-    RatingModule,
-    ProgressSpinnerModule
+    ReactiveFormsModule,
+    HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN'})
+
   ],
   providers: [],
   bootstrap: [AppComponent]

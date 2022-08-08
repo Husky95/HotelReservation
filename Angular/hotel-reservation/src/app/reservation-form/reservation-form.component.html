@@ -1,162 +1,106 @@
-<div class="reservation-container" *ngIf="!showConfirmation; else confirmation">
-    <div *ngIf="showBack" (click)="hideForm.emit()" class="back-button">
-        <i class="pi pi-chevron-left"></i>
-        <span>Back to hotels</span>
-    </div>
-
-    <div class="hotel-info">
-        <div class="gallery" *ngIf="showBack">
-            <div class="imageDisplay">
-                <img [src]="displayURL" >
-            </div>
-            <div *ngIf="images" class="thumbnail-container">
-                <div *ngFor="let image of images;">
-                    <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="displayURL = image.thumbnailImageSrc"/>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="hotel">
-                <header>{{ hotelData.hotelInfo.hotelName }}</header>
-                <p-rating *ngIf="showBack" [ngModel]="getFloor(hotelData.hotelInfo.rating)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
-                <div *ngIf="showBack">{{ hotelData.hotelInfo.description }}</div>
-                <div *ngIf="showBack"><b>{{ hotelData.hotelInfo.rating * 2 }}/10 {{ hotelData.hotelInfo.ratingCatagory }}</b></div>
-            </div>
-            <div class="location"> 
-                <img *ngIf="showBack" [hidden]="loading" [src]="imageUrl" (load)="loadedImage()">
-                <div *ngIf="loading && showBack" class="loading">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
-                    <div>Getting map data</div>
-                </div>
-                <div>{{ hotelData.hotelInfo.street }}, {{ hotelData.hotelInfo.city }}, {{ hotelData.hotelInfo.state }}, {{ hotelData.hotelInfo.zipcode }}</div>
-                <div>{{ hotelData.hotelInfo.phone | phoneFormat }}</div>
-            </div>
-        </div>
-    </div>
-
-    <form>
-        <h3 *ngIf="!showBack">Check In - Check Out</h3>
-        <div *ngIf="!showBack" class="date">
-            <small *ngIf="dataInvalid.dates" class="p-error block">Please select your dates.</small>
-            <p-calendar name="date" (onClose)="validateData('dates')" (onSelect)="pastDates()" [(ngModel)]="dates" [showWeek]="true" 
-            selectionMode="range" [showButtonBar]="true" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
-        </div>
-
-        <h3>Personal Information</h3>
-        <div class="personal-info">
-            <div>
-                <small *ngIf="dataInvalid.first" class="p-error block">Please enter a first name.</small>
-                <input name="firstName" type="text" class="p-inputtext-sm" placeholder="First Name" [(ngModel)]="customer.firstName" (blur)="validateData('first')" [pKeyFilter]="'alpha'" pInputText>
-            </div>
-            <div>
-                <small *ngIf="dataInvalid.last" class="p-error block">Please enter a last name.</small>
-                <input name="lastName" type="text" class="p-inputtext-sm" placeholder="Last Name" [(ngModel)]="customer.lastName" (blur)="validateData('last')" [pKeyFilter]="'alpha'" pInputText>
-            </div> 
-        </div>
-
-        <h3>Contact Information</h3>
-        <div class="contact-info">
-            <div>
-                <small *ngIf="dataInvalid.email" class="p-error block">Please enter a valid email.</small>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-envelope"></i>
-                    <input name="email" type="text" class="p-inputtext-sm" placeholder="Email" [(ngModel)]="customer.email" (blur)="validateData('email')" [pKeyFilter]="'email'" pInputText>
-                </span>
-            </div>
-            <div>
-                <small *ngIf="dataInvalid.phone" class="p-error block">Please enter a valid phone number.</small>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-phone"></i>
-                    <input name="phone" type="text" class="p-inputtext-sm" placeholder="Phone Number" [(ngModel)]="customer.phone" (blur)="validateData('phone')" [pKeyFilter]="'int'" pInputText>
-                </span>
-            </div>
-        </div>
-
-        <h3>Address</h3>
-        <div class="address-info">
-            <div class="street">
-                <small *ngIf="dataInvalid.street" class="p-error block">Please enter your street.</small>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-home"></i>
-                    <input name="address" type="text" class="p-inputtext-sm" placeholder="Street" [(ngModel)]="customer.street" (blur)="validateData('street')" pInputText>
-                </span>
-            </div>
-
-            <div class="city-container">
-                <div>
-                    <small *ngIf="dataInvalid.city" class="p-error block">Please enter your city.</small>
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-building"></i>
-                        <input name="city" type="text" class="p-inputtext-sm" placeholder="City" [(ngModel)]="customer.city" (blur)="validateData('city')" [pKeyFilter]="'alpha'" pInputText>
-                    </span>
-                </div>
-                <div>
-                    <small *ngIf="dataInvalid.state" class="p-error block">Please enter your state.</small>
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-map"></i>
-                        <input name="state" type="text" class="p-inputtext-sm" placeholder="State" [(ngModel)]="customer.state" (blur)="validateData('state')" [pKeyFilter]="'alpha'" pInputText>
-                    </span>
-                </div>
-                <div>
-                    <small *ngIf="dataInvalid.zipcode" class="p-error block">Please enter a valid zipcode.</small>
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-map-marker"></i>
-                        <input name="zipcode" type="text" class="p-inputtext-sm" placeholder="Zipcode" [(ngModel)]="customer.zipcode" (blur)="validateData('zipcode')" [pKeyFilter]="'int'" pInputText>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <h3>Room Information</h3>
-        <div class="room-info">
-            <div>
-                <label for="numOfAdults">Adults</label>
-                <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="reservation.numAdults"></p-dropdown>
-            </div>
-
-            <div>
-                <label for="numOfChildren">Children</label>
-                <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="reservation.numKids"></p-dropdown>
-            </div>
-
-            <div>
-                <label for="bedSize">Bed Size</label>
-                <p-dropdown name="bedSize" [options]="beds" [(ngModel)]="reservation.bedType"></p-dropdown>
-            </div>
-
-            <div>
-                <label for="bedAmount">Beds</label>
-                <p-dropdown name="bedAmount" [options]="[1, 2]" [(ngModel)]="reservation.numBeds"></p-dropdown>
-            </div>
-        </div>
-
-        <nav>
-            <p-button (click)="getData()" *ngIf="showBack; else edit">Submit</p-button>
-            <ng-template #edit>
-                <div class="edit-buttons">
-                    <button (click)="cancelReservation()" pButton pRipple type="button" label="Cancel Reservation" icon="pi pi-trash" class="p-button-danger"></button>
-                    <button (click)="getData()" pButton pRipple type="button" label="Update Information" icon="pi pi-pencil" class="p-button-warning"></button>
-                    <button (click)="returnHome()" pButton pRipple type="button" label="Done" icon="pi pi-check"></button>
-                </div>
-            </ng-template>
-        </nav>
-    </form>
+<div *ngIf="showBack" (click)="hideForm.emit()">
+    <i class="pi pi-chevron-left"></i>
+    <span>Back to hotels</span>
 </div>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div>
+    <!-- Insert random image -->
+    <div>{{ hotelData.hotelInfo.hotelName }}</div>
+    <div>{{ hotelData.hotelInfo.street }}</div>
+    <div>
+        {{ hotelData.hotelInfo.city }}
+        {{ hotelData.hotelInfo.state }}
+        {{ hotelData.hotelInfo.zipcode }}
+    </div>
+    <div>{{ hotelData.hotelInfo.phone }}</div>
+</div>
 
-<ng-template #confirmation>
-    <div class="reservation-container">
-        <div (click)="home()" class="back-button">
-            <i class="pi pi-chevron-left"></i>
-            <span>Back to homepage</span>
+<form (ngSubmit)="getData()">
+    <h3>Personal Information</h3>
+    <div>
+        <label for="firstName">First Name</label>
+        <input name="firstName" type="text" class="p-inputtext-sm" [(ngModel)]="customer.firstName" [pKeyFilter]="'alpha'" pInputText>
+    </div>
+
+    <div>
+        <label for="lastName">Last Name</label>
+        <input name="lastName" type="text" class="p-inputtext-sm" [(ngModel)]="customer.lastName" [pKeyFilter]="'alpha'" pInputText>
+    </div>
+    
+    <h3>Contact Information</h3>
+    <div>
+        <label for="email">Email</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-envelope"></i>
+            <input name="email" type="text" class="p-inputtext-sm" [(ngModel)]="customer.email" [pKeyFilter]="'email'" pInputText>
+        </span>
+    </div>
+
+    <div>
+        <label for="phone">Phone</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-phone"></i>
+            <input name="phone" type="text" class="p-inputtext-sm" [(ngModel)]="customer.phone" [pKeyFilter]="'int'" pInputText>
+        </span>
+    </div>
+
+    <h3>Address</h3>
+
+    <div>
+        <label for="street">Street</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-home"></i>
+            <input name="address" type="text" class="p-inputtext-sm" [(ngModel)]="customer.street" pInputText>
+        </span>
+    </div>
+
+    <div class="address-container">
+        <div>
+            <label for="citys">City</label>
+            <span class="p-input-icon-left">
+                <i class="pi pi-building"></i>
+                <input name="city" type="text" class="p-inputtext-sm" [(ngModel)]="customer.city" [pKeyFilter]="'alpha'" pInputText>
+            </span>
         </div>
-
-        <div class="message">
-            <div>Thank you for making a reservation with us!</div>
-            <div>Your reservation id is: <b>{{ reservation.reservationNumber }}</b></div>
-            <div>Please keep track of it. You can use it to update or cancel your reservation.</div>
+        <div>
+            <label for="state">State</label>
+            <span class="p-input-icon-left">
+                <i class="pi pi-map"></i>
+                <input name="state" type="text" class="p-inputtext-sm" [(ngModel)]="customer.state" [pKeyFilter]="'alpha'" pInputText>
+            </span>
+        </div>
+        <div>
+            <label for="zipcode">Zipcode</label>
+            <span class="p-input-icon-left">
+                <i class="pi pi-map-marker"></i>
+                <input name="zipcode" type="text" class="p-inputtext-sm" [(ngModel)]="customer.zipcode" [pKeyFilter]="'int'" pInputText>
+            </span>
         </div>
     </div>
-</ng-template>
+
+    <h3>Room Information</h3>
+    <div>
+        <label for="numOfAdults"># of Adults</label>
+        <p-dropdown name="numOfAdults" [options]="adults" [(ngModel)]="reservation.numAdults"></p-dropdown>
+    </div>
+
+    <div>
+        <label for="numOfChildren"># of Children</label>
+        <p-dropdown name="numOfChildren" [options]="children" [(ngModel)]="reservation.numKids"></p-dropdown>
+    </div>
+
+    <div>
+        <label for="bedSize">Bed Size</label>
+        <p-dropdown name="bedSize" [options]="beds" [(ngModel)]="reservation.bedType"></p-dropdown>
+    </div>
+
+    <div>
+        <label for="bedAmount">Number of beds</label>
+        <p-dropdown name="bedAmount" [options]="[1, 2]" [(ngModel)]="reservation.numBeds"></p-dropdown>
+    </div>
+
+    <input type="submit" pButton>
+    <p-button (click)="getData()">Test</p-button>
+    {{ numOfAdults }}
+
+</form>

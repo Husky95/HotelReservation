@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,31 +11,26 @@ export class HotelApiService {
 
     http: HttpClient
 
-    constructor(http: HttpClient) { 
+    constructor(http: HttpClient, private service: AuthenticationService) { 
         this.http = http
     }
 
-    findAll(): Observable<any> {
-        return this.http.get(environment.apiURL + 'hotel/all')
-    }
+    //findAll(): Observable<any> {
+        //return this.http.get(environment.apiURL + 'hotel/all')
+    //}
 
+    findAll(): Observable<any> {
+        const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(this.service.getConfig().username + ':' + this.service.getConfig().password) });
+
+        let token = this.service.getConfig().token!;
+        console.log(token)
+        return this.http.get(environment.apiURL + 'hotel/all', {headers,responseType: 'text' as 'json'})
+    }
+    
+    
     findById(id: number): Observable<any> {
         return this.http.get(environment.apiURL + `hotel/${id}`)
     }
-
-    searchHotels(city: string, state: string, dates: Array<Date>): Observable<any> {
-        let arrivalDate = dates[0].toISOString().substring(0, 10)
-        let departDate = dates[1].toISOString().substring(0, 10)
-        console.log(arrivalDate, departDate)
-        return this.http.get(environment.apiURL + `hotel/search?city=${city}&state=${state}&arrival-date=${arrivalDate}&depart-date=${departDate}`)
-    }
-
-    checkAvailability(id: number, dates: Array<Date>): Observable<any> {
-        let arrivalDate = dates[0].toISOString().substring(0, 10)
-        let departDate = dates[1].toISOString().substring(0, 10)
-        return this.http.get(environment.apiURL + `hotel/available?id=${id}&arrival-date=${arrivalDate}&depart-date=${departDate}`)
-    }
-
 
     getLocations(): Observable<any> {
         return this.http.get(environment.apiURL + 'hotel/statecity')

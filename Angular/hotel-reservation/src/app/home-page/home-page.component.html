@@ -1,17 +1,12 @@
 <nav>
-    <header>
-        <div>Plan Your</div>
-        <div>Castaway Today</div>
-    </header> 
-    <div>
-        <button (click)="toggleForm(false)" pButton pRipple type="button" label="Make a reservation"></button>
-        <button (click)="toggleForm(true)" pButton pRipple type="button" label="Have a reservation?" class="p-button-secondary"></button>
-    </div>
+    <a href="#form"><p-button (click)="toggleForm(false)">Make a reservation</p-button></a>
+    <a href="#form"><p-button (click)="toggleForm(true)">Have a reservation?</p-button></a>
 </nav>
 
-<main>
+<main id="form">
     <app-find-reservation *ngIf="showReservationFrom; else make"></app-find-reservation>
-    <ng-template #make>
-        <app-date-form></app-date-form>
-    </ng-template>
+<ng-template #make>
+    <app-date-form></app-date-form>
+</ng-template>
 </main>
+

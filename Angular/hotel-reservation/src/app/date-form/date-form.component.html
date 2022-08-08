@@ -1,4 +1,5 @@
-<div class="form-container">
+<p>date-form works!</p>
+<div>
     <!-- <div>
         <label for="location">Location</label>
         <span class="p-input-icon-left">
@@ -8,8 +9,7 @@
     </div> -->
     <div>
         <label for="location">Location</label>
-        <small *ngIf="dataInvalid.location" class="p-error block">Location cannot be empty.</small>
-        <p-dropdown (onChange)="validateData('location')" (onHide)="validateData('location')" [options]="locations" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
+        <p-dropdown [options]="locations" optionLabel="city" [filter]="true" [(ngModel)]="selected" [showClear]="true" placeholder="Going to">
             <ng-template pTemplate="selectedItem">
                 <div *ngIf="selected">
                     <div>{{ selected.city }}, {{ selected.state }}</div>
@@ -22,17 +22,13 @@
             </ng-template>
         </p-dropdown>
     </div>
-    <div class="date">
+    <div>
         <label for="date">Check In - Check Out</label>
-        <small *ngIf="dataInvalid.dates" class="p-error block">Please select your dates.</small>
-        <p-calendar name="date" (onClose)="validateData('dates')" [(ngModel)]="date" [showWeek]="true" selectionMode="range" 
-            [showButtonBar]="true" (onSelect)="pastDates()" [readonlyInput]="true" placeholder="Check in - Check out"></p-calendar>
+        <p-calendar name="date" [(ngModel)]="date" [showWeek]="true" selectionMode="range" [showButtonBar]="true" (ngModelChange)="getDates()" [readonlyInput]="true"></p-calendar>
     </div>
-
-    <p-button (click)="showHotels()" label="Search" icon="pi pi-search"></p-button>
-
+    <p-button (click)="showHotels()">Search</p-button>
 </div>
 
 
-<app-hotel-list [hidden]="hideHotelList" [date]="date" [location]="selected" (hideHotels)="toggleDisplay()" [searchEvent]="searchEvent.asObservable()"></app-hotel-list>
-<app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()" [dates]="date"></app-reservation-form>
+<app-hotel-list [hidden]="hideHotelList" [date]="date" (hideHotels)="toggleDisplay()"></app-hotel-list>
+<app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()"></app-reservation-form>

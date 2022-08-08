@@ -1,10 +1,14 @@
 <form>
     <div>
-        <label for="reservation">Reservation No. </label>
+        <label for="reservation">Reservation No.</label>
         <input name="reservation" type="text" class="p-inputtext-sm" [(ngModel)]="id" [pKeyFilter]="'int'" pInputText>
     </div>
-    <button (click)="getReservation(id)" pButton pRipple type="button" icon="pi pi-search" label="Search"></button>
+    <p-button (onClick)="getReservation(id)">Sumbit</p-button>
 </form>
 
-<app-reservation-form *ngIf="reservation != null" [showBack]="false" 
-    [reservation]= "reservation" [customer]="customer" [dates]="dates"></app-reservation-form>
+<!-- <div *ngIf="hotel != null">
+    {{ hotel.hotelName }}
+
+</div> -->
+
+<app-reservation-form *ngIf="reservation != null" [showBack]="false" [reservation]= "reservation"></app-reservation-form>

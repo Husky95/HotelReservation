@@ -6,15 +6,15 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class ReservationApiService {
+export class CustomerApiService {
 
     http: HttpClient
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient) { 
         this.http = http
     }
 
     findById(id: number): Observable<any> {
-        return this.http.get(environment.apiURL + `reservation/${id}`)
+        return this.http.get(environment.apiURL + `customer/${id}`)
     }
 }
