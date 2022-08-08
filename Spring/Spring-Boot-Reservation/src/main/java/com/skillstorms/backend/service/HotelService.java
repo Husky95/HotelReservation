@@ -58,7 +58,7 @@ public class HotelService {
 		return availableHotels;
 	}
 	
-	private boolean isHotelAvailable(Hotel hotel, List<Reservation> reservations) {
+	public boolean isHotelAvailable(Hotel hotel, List<Reservation> reservations) {
 		return hotel.getTotalRoom() > reservationService.getMaxReservationOverlap(reservations);
 	}
 	

@@ -4,12 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.skillstorms.backend.model.Customer;
 import com.skillstorms.backend.model.DateChecker;
 import com.skillstorms.backend.model.Hotel;
+import com.skillstorms.backend.model.HotelBookedException;
 import com.skillstorms.backend.model.Reservation;
 import com.skillstorms.backend.repository.CustomerRepository;
 import com.skillstorms.backend.repository.HotelRepository;
@@ -44,6 +49,8 @@ public class ReservationController {
   private HotelRepository hotelRepository;
   @Autowired
   private ReservationService reservationService;
+  @Autowired
+  private HotelService hotelService;
   //@PostMapping("/customer/{customerId}")
   //public Reservation create(@PathVariable (value = "customerId") Integer customerId, @Valid @RequestBody Reservation reservation) {
 
@@ -52,15 +59,21 @@ public class ReservationController {
     @PathVariable(value = "hotelID") Integer hotelID,
     @Valid @RequestBody Reservation reservation) {
 
-    System.out.println("reservation add");
     customerRepository.findById(customerId).map(customer -> {
       reservation.setCustomer(customer);
       return reservation;
     }).orElseThrow(() -> new ResourceNotFoundException("Customer Id " + customerId + " not found"));
 
     return hotelRepository.findById(hotelID).map(hotel -> {
-      reservation.setHotel(hotel);
-      return reservationRepository.save(reservation);
+    	boolean isHotelStillAvailable = hotelService.isHotelAvailable(hotel.getHotelID(), reservation.getArrivalDate(), reservation.getDepartDate());
+    	if (isHotelStillAvailable) {
+    		reservation.setHotel(hotel);
+        return reservationRepository.save(reservation);
+    	}
+    	else {
+    		String message = hotel.getHotelName() + " is no longer available.";
+    		throw new ResponseStatusException(HttpStatus.CONFLICT, message, new HotelBookedException(message));
+    	}
     }).orElseThrow(() -> new ResourceNotFoundException("HotelId " + hotelID + " not found"));
   }
 
@@ -84,7 +97,6 @@ public class ReservationController {
     @PathVariable(value = "customerId") int customerID,
     @PathVariable(value = "hotelId") int hotelID,
     @Valid @RequestBody Reservation newReservation) {
-    System.out.println("Put Reservation");
     return reservationRepository.findById(reservationID)
       .map(reservation -> {
         Optional < Customer > tempCustomer = customerRepository.findById(customerID);
@@ -92,20 +104,37 @@ public class ReservationController {
 
         Customer currentCustomer = tempCustomer.isPresent() ? tempCustomer.get() : null;
         Hotel currentHotel = tempHotel.isPresent() ? tempHotel.get() : null;
+        
+        List<Reservation> reservations = reservationService.findByHotelIDAndDateRagne(hotelID, newReservation.getArrivalDate(), newReservation.getDepartDate());
+        Optional<Reservation> oldReservation = reservationRepository.findById(reservationID);
+        if (oldReservation.isPresent()) {
+        	reservations.remove(oldReservation.get());
+        }
+        if (tempHotel.isPresent()) {
+        	 boolean isNewReservationAvailable = hotelService.isHotelAvailable(tempHotel.get(), reservations);
+        	 if (isNewReservationAvailable) {
+             reservation.setReserveDate(newReservation.getReserveDate());
+             reservation.setArrivalDate(newReservation.getArrivalDate());
+             reservation.setDepartDate(newReservation.getDepartDate());
+             reservation.setNumAdults(newReservation.getNumAdults());
+             reservation.setNumKids(newReservation.getNumKids());
+             reservation.setNumBeds(newReservation.getNumBeds());
+             reservation.setBedType(newReservation.getBedType());
+             reservation.setRoomNumber(newReservation.getRoomNumber());
+             reservation.setCustomer(currentCustomer);
+             reservation.setHotel(currentHotel);
 
-        System.out.println(currentCustomer);
-        reservation.setReserveDate(newReservation.getReserveDate());
-        reservation.setArrivalDate(newReservation.getArrivalDate());
-        reservation.setDepartDate(newReservation.getDepartDate());
-        reservation.setNumAdults(newReservation.getNumAdults());
-        reservation.setNumKids(newReservation.getNumKids());
-        reservation.setNumBeds(newReservation.getNumBeds());
-        reservation.setBedType(newReservation.getBedType());
-        reservation.setRoomNumber(newReservation.getRoomNumber());
-        reservation.setCustomer(currentCustomer);
-        reservation.setHotel(currentHotel);
+             return reservationRepository.save(reservation);
+        	 }
+        	 else {
+        		 String message = tempHotel.get().getHotelName() + " is not available for the new dates.";
+        		 throw new ResponseStatusException(HttpStatus.CONFLICT, message, new HotelBookedException(message));
+        	 }
+        }
+        else {
+        	throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
-        return reservationRepository.save(reservation);
       });
   }
 
