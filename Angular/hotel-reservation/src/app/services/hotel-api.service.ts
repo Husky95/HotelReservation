@@ -25,7 +25,6 @@ export class HotelApiService {
     searchHotels(city: string, state: string, dates: Array<Date>, sort: string, asc: boolean): Observable<any> {
         let arrivalDate = dates[0].toISOString().substring(0, 10)
         let departDate = dates[1].toISOString().substring(0, 10)
-        console.log(arrivalDate, departDate)
         return this.http.get(environment.apiURL + `hotel/search?city=${city}&state=${state}&arrival-date=${arrivalDate}&depart-date=${departDate}&sort=${sort}&isAsc=${asc}`)
     }
 

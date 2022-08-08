@@ -16,7 +16,6 @@ export class MapApiService {
 
     getGeocoding(location: string): Observable<any> {
         //let location = `${street} ${city} ${state} ${zipcode}`
-        console.log(location)
         return this.http.get(`https://api.geoapify.com/v1/geocode/search?text=${location}&format=json&apiKey=${environment.apiKey}`)
     }
 

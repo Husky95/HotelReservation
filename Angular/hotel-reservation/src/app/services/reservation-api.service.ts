@@ -38,7 +38,6 @@ export class ReservationApiService {
             departDate: dates[1].toISOString().substring(0, 10),
             ...body
         }
-        console.log(body)
         return this.http.put(environment.apiURL + `reservation/${reservationId}/customer/${customerId}/hotel/${hotelId}`, body)
     }
 

@@ -19,7 +19,7 @@ export class ReservationPageComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.id)
+
     }
 
 }

@@ -86,7 +86,6 @@ export class ReservationFormComponent implements OnInit {
         }
 
     ngOnInit(): void {
-        console.log(this.hotel)
         if (this.dates.length == 0) {
             this.route.queryParams.subscribe(params => {
                 this.dates = [new Date(params['arrivalDate'].replaceAll("-", "/")), new Date(params['departDate'].replaceAll("-", "/"))]
@@ -144,7 +143,7 @@ export class ReservationFormComponent implements OnInit {
                 //Actual logic to perform a confirmation
                 this.customerService.update(this.customer.customerID, this.customer).subscribe(resp => {
                     this.reservationService.update(resp.reservations[0].reservationNumber, resp.customerID, 
-                        this.hotel.hotelID, this.dates, data).subscribe(resp => console.log(resp))
+                        this.hotel.hotelID, this.dates, data).subscribe()
                 })
                 this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
             }
@@ -194,7 +193,6 @@ export class ReservationFormComponent implements OnInit {
             //         reservation: data
             //     }
             // }
-            console.log("we updating in here")
             this.updateReservation(data)
         }
         else {
@@ -221,7 +219,6 @@ export class ReservationFormComponent implements OnInit {
     }
 
     loadedImage() {
-        console.log("loading")
         this.loading = false
     }
 
@@ -262,14 +259,12 @@ export class ReservationFormComponent implements OnInit {
     }
 
     pastDates() {
-        console.log(this.dates)
         let today = new Date()
         if (this.dates[0].getTime() == this.dates[1].getTime()) 
             this.dates = [this.dates[0]]
         
         let past = new Date(today.toLocaleDateString())
         past.setDate(past.getDate() - 1)
-        console.log(past)
         if (this.dates[0] < past)
             this.dates = []     
     }

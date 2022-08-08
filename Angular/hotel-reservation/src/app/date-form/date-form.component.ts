@@ -70,7 +70,6 @@ export class DateFormComponent implements OnInit {
         
         let past = new Date(today.toLocaleDateString())
         past.setDate(past.getDate() - 1)
-        console.log(past)
         if (this.date[0] < past)
             this.date = []     
     }

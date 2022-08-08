@@ -49,9 +49,7 @@ export class HotelListComponent implements OnInit {
         //         this.loading = true
         //         this.mapUrl = this.mapService.getStaticMap(resp.results[0].lon, resp.results[0].lat, 12)
         //     })
-        // })
-
-        console.log("rendered")                     
+        // })               
     }
 
     ngOnChanges(changes: SimpleChanges) {
