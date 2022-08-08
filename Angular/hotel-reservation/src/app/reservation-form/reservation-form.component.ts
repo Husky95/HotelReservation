@@ -154,7 +154,7 @@ export class ReservationFormComponent implements OnInit {
     noAvailability() {
         this.confirmationService.confirm({
             header: 'No Availability',
-            message: 'Sorry, there are no available rooms for these dates. Please select a different set of days or try again later.',
+            message: 'Sorry, there are no available rooms for these dates. Please select a different set of days, choose a different hotel or try again later.',
             accept: () => {
                 window.location.reload()
                 window.scrollTo(0, 0)
