@@ -23,33 +23,50 @@ import com.skillstorms.backend.model.Hotel;
 import com.skillstorms.backend.model.ResourceNotFoundException;
 import com.skillstorms.backend.repository.CustomerRepository;
 
-@RestController // @RestController = @Controller + @ResponseBody
-@CrossOrigin("*") // If you don't like CorsFilter, you're in luck. They do the same thing
-@RequestMapping(path="/customer") // This means URL's start with /demo (after Application path)
+@RestController
+@CrossOrigin("*")
+@RequestMapping(path="/customer") 
 public class CustomerController {
   @Autowired 
   private CustomerRepository customerRepository;
 
+  /**
+   * Method handle POST request for creating a single Customer object.
+   * @param customer Customer object from front end.
+   * @return The created Customer object in database.
+   */
   @PostMapping
   public Customer create(@Valid @RequestBody Customer customer) {
 	 System.out.println("Customer add call"); 
 	 return customerRepository.save(customer);
   }  
-  //@GetMapping(path="/all")
-  //public Page<Customer> getAllCustomer(Pageable pageable) {
-      //return customerRepository.findAll(pageable);
-  //}
   
+  /**
+   * Method handle GET request for getting all the Customer objects.
+   * @return All the Customer objects in database.
+   */
   @GetMapping(path="/all")
   public @ResponseBody Iterable<Customer> getAllCustomers() {
     return customerRepository.findAll();
   }
+  
+  /**
+   * Method handle GET request for getting a Customer objects by CustomerID.
+   * @param customerID CustomerID value from the front end.
+   * @return The Customer objects where Customer_Id in database equal to the pass in CustomerID.
+   */
   @GetMapping(path="/{id}")
   public Customer findByID(@PathVariable (value = "id") int customerID) {
 	  	Optional<Customer> customer = customerRepository.findById(customerID);
 		return customer.isPresent() ? customer.get() : null;
   }
-  //update	
+  
+  /**
+   * Method handle PUT request for updating a Customer objects by CustomerID.
+   * @param customerID CustomerID value from the front end.
+   * @param newCustomer new Customer object value from the front end.
+   * @return The updated Customer objects where Customer_Id in database equal to the pass in CustomerID.
+   */
   @PutMapping(path="/{id}")
   public @ResponseBody Optional<Object> update(@PathVariable (value = "id") int customerID, @Valid @RequestBody Customer newCustomer) { 
 	  return customerRepository.findById(customerID)
@@ -66,7 +83,12 @@ public class CustomerController {
 		          return customerRepository.save(customer);
 	 });
   }
-  //delete
+  
+  /**
+   * Method handle DELETE request for deleting a Customer objects by CustomerID.
+   * @param customerID CustomerID value from the front end.
+   * @return The deleted Customer objects where Customer_Id in database equal to the pass in CustomerID.
+   */
   @DeleteMapping(path="/{id}")
   @ResponseStatus(code = HttpStatus.OK)
   public void delete(@PathVariable int id) {

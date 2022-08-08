@@ -32,9 +32,9 @@ import com.skillstorms.backend.service.HotelService;
 import com.skillstorms.backend.service.ReservationService;
 import com.skillstorms.backend.model.ResourceNotFoundException;
 
-@RestController // @RestController = @Controller + @ResponseBody
-@CrossOrigin("*") // If you don't like CorsFilter, you're in luck. They do the same thing
-@RequestMapping(path = "/reservation") // This means URL's start with /demo (after Application path)
+@RestController
+@CrossOrigin("*") 
+@RequestMapping(path = "/reservation") 
 public class ReservationController {
   @Autowired
   private ReservationRepository reservationRepository;
@@ -44,9 +44,15 @@ public class ReservationController {
   private HotelRepository hotelRepository;
   @Autowired
   private ReservationService reservationService;
-  //@PostMapping("/customer/{customerId}")
-  //public Reservation create(@PathVariable (value = "customerId") Integer customerId, @Valid @RequestBody Reservation reservation) {
+ 
 
+  /**
+   * Method handle POST request for creating a single reservation.
+   * @param customerId Id of customer that create this reservation.
+   * @param hotelID Id of the hotel that was reserve.
+   * @param reservation Reservation object from front end.
+   * @return The created Reservation objects in database.
+   */
   @PostMapping("/customer/{customerId}/hotel/{hotelID}")
   public Reservation create(@PathVariable(value = "customerId") Integer customerId,
     @PathVariable(value = "hotelID") Integer hotelID,
@@ -64,21 +70,44 @@ public class ReservationController {
     }).orElseThrow(() -> new ResourceNotFoundException("HotelId " + hotelID + " not found"));
   }
 
+  /**
+   * Method handle GET request for getting all the Reservation objects.
+   * @return All the Reservation objects in database.
+   */
   @GetMapping(path = "/all")
   public @ResponseBody Iterable < Reservation > findAll() {
     return reservationRepository.findAll();
   }
+  
+  /**
+   * Method handle GET request returning all hotel with vacant room (no full reservation)
+   * @param startDate startDate of the the reservation.
+   * @param endDate endDate of the reservation.
+   * @return All the Reservation objects in database.
+   */
   @GetMapping(path = "/vacancy/{arrivalDate}/{departDate}")
   public @ResponseBody ArrayList < Hotel > findByVacancy(@PathVariable(value = "arrivalDate") String startDate, @PathVariable(value = "departDate") String endDate) {
     return reservationService.getVacantHotel(startDate, endDate);
   }
 
+  /**
+   * Method handle GET request for a Reservation objects by ID.
+   * @param reservationID Id of reservation that the front-end want.
+   * @return A Reservation objects in database by the input ID.
+   */
   @GetMapping(path = "/{id}")
   public Reservation findByID(@PathVariable(value = "id") int reservationID) {
     Optional < Reservation > reservation = reservationRepository.findById(reservationID);
     return reservation.isPresent() ? reservation.get() : null;
   }
-  //update
+
+  /**
+   * Method handle PUT request for updating a single reservation.
+   * @param customerId Id of customer that create this reservation.
+   * @param hotelID Id of the hotel that was reserve.
+   * @param reservation The new Reservation object from front end.
+   * @return The updated Reservation objects in database.
+   */
   @PutMapping(path = "/{reservationId}/customer/{customerId}/hotel/{hotelId}")
   public @ResponseBody Optional < Object > update(@PathVariable(value = "reservationId") int reservationID,
     @PathVariable(value = "customerId") int customerID,
@@ -108,7 +137,11 @@ public class ReservationController {
         return reservationRepository.save(reservation);
       });
   }
-
+  /**
+   * Method handle DELETE request for deleting a Reservation objects byReservationID.
+   * @param ReservationID ReservationID value from the front end.
+   * @return The deleted Reservation objects where CReservation_Id in database equal to the pass in ReservationID.
+   */
   @DeleteMapping(path = "/{id}")
   public void delete(@PathVariable(value = "id") int reservationID) {
     Optional < Reservation > reservationStagedForDelete = reservationRepository.findById(reservationID);

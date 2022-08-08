@@ -35,11 +35,15 @@ public class ReservationService {
   public List < ReservationCount > getReservationCountByHotel(LocalDate arrivalDate, LocalDate departDate, List < Integer > hotelIDs) {
     return reservationRepository.countReservationsByHotelForDateRange(arrivalDate, departDate, hotelIDs);
   }
-
+  /**
+   * Method return a list of all vacant hotel based on the reservation date range from the user 
+   * @param startDate Id of customer that create this reservation.
+   * @param endDate Id of the hotel that was reserve.
+   * @return The ArrayList of all the vacant hotel.
+   **/
   public ArrayList < Hotel > getVacantHotel(String startDate, String endDate) {
     Iterable < Reservation > ReservationList = reservationRepository.findAll();
     ArrayList < Integer > hotelList = new ArrayList < Integer > ();
-    //int[] hotelMaxRooms = new int[] { 40, 40, 40 };
 
     //This go through the reservation list and check if there matching date in arrivalDate or departDate
     //if there is add the hotelID to a hotel List 
@@ -50,15 +54,13 @@ public class ReservationService {
         LocalDate departDate = LocalDate.parse(endDate);
 
         DateChecker checker = new DateChecker(arrivalDate, departDate);
-        //int compareValue = arrivalDate.compareTo(element.getArrivalDate());
 
         if (checker.checkConflictRange(element.getArrivalDate(), element.getDepartDate())) {
           Hotel hotel = element.getHotel();
           hotelList.add(hotel.getHotelID());
 
         } else {
-          //System.out.println("input date is available");
-          //ArrayList<Hotel> allHotel = new ArrayList<Hotel>(hotelRepository.findAll());
+        
         }
       }
     );
