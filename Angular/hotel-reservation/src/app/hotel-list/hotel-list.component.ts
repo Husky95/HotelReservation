@@ -44,12 +44,12 @@ export class HotelListComponent implements OnInit {
 
     ngOnInit(): void {
 
-        // this.route.queryParams.subscribe(params => {
-        //     this.mapService.getGeocoding(`${params['city']}, ${params['state']}`).subscribe(resp => {
-        //         this.loading = true
-        //         this.mapUrl = this.mapService.getStaticMap(resp.results[0].lon, resp.results[0].lat, 12)
-        //     })
-        // })               
+        this.route.queryParams.subscribe(params => {
+            this.mapService.getGeocoding(`${params['city']}, ${params['state']}`).subscribe(resp => {
+                this.loading = true
+                this.mapUrl = this.mapService.getStaticMap(resp.results[0].lon, resp.results[0].lat, 12)
+            })
+        })               
     }
 
     ngOnChanges(changes: SimpleChanges) {
