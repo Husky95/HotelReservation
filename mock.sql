@@ -106,30 +106,97 @@ insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms,
 values('UnitPrime', '9241 13th Ave SW', 'Seattle', 'WA', 98106, 5099557226,1, 5, 1000, 
 "A very luxurious single suit room using the only the latest technology." );
 
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Square Hotel', '9256 13th Ave SW', 'Seattle', 'WA', 93106, 5099555226,1, 5, 1000, 
+"A very luxurious single suit room using the only the latest technology." );
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Handlery Union', '9551 13th Ave SW', 'Seattle', 'WA', 95106, 5099553226,1, 5, 1000, 
+"A very luxurious single suit room using the only the latest technology." );
+
+
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('Giraffe Manor', '9241 13th Ave SW', 'Malvern', 'PA', 898106, 50943557226,40 , 4.5 , 500, 
 "The exclusive boutique hotel Giraffe Manor is located in one of Nairobi’s most iconic buildings, and its timeless elegance recalls the 1930s when European visitors first flocked to East Africa to enjoy safaris."
 );
 
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Elephant Manor', '133 25th Ave SW', 'Malvern', 'PA', 898106, 50943557226,40 , 4.5 , 500, 
+"The exclusive boutique hotel Giraffe Manor is located in one of Nairobi’s most iconic buildings, and its timeless elegance recalls the 1930s when European visitors first flocked to East Africa to enjoy safaris."
+);
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('Buena Vista Suites Orlando', '8203 World Center Dr', 'Orlando', 'FL', '32821', 4072398588, 1, 2, 565 , 
 "Founded in 1228 and later purchased by the Guiness family, this palatial castle is brimming with culture and history. The is not only magnificent, but it has a cult following among guests.");
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('The Witherspoon', '130 South Juniper St', 'Orlando', 'FL', '19107', 6173000956, 3, 3.5, 255, 
+"While you are cruising down Route 66 you can pull into this very unique roadside motel, The Sonder. Built in 1949 it’s a nod back to those great American road trip days and makes a fun and quirky place to stay. ");
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Union  Hotel', '351 Geary St', 'Orlando', 'FL', '94102', 4157817800, 2, 4, 332, 
+"When an architect was faced with a challenge on how to build homes over a pedestrian bridge, this is how he answered the call – with curious and strange cube homes. Not only are the outside of the homes unforgettable, but the inside too. Each room is oddly shaped with angled walls and interesting skylights. ");
+
 
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('Handlery Union Square Hotel', '351 Geary St', 'San Francisco', 'CA', '94102', 4157817800, 2, 4, 332, 
 "When an architect was faced with a challenge on how to build homes over a pedestrian bridge, this is how he answered the call – with curious and strange cube homes. Not only are the outside of the homes unforgettable, but the inside too. Each room is oddly shaped with angled walls and interesting skylights. ");
 
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('FireHotel', '701 Michigan Ave', 'San Francisco', 'CA', '60611', 1234567890, 3 , 4, 325,
+"The hotel also includes an ice church, ice bar, ice sculpting studio and pillar hall, in addition to two heated restaurants, lounge, four meeting rooms and two wilderness camps." );
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Rosewood Suites', '40 East Grand Ave', 'San Francisco', 'CA', '60611', 1234567890, 4, 3.5 , 799, 
+" The hotel’s luxurious interior bears the unmistakable stamp of Gehry’s design. Tilted walls, zigzag windows, cathedral-height ceilings and a host of bespoke details create the impression of accommodation as a work of art in its 43 rooms & suites.");
+
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('Sonder The Witherspoon', '130 South Juniper St', 'Philadelphia', 'PA', '19107', 6173000956, 3, 3.5, 255, 
 "While you are cruising down Route 66 you can pull into this very unique roadside motel, The Sonder. Built in 1949 it’s a nod back to those great American road trip days and makes a fun and quirky place to stay. ");
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Square Hotel', '9256 13th Ave SW', 'Philadelphia', 'PA', 93106, 5099555226,1, 5, 1000, 
+"A very luxurious single suit room using the only the latest technology." );
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Hand Union', '9551 13th Ave SW', 'Philadelphia', 'PA', 95106, 5099553226,1, 5, 1000, 
+"A very luxurious single suit room using the only the latest technology." );
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Gira Manor', '9241 13th Ave SW', 'Philadelphia', 'PA', 898106, 50943557226,40 , 4.5 , 500, 
+"The exclusive boutique hotel Giraffe Manor is located in one of Nairobi’s most iconic buildings, and its timeless elegance recalls the 1930s when European visitors first flocked to East Africa to enjoy safaris."
+);
+
 
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('Finn Lough Resort', '9241 13th Ave SW', 'Portland', 'OR', '88106', 7099557226, 4, 1.5 , 99, 
 "Likely one of the most unique hotel rooms on the planet. These idyllic bubble domes are set back into the green forest of Northern Ireland and offer guests a true escape. The transparent walls give you an uninterrupted 180° view of the trees and the sky, which past guests have said is phenomenal on a clear night. ");
 
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Handlery Union Square Hotel', '351 Geary St', 'Portland', 'OR', '94102', 4157817800, 2, 4, 332, 
+"When an architect was faced with a challenge on how to build homes over a pedestrian bridge, this is how he answered the call – with curious and strange cube homes. Not only are the outside of the homes unforgettable, but the inside too. Each room is oddly shaped with angled walls and interesting skylights. ");
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('FireHotel', '701 Michigan Ave', 'Portland', 'OR', '60611', 1234567890, 3 , 4, 325,
+"The hotel also includes an ice church, ice bar, ice sculpting studio and pillar hall, in addition to two heated restaurants, lounge, four meeting rooms and two wilderness camps." );
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
+values('Rosewood Suites', '40 East Grand Ave', 'Portland', 'OR', '60611', 1234567890, 4, 3.5 , 799, 
+" The hotel’s luxurious interior bears the unmistakable stamp of Gehry’s design. Tilted walls, zigzag windows, cathedral-height ceilings and a host of bespoke details create the impression of accommodation as a work of art in its 43 rooms & suites.");
+
+
+
+insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('Wrigley Hostel', '3514 Sheffield Ave', 'Chicago', 'IL', '60657', 1234567890, 2, 3, 199, 
-"");
+"Located in Wrigleyville, the party center of Chicago, you are steps away from some of the finest bars, restaurants and nightclubs in Chicago. We are also located right out side the Addison Red Line 'L' Train Stop, which takes you downtown in just 15 Minutes and we are across the street from the world famous Wrigley Field Baseball Stadium.");
 
 insert into Hotel (Hotel_Name, Street, City, State, Zipcode, Phone, Total_Rooms, Rating, Price, Descriptions ) 
 values('IceHotel', '701 Michigan Ave', 'Chicago', 'IL', '60611', 1234567890, 3 , 4, 325,
