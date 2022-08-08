@@ -5,8 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 @Entity(name="User") 
 @Table(name="User")
@@ -29,9 +36,19 @@ public class User {
 	private String role;
 	
 	@Column(name = "Enabled")
-	@NotBlank
 	private int enabled;
 	
+	@OneToOne()
+    @JoinColumn(name = "Customer_ID")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+    private Customer customer;
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	public int getUserID() {
 		return userID;
 	}

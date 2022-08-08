@@ -53,11 +53,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		  http.authorizeRequests()
-          .anyRequest().authenticated()
-          .and()
-          .formLogin().loginPage("/login").permitAll()
-          .and()
-          .logout().logoutUrl("/logout").permitAll();     
+		  http.authorizeHttpRequests().mvcMatchers("/customer/*","/reservation/*","/registration","hotel").permitAll();
+
+		  //http.formLogin();
+		  http.httpBasic();
+		  http.cors();
+
+		  http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringAntMatchers("/register","/customer/*");
+
+		  http.csrf().disable(); //can't get this to work 
+		  http.authorizeHttpRequests().mvcMatchers("/test/**").hasAnyRole("USER");
+
+		  http.authorizeHttpRequests().mvcMatchers("/user/**").hasAnyRole("USER");
+		  http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true);
+
+
+
   }
 }
