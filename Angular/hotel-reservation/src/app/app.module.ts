@@ -10,6 +10,9 @@ import { DateFormComponent } from './date-form/date-form.component';
 import { HotelListComponent } from './hotel-list/hotel-list.component';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HotelsPageComponent } from './hotels-page/hotels-page.component';
+import { FindReservationComponent } from './find-reservation/find-reservation.component';
+import { AllHotelsPageComponent } from './all-hotels-page/all-hotels-page.component';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -17,12 +20,12 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HotelsPageComponent } from './hotels-page/hotels-page.component';
-import { FindReservationComponent } from './find-reservation/find-reservation.component';
 import { PhoneFormatPipe } from './phone-format.pipe';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RatingModule } from 'primeng/rating';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FooterComponent } from './footer/footer.component';
+import { ReservationPageComponent } from './reservation-page/reservation-page.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     HotelsPageComponent,
     FindReservationComponent,
     PhoneFormatPipe,
+    AllHotelsPageComponent,
+    FooterComponent,
+    ReservationPageComponent,
   ],
   imports: [
     BrowserModule,

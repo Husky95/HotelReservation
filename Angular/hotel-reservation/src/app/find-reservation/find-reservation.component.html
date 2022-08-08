@@ -1,10 +1,13 @@
 <form>
     <div>
-        <label for="reservation">Reservation No. </label>
-        <input name="reservation" type="text" class="p-inputtext-sm" [(ngModel)]="id" [pKeyFilter]="'int'" pInputText>
+        <label for="reservation">Reservation Id </label>
+        <div>
+            <small *ngIf="invalid" class="p-error block">Invalid reservation Id</small>
+            <input name="reservation" type="text" class="p-inputtext-sm" [(ngModel)]="id" [pKeyFilter]="'int'" pInputText>
+        </div>
     </div>
     <button (click)="getReservation(id)" pButton pRipple type="button" icon="pi pi-search" label="Search"></button>
 </form>
 
 <app-reservation-form *ngIf="reservation != null" [showBack]="false" 
-    [reservation]= "reservation" [customer]="customer" [dates]="dates"></app-reservation-form>
+    [reservation]= "reservation" [customer]="customer" [dates]="dates" [hotel]="hotel"></app-reservation-form>

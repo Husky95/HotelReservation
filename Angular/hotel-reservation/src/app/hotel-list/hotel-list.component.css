@@ -1,3 +1,7 @@
+.container {
+    min-height: 80vh;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -5,6 +9,7 @@ main {
     gap: 40px;
     width: 90%;
     margin: auto;
+    margin-top: 50px;
 }
 
 main > img {
@@ -15,9 +20,9 @@ main > img {
 .hotel-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 20px;
     flex: 1;
+    align-items: flex-end;
 }
 
 .hotel-container > div {
@@ -29,8 +34,8 @@ main > img {
     align-items: center;
     overflow: hidden;
     background-color: white;
-    box-shadow: 5px 5px 5px lightgray;
-    gap: 15px;
+    box-shadow: 5px 5px 10px 5px lightgray;
+    gap: 15px; 
 }
 
 .hotel-container > div > div {
@@ -47,6 +52,7 @@ main > img {
 
 header {
     font-size: 24px;
+    margin-top: 10px;
 }
 
 .hotel-container img {
@@ -72,6 +78,7 @@ header {
 }
 
 .empty {
+    margin-top: 50px;
     text-align: center;
 }
 
@@ -83,4 +90,9 @@ header {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 130px;
+
 }

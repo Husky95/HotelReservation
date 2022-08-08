@@ -1,15 +1,33 @@
+<div class="container">
 <div class="empty" *ngIf="hotels.length == 0">
     Sorry, there are no hotels for your location available for these dates.
 </div>
 
 <!-- Make a reservation for {{ date[0] | date: 'shortDate' }} - {{ date[1] | date: 'shortDate' }} -->
-<main>
-<img *ngIf="coords != null" [src]="mapService.getStaticMap(coords.lon, coords.lat, 12)" alt="Map">
-<div *ngIf="coords == null" class="loading">
-    <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
-    <div>Getting map data</div>
-</div>
-<div class="hotel-container" >
+<main *ngIf="!showForm && hotels.length != 0">
+<aside>
+    <img [hidden]="loading" [src]="mapUrl" alt="Map" (load)="loadedImage()">
+    <div *ngIf="loading" class="loading">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+        <div>Getting map data</div>
+    </div>
+    <div class="sidebar">
+        
+    </div>
+</aside>
+<div class="hotel-container">
+    <p-dropdown [options]="type" [(ngModel)]="filter" placeholder="Sort By" optionLabel="sort" (onChange)="filterBy()" >
+        <ng-template pTemplate="selectedItem">
+            <div *ngIf="filter">
+                <i [class]="filter.icon"></i> {{ filter.sort }}
+            </div>
+        </ng-template>
+        <ng-template let-type pTemplate="item">
+            <div class="type-item">
+                <i [class]="type.icon"></i> {{ type.sort }}
+            </div>
+        </ng-template>
+    </p-dropdown>
     <div *ngFor="let elem of hotels">
         <img src="https://digital.ihg.com/is/image/ihg/even-hotels-alpharetta-6479711701-4x3">
         <div class="hotel-info">
@@ -21,13 +39,6 @@
                 <div><b>{{ elem.rating * 2 }}/10</b></div>
                 <div>{{ elem.ratingCatagory }}</div>
             </div>
-            
-            <!-- <div>{{ elem.street }}</div>
-            <div>
-                {{ elem.city }}
-                {{ elem.state }}
-                {{ elem.zipcode }}
-            </div> -->
         </div>
         <div class="row-end">
             <button (click)="selectHotel(elem)" pButton pRipple icon="pi pi-book" label="Book" type="button" class="p-button-outlined p-button-warning"></button>
@@ -36,3 +47,5 @@
     </div>
 </div>
 </main>
+<app-reservation-form *ngIf="showForm" (hideForm)="showForm = false" [hotel]="selectedHotel"></app-reservation-form>
+</div>

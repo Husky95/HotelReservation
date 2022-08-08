@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HotelApiService } from '../services/hotel-api.service';
 
 @Component({
@@ -9,34 +9,56 @@ import { HotelApiService } from '../services/hotel-api.service';
 })
 export class DateFormComponent implements OnInit {
 
-    hideHotelList: boolean = true
+    showHotelList: boolean = false
     date: Array<Date> = []
-    showForm: boolean = false
 
     locations: Array<any> = []
-    selected = {city: null, state: null}
+    selected = {city: '', state: ''}
 
-    searchEvent: Subject<void> = new Subject<void>()
 
     dataInvalid = {
         location: false,
         dates: false
     }
 
-    constructor(private service: HotelApiService) { }
+    hotels: Array<any> = []
+
+    constructor(private service: HotelApiService, private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.service.getLocations().subscribe(resp => this.locations = resp)
+
+        this.route.queryParams.subscribe(params => {
+            if (Object.keys(params).length != 0) {
+                this.selected = {city: params['city'], state: params['state']}
+                this.date = [
+                    new Date(params['arrivalDate'].replaceAll("-", "/")), 
+                    new Date(params['departDate'].replaceAll("-", "/"))
+                ]
+                this.showHotels()
+            }
+        })
     }
 
     showHotels() {
-
         if (!this.dataInvalid.location && this.selected != null) {
-            if (!this.dataInvalid.dates && this.date.length == 2) {
-                this.hideHotelList = false
-                this.showForm = false
-                console.log(this.selected)
-                this.searchEvent.next()
+            if (!this.dataInvalid.dates && this.date.length == 2) {                
+                const params = {
+                    city: this.selected.city,
+                    state: this.selected.state,
+                    arrivalDate: this.date[0].toISOString().substring(0, 10),
+                    departDate: this.date[1].toISOString().substring(0, 10)
+                }
+
+                this.router.navigate(['hotels'], {queryParams: {...params}, queryParamsHandling: 'merge', replaceUrl:true})
+                
+                this.route.queryParams.subscribe(params => {
+                    this.showHotelList = true
+                    if (params.hasOwnProperty('sort') && params.hasOwnProperty('asc'))
+                        return this.service.searchHotels(this.selected.city, this.selected.state, this.date, params['sort'], params['asc']).subscribe(resp => this.hotels = resp)  
+                    return this.service.searchHotels(this.selected.city, this.selected.state, this.date, 'hotelName', true).subscribe(resp => this.hotels = resp)              
+                })
+
             }
         }
     }
@@ -54,8 +76,7 @@ export class DateFormComponent implements OnInit {
     }
     
     toggleDisplay() {
-        this.hideHotelList = !this.hideHotelList
-        this.showForm = !this.showForm
+        this.showHotelList = !this.showHotelList
     }
 
     validateData(type: string) {

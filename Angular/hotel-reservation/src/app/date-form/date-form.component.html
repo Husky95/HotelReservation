@@ -1,11 +1,4 @@
 <div class="form-container">
-    <!-- <div>
-        <label for="location">Location</label>
-        <span class="p-input-icon-left">
-            <i class="pi pi-map-marker"></i>
-            <input name="location" type="text" class="p-inputtext-sm" placeholder="Going to" pInputText>
-        </span>
-    </div> -->
     <div>
         <label for="location">Location</label>
         <small *ngIf="dataInvalid.location" class="p-error block">Location cannot be empty.</small>
@@ -34,5 +27,5 @@
 </div>
 
 
-<app-hotel-list [hidden]="hideHotelList" [date]="date" [location]="selected" (hideHotels)="toggleDisplay()" [searchEvent]="searchEvent.asObservable()"></app-hotel-list>
-<app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()" [dates]="date"></app-reservation-form>
+<app-hotel-list *ngIf="showHotelList" [hotels]="hotels"></app-hotel-list>
+<!-- <app-reservation-form *ngIf="showForm" [showBack]="true" (hideForm)="toggleDisplay()" [dates]="date"></app-reservation-form> -->

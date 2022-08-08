@@ -1,17 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CustomerApiService } from '../services/customer-api.service';
-import { HotelDataService } from '../services/hotel-data.service';
 import { ReservationApiService } from '../services/reservation-api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MapApiService } from '../services/map-api.service';
 import { HotelApiService } from '../services/hotel-api.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-reservation-form',
     templateUrl: './reservation-form.component.html',
     styleUrls: ['./reservation-form.component.css'],
-    providers: [ConfirmationService,MessageService]
+    providers: [ConfirmationService, MessageService]
 })
 
 export class ReservationFormComponent implements OnInit {
@@ -25,13 +24,13 @@ export class ReservationFormComponent implements OnInit {
     numOfAdults: number = 0
     numOfChildren: number = 0
 
-    hotelData: HotelDataService
     @Input() reservation: any = {
         numAdults: 1,
         numBeds: 1,
         bedType: "Full",
     }
 
+    @Input() hotel: any
     @Input() customer: any = {
         firstName: '',
         lastName: '',
@@ -81,20 +80,23 @@ export class ReservationFormComponent implements OnInit {
         }
     ]
 
-    constructor(hotelData: HotelDataService, private customerService: CustomerApiService, private reservationService: ReservationApiService, 
-        private confirmationService: ConfirmationService, private messageService: MessageService, private mapService: MapApiService, private hotelService: HotelApiService) { 
-            this.hotelData = hotelData
-    }
+    constructor(private customerService: CustomerApiService, private reservationService: ReservationApiService, private confirmationService: ConfirmationService, 
+        private messageService: MessageService, private mapService: MapApiService, private hotelService: HotelApiService, private router: Router,
+        private route: ActivatedRoute) {
+        }
 
     ngOnInit(): void {
-        // if (this.reservation.customer != null) {
-        //     // Found customer id, display data
-        //     this.customerService.findById(this.reservation.customer).subscribe(resp => this.customer = resp)
-        // }
-        // Check for existing reservation dates
-        if (this.reservation.hasOwnProperty("arrivalDate")) {
-            this.dates = [new Date(this.reservation.arrivalDate.replaceAll("-", "/")), new Date(this.reservation.departDate.replaceAll("-", "/"))]
+        console.log(this.hotel)
+        if (this.dates.length == 0) {
+            this.route.queryParams.subscribe(params => {
+                this.dates = [new Date(params['arrivalDate'].replaceAll("-", "/")), new Date(params['departDate'].replaceAll("-", "/"))]
+            })
         }
+            
+        // Check for existing reservation dates
+        // if (this.reservation.hasOwnProperty("arrivalDate")) {
+        //     this.dates = [new Date(this.reservation.arrivalDate.replaceAll("-", "/")), new Date(this.reservation.departDate.replaceAll("-", "/"))]
+        // }
 
         // if (this.showBack){
         //     this.hotelService.findById(this.hotelData.hotelInfo.hotelID).subscribe(resp => {this.hotelData.hotelInfo = resp
@@ -108,11 +110,11 @@ export class ReservationFormComponent implements OnInit {
         //     })
         // }
             
-        //this.getGeoLocation()
+        this.getGeoLocation()
     }
 
     getGeoLocation() {
-        this.mapService.getGeocoding(`${this.hotelData.hotelInfo.street} ${this.hotelData.hotelInfo.city} ${this.hotelData.hotelInfo.state} ${this.hotelData.hotelInfo.zipcode}`)
+        this.mapService.getGeocoding(`${this.hotel.street} ${this.hotel.city} ${this.hotel.state} ${this.hotel.zipcode}`)
         .subscribe(resp => {
             this.location = {lon: resp.results[0].lon, lat: resp.results[0].lat}
             this.imageUrl = this.mapService.getStaticMap(resp.results[0].lon, resp.results[0].lat, 14)
@@ -127,7 +129,7 @@ export class ReservationFormComponent implements OnInit {
                 //Actual logic to perform a confirmation
                 this.reservationService.delete(this.reservation.reservationNumber).subscribe(resp => {
                     this.customerService.delete(this.reservation.customer).subscribe() 
-                    window.location.reload()  
+                    this.returnHome()
                 })
                 this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
             }
@@ -142,7 +144,7 @@ export class ReservationFormComponent implements OnInit {
                 //Actual logic to perform a confirmation
                 this.customerService.update(this.customer.customerID, this.customer).subscribe(resp => {
                     this.reservationService.update(resp.reservations[0].reservationNumber, resp.customerID, 
-                        this.hotelData.hotelInfo.hotelID, this.dates, data).subscribe(resp => console.log(resp))
+                        this.hotel.hotelID, this.dates, data).subscribe(resp => console.log(resp))
                 })
                 this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
             }
@@ -152,18 +154,21 @@ export class ReservationFormComponent implements OnInit {
     noAvailability() {
         this.confirmationService.confirm({
             header: 'No Availability',
-            message: 'Sorry, there are no available rooms for these dates. Please select a different set of days or try again later.',
+            message: 'Sorry, there are no available rooms for these dates. Please select a different set of days, choose a different hotel or try again later.',
             accept: () => {
+                window.location.reload()
+                window.scrollTo(0, 0)
                 this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
             },
             reject: () => {
-                window.location.reload()
+                this.returnHome()
             }
         });
     }
 
     returnHome() {
-        window.location.reload()
+        this.router.navigate(['/'])
+        window.scrollTo(0, 0)
     }
 
     getData() {
@@ -194,10 +199,10 @@ export class ReservationFormComponent implements OnInit {
         }
         else {
             // Create new reservation
-            this.hotelService.checkAvailability(this.hotelData.hotelInfo.hotelID, this.dates).subscribe(resp => {
+            this.hotelService.checkAvailability(this.hotel.hotelID, this.dates).subscribe(resp => {
                 if (resp)
                     this.customerService.save(this.customer).subscribe(resp => {
-                        this.reservationService.save(resp.customerID, this.hotelData.hotelInfo.hotelID, this.dates, data).subscribe(resp => {
+                        this.reservationService.save(resp.customerID, this.hotel.hotelID, this.dates, data).subscribe(resp => {
                             this.reservation = resp
                             this.showConfirmation = true
                         })
@@ -209,10 +214,6 @@ export class ReservationFormComponent implements OnInit {
             
         }
         
-    }
-
-    home() {
-        window.location.reload()
     }
 
     getFloor(rating: number) {

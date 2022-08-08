@@ -4,37 +4,47 @@
         <span>Back to hotels</span>
     </div>
 
-    <div class="hotel-info">
-        <div class="gallery" *ngIf="showBack">
+    <div class="hotel-info" *ngIf="showBack; else editmode">
+        <div class="gallery">
             <div class="imageDisplay">
                 <img [src]="displayURL" >
             </div>
             <div *ngIf="images" class="thumbnail-container">
                 <div *ngFor="let image of images;">
-                    <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="displayURL = image.thumbnailImageSrc"/>
+                    <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="displayURL = image.thumbnailImageSrc">
                 </div>
             </div>
         </div>
 
-        <div>
+        <div class="details">
             <div class="hotel">
-                <header>{{ hotelData.hotelInfo.hotelName }}</header>
-                <p-rating *ngIf="showBack" [ngModel]="getFloor(hotelData.hotelInfo.rating)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
-                <div *ngIf="showBack">{{ hotelData.hotelInfo.description }}</div>
-                <div *ngIf="showBack"><b>{{ hotelData.hotelInfo.rating * 2 }}/10 {{ hotelData.hotelInfo.ratingCatagory }}</b></div>
+                <header>{{ hotel.hotelName }}</header>
+                <p-rating [ngModel]="getFloor(hotel.rating)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+                <div>{{ hotel.description }}</div>
+                <div><b>{{ hotel.rating * 2 }}/10 {{ hotel.ratingCatagory }}</b></div>
             </div>
             <div class="location"> 
-                <img *ngIf="showBack" [hidden]="loading" [src]="imageUrl" (load)="loadedImage()">
-                <div *ngIf="loading && showBack" class="loading">
+                <img [hidden]="loading" [src]="imageUrl" (load)="loadedImage()">
+                <div *ngIf="loading" class="loading">
                     <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
                     <div>Getting map data</div>
                 </div>
-                <div>{{ hotelData.hotelInfo.street }}, {{ hotelData.hotelInfo.city }}, {{ hotelData.hotelInfo.state }}, {{ hotelData.hotelInfo.zipcode }}</div>
-                <div>{{ hotelData.hotelInfo.phone | phoneFormat }}</div>
+                <div>{{ hotel.street }}, {{ hotel.city }}, {{ hotel.state }}, {{ hotel.zipcode }}</div>
+                <div>{{ hotel.phone | phoneFormat }}</div>
             </div>
         </div>
     </div>
 
+    <ng-template #editmode>
+        <div class="hotel-info">
+            <div class="editmode-details">
+                <header>{{ hotel.hotelName }}</header>
+                <div>{{ hotel.street }}, {{ hotel.city }}, {{ hotel.state }}, {{ hotel.zipcode }}</div>
+                <div>{{ hotel.phone | phoneFormat }}</div>
+            </div>
+        </div>
+    </ng-template>
+    
     <form>
         <h3 *ngIf="!showBack">Check In - Check Out</h3>
         <div *ngIf="!showBack" class="date">
@@ -148,7 +158,7 @@
 
 <ng-template #confirmation>
     <div class="reservation-container">
-        <div (click)="home()" class="back-button">
+        <div (click)="returnHome()" class="back-button">
             <i class="pi pi-chevron-left"></i>
             <span>Back to homepage</span>
         </div>
