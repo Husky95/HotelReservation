@@ -86,6 +86,7 @@ export class ReservationFormComponent implements OnInit {
         }
 
     ngOnInit(): void {
+        // Grab the dates from the URL
         if (this.dates.length == 0) {
             this.route.queryParams.subscribe(params => {
                 this.dates = [new Date(params['arrivalDate'].replaceAll("-", "/")), new Date(params['departDate'].replaceAll("-", "/"))]
@@ -112,6 +113,7 @@ export class ReservationFormComponent implements OnInit {
         this.getGeoLocation()
     }
 
+    // Using the street, city, and zipcode. Generate a map photo from the map API
     getGeoLocation() {
         this.mapService.getGeocoding(`${this.hotel.street} ${this.hotel.city} ${this.hotel.state} ${this.hotel.zipcode}`)
         .subscribe(resp => {
@@ -120,6 +122,7 @@ export class ReservationFormComponent implements OnInit {
         })
     }
 
+    // Cancellation prompt message
     cancelReservation() {
         this.confirmationService.confirm({
             header: 'Cancel Reservation',
@@ -135,6 +138,7 @@ export class ReservationFormComponent implements OnInit {
         });
     }
 
+    // Upadate prompt message
     updateReservation(data: any) {
         this.confirmationService.confirm({
             header: 'Update Reservation Information',
@@ -150,6 +154,7 @@ export class ReservationFormComponent implements OnInit {
         });
     }
 
+    // No avalability prompt message
     noAvailability() {
         this.confirmationService.confirm({
             header: 'No Availability',
@@ -173,6 +178,8 @@ export class ReservationFormComponent implements OnInit {
     getData() {
         // let test = this.dates[0].toISOString().substring(0, 10)
         // console.log('Date:', test)
+
+        // Validate the user inputs
         if (Object.values(this.dataInvalid).some(check => check == true) || Object.values(this.customer).some(check => check == ''))
             return
 
@@ -181,6 +188,7 @@ export class ReservationFormComponent implements OnInit {
             numKids: +this.reservation.numKids
         }
 
+        // If customer doesn't exist, add a new reservation, else update an existing one
         if (this.reservation.customer != null) {
             // Update data
             // this.modalData = {

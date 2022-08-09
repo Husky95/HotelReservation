@@ -28,9 +28,11 @@ export class DateFormComponent implements OnInit {
     ngOnInit(): void {
         this.service.getLocations().subscribe(resp => this.locations = resp)
 
+        // Grab the query parameters. If they exist grab them and set them to the state.
         this.route.queryParams.subscribe(params => {
             if (Object.keys(params).length != 0) {
                 this.selected = {city: params['city'], state: params['state']}
+                // Dates are dumb. Create a new date using "/" instead of "-"" because it uses UTC instead of local time
                 this.date = [
                     new Date(params['arrivalDate'].replaceAll("-", "/")), 
                     new Date(params['departDate'].replaceAll("-", "/"))
@@ -41,8 +43,10 @@ export class DateFormComponent implements OnInit {
     }
 
     showHotels() {
+        // Validate the user inputs
         if (!this.dataInvalid.location && this.selected != null) {
-            if (!this.dataInvalid.dates && this.date.length == 2) {                
+            if (!this.dataInvalid.dates && this.date.length == 2) {     
+                // Set query parameters to the url           
                 const params = {
                     city: this.selected.city,
                     state: this.selected.state,
@@ -52,6 +56,7 @@ export class DateFormComponent implements OnInit {
 
                 this.router.navigate(['hotels'], {queryParams: {...params}, queryParamsHandling: 'merge', replaceUrl:true})
                 
+                // Check if the query parameters have sort parameters
                 this.route.queryParams.subscribe(params => {
                     this.showHotelList = true
                     if (params.hasOwnProperty('sort') && params.hasOwnProperty('asc'))
@@ -63,6 +68,7 @@ export class DateFormComponent implements OnInit {
         }
     }
 
+    // Check if the user enters a past date
     pastDates() {
         let today = new Date()
         if (this.date[0].getTime() == this.date[1].getTime()) 

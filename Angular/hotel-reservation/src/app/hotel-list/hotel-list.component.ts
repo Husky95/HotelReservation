@@ -17,6 +17,7 @@ export class HotelListComponent implements OnInit {
     loading: boolean = true
     mapUrl: string = ''
 
+    // Date for the sort dropdown menu
     type: Array<any> = [
         {sort: "Name", icon: 'pi pi-sort-alpha-down', value: ["hotelName", true]}, 
         {sort: "Name", icon: 'pi pi-sort-alpha-up', value: ["hotelName", false]},
@@ -29,6 +30,7 @@ export class HotelListComponent implements OnInit {
 
     showForm: boolean = false
 
+    // Append new parameters to URL
     filterBy() {
         const params = {
             sort: this.filter.value[0],
@@ -43,7 +45,7 @@ export class HotelListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        // Grab the location from the URL and send it to the map API
         this.route.queryParams.subscribe(params => {
             this.mapService.getGeocoding(`${params['city']}, ${params['state']}`).subscribe(resp => {
                 this.loading = true
@@ -53,9 +55,11 @@ export class HotelListComponent implements OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        // If the user search for new hotels while on the reservation form, redirect them back to the hotel list
         if (changes['hotels'].currentValue != changes['hotels'].previousValue)
             this.showForm = false
         //console.log(changes);
+        // Adds flavor text depending on the hotel rating
         this.hotels = changes['hotels'].currentValue.map((elem: any) => {
             if (elem.rating <= 2)
                 return elem = {...elem, ratingCatagory: 'Poor'}

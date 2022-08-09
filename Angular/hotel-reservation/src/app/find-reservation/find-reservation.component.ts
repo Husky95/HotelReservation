@@ -25,6 +25,7 @@ export class FindReservationComponent implements OnInit {
         }
 
     ngOnInit(): void {
+        // If on the home route, don't grab the reservation yet
         if (this.router.url != '/')
             this.getReservation(this.id)
     }
