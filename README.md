@@ -30,7 +30,7 @@ The team working on this project:
 To run the frontend . Do the following commands : 
 
 ```
-cd Angular/hotel-reservation/inventory-app
+cd Angular/hotel-reservation
 npm install
 ng serve
 ```
